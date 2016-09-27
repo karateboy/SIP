@@ -1,0 +1,4683 @@
+<?xml version="1.0" standalone="yes"?>
+<AQX_P_267>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>96.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>96.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>97.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>1.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>9.80                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>144.50                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>156.90                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>149.20                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.24                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.92                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.33                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公13測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>1.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>6.80                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>23.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公19測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>95.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>96.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>99.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>1.80                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>9.60                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>121.00                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>147.00                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>138.00                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>26.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>26.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>公29測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>91.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>92.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.20                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.00                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>降雨量</DESP>
+    <UNIT>mm/hr   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>6.20                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>147.80                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>167.80                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>150.50                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>1.55                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.59                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.09                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台南科學園區</IndParkName>
+    <DP_NO>南科實中測站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>臺南市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>87.13                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>88.44                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>189.11                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>188.33                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>198.58                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.28                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.24                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>5.23                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.39                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.71                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣土庫站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.42                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>89.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>86.49                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>88.22                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>166.52                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>169.42                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>181.18                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.61                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.32                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>4.85                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.86                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.18                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣台西站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.04                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>97.79                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>94.94                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>94.84                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>165.84                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>170.16                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>180.20                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>4.09                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.81                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>6.19                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.01                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.21                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣四湖站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.22                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>90.37                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>90.16                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>88.11                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>193.05                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>158.55                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>195.14                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.02                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>1.55                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>3.24                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.57                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.75                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣西螺站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.92                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.36                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>87.45                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>90.31                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>165.72                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>173.12                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>183.63                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.98                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>4.06                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>5.25                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.99                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.36                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣東勢站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.88                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>90.58                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>85.64                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>83.72                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>187.14                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>191.47                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>196.38                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>4.03                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>4.18                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>5.65                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.63                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.24                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣崙背站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.43                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>94.59                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>87.95                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>87.45                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>173.67                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>180.87                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>195.29                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.75                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.42                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>4.23                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.33                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣麥寮站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.41                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.93                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>88.19                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>90.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>191.23                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>198.22                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>205.65                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.78                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.74                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>5.38                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.77                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.26                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>雲林縣褒忠站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.12                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>雲林縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.12                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>88.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>95.51                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>155.11                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>168.42                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>170.83                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.80                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>4.53                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>5.23                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.06                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.51                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>嘉義縣東石站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>嘉義縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.44                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>86.83                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>86.32                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>184.22                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>184.51                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>192.95                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.68                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.27                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>4.67                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.53                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>26.04                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>台塑六輕工業園區</IndParkName>
+    <DP_NO>彰化縣大城站</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>26.18                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>雲林縣環保局</CITY>
+    <CITY2>彰化縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>94.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>95.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>95.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>68.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>11.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>71.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.16                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.41                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.31                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>22.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>22.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>大寮區潮寮里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>22.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>88.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>89.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>90.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>29.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>39.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.34                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.66                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.85                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>23.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>小港區鳳林國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>90.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>92.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>92.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>46.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>337.30                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>41.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.17                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.62                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.55                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>23.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區五福里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>89.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>90.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>91.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>42.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>14.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>46.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.63                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.69                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>3.18                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區汕尾里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>88.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>90.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>90.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>29.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>359.90                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>22.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.57                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.42                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.51                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區西溪里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>93.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>94.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>94.80                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>35.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>358.60                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>39.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.28                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.33                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.78                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>23.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區林園里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>是</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>96.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>98.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>98.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>37.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>352.30                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>36.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.08                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.40                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>1.64                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>林園區溪州里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.00                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>臺南市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>96.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>97.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>97.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>28.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>341.10                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>34.30                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.51                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.07                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.51                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>22.90                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>林園工業區</IndParkName>
+    <DP_NO>新園鄉港西國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>22.50                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>屏東縣環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>90.95                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>90.63                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>92.58                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>106.79                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>97.41                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>71.74                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>0.91                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>0.24                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>0.54                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.51                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>二甲里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.37                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>96.89                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>96.98                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>97.49                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>82.09                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>20.03                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>59.34                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.00                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>1.89                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.22                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.05                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>23.88                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>大坪頂</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.61                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>95.69                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>95.66                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>95.66                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>87.75                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>79.27                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>67.12                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.93                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.19                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.09                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.39                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.14                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>中山國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.99                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>91.84                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>91.82                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>92.33                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>88.77                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>62.99                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>72.13                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.39                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>1.72                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>1.77                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.32                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>太平國小</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.99                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>93.63                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>93.98                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>95.74                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>237.55                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>254.37                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>246.93                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.31                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>1.62                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.04                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.28                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.43                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>明正社區活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>24.10                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>92.18                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>93.73                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>95.22                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>62.92                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>85.66                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>68.08                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>2.64                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>2.96                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.01                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.72                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.21                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>頂厝里</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.91                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>96.11                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>95.88                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>97.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>174.90                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>256.33                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>99.61                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>1.34                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>1.76                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.08                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>24.26                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>24.05                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>新厝里活動中心</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>23.70                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>92.32                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>92.60                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>相對濕度                            </DESP>
+    <UNIT>%    </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>94.40                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>23.20                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>109.95                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風向                            </DESP>
+    <UNIT>deg</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>109.44                        </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>3.36                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>3.00                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>風速                            </DESP>
+    <UNIT>m/s   </UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>2.49                          </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>000000</M_TIME>
+    <VAL>25.66                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>010000</M_TIME>
+    <VAL>25.75                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+  <STK>
+    <IndParkName>臨海工業區</IndParkName>
+    <DP_NO>旗津國中</DP_NO>
+    <DESP>溫度                            </DESP>
+    <UNIT>℃</UNIT>
+    <M_Date>2016-09-07</M_Date>
+    <M_TIME>020000</M_TIME>
+    <VAL>25.43                         </VAL>
+    <CODE2>010</CODE2>
+    <CITY>高雄市環保局</CITY>
+    <CITY2>高雄市環保局</CITY2>
+    <YN>否</YN>
+  </STK>
+</AQX_P_267>

@@ -27,7 +27,6 @@ object Alarm {
   val alarmLevelList = Level.INFO to Level.ERR
 
   def Src(mt: MonitorType.Value) = s"T:${mt.toString}"
-  def Src(inst: Instrument) = s"I:${inst._id}"
   def instStr(id: String) = s"I:$id"
   def Src() = "S:System"
 

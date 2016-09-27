@@ -86,7 +86,6 @@
                 	<ul class="nav nav-second-level">
                     	<li><a href="#/History" >歷史資料查詢</a></li>
                     	<li><a href="#/HistoryTrend" >歷史趨勢圖</a></li>
-                    	<li><a href="#/Calibration" >校正資料查詢</a></li>
                     	<li><a href="#/Alarm" >警報記錄查詢</a></li>
                 	</ul>
             	</li>
@@ -96,23 +95,12 @@
                     	<li><a href="#/Report" >監測報表</a></li>
                     	<li><a href="#/MonitorMonthlyHourReport" >月份時報表</a></li>
                 	</ul>
-            	</li>
-            	<li>
-                	<a href="#/MaintainInstrument"><i class="fa fa-table fa-lg"></i> <span class="nav-label">操作維護 </span></a>
-            	</li>
+            	</li>            	
             @if(user.isAdmin){
             	<li>
                 <a href="#"><i class="fa fa-cog fa-lg"></i> <span class="nav-label">系統管理</span></a>
                 <ul class="nav nav-second-level">
-                	<li>
-                		<a href="#/ManageInstrument" >
-                		<i class="fa fa-link fa-lg"></i> <span class="nav-label">儀器管理</span></a>
-                	</li>
-                	<li>
-                		<a href="#/InstrumentStatus" >
-                		<i class="fa fa-link fa-lg"></i> <span class="nav-label">儀器狀態查詢</span></a>
-                	</li>
-                    <li><a href="#/MonitorTypeConfig" >測項管理</a></li>
+                	<li><a href="#/MonitorTypeConfig" >測項管理</a></li>
                     <li><a href="#/ManualAudit" >人工資料註記</a></li>
                     <li><a href="#/ManualAuditHistory" >人工註記查詢</a></li>
                     <li><a href="#/UserManagement" >使用者管理</a></li> 
@@ -173,12 +161,7 @@
 
 <!-- App JS -->
 <script src="assets/js/app/dataLogger.js"></script>
-<script src="assets/js/app/instrumentWizard.js"></script>
-<script src="assets/js/app/adam4017.js"></script>
-<script src="assets/js/app/tapiConfig.js"></script>
-<script src="assets/js/app/baselineConfig.js"></script>
 <script src="assets/js/app/mtConfig.js"></script>
-<script src="assets/js/app/verewaConfig.js"></script>
 <script src="assets/js/app/mtRealtimeChart.js"></script>
 <script src="assets/js/app/mtRealtimeChart2.js"></script>
 <script src="assets/js/app/miniMtList.js"></script>

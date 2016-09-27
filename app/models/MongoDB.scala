@@ -16,13 +16,10 @@ object MongoDB {
       //MonitorType =>
       Monitor.init(colNames)
       MonitorType.init(colNames)
-      Instrument.init(colNames)
       Record.init(colNames)
       User.init(colNames)
-      Calibration.init(colNames)
       MonitorStatus.init(colNames)
       Alarm.init(colNames)
-      InstrumentStatus.init(colNames)
       ManualAuditLog.init(colNames)
     }
     //Program need to wait before init complete

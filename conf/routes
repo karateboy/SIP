@@ -26,35 +26,12 @@ GET		/Excel/HistoryTrend/:monitors/:monitorType/:reportUnit/:statusFilter/:start
 
 GET		/History					controllers.Query.history
 GET		/HistoryReport/:monitor/:monitorType/:tabType/:start/:end		controllers.Query.historyReport(monitor, monitorType, tabType, start, end)
-GET		/Calibration				controllers.Query.calibration
-GET		/CalibrationReport/:start/:end	controllers.Query.calibrationReport(start, end)
 GET		/Alarm						controllers.Query.alarm
 GET		/AlarmReport/:level/:start/:end	controllers.Query.alarmReport(level:Int, start, end)
 
 GET		/MonitorTypeConfig			controllers.Application.monitorTypeConfig
 POST	/SaveMonitorTypeConfig		controllers.Application.saveMonitorTypeConfig
 
-GET		/InstrumentTypes			controllers.Application.getInstrumentTypes
-GET		/InstrumentTypeInfo			controllers.Application.getInstrumentTypes
-GET		/InstrumentTypeInfo/:id		controllers.Application.getInstrumentType(id)
-GET		/MaintainInstrument			controllers.Application.maintainInstrument
-GET		/ManageInstrument			controllers.Application.manageInstrument
-PUT		/Instrument					controllers.Application.newInstrument
-GET		/Instrument					controllers.Application.getInstrumentList
-GET		/Instrument/:id				controllers.Application.getInstrument(id)
-DELETE  /Instrument/:ids			controllers.Application.removeInstrument(ids)
-PUT		/DeactivateInstrument/:ids	controllers.Application.deactivateInstrument(ids)
-PUT		/ActivateInstrument/:ids	controllers.Application.activateInstrument(ids)
-PUT		/ToggleMaintainInstrument/:ids	controllers.Application.toggleMaintainInstrument(ids)
-PUT		/CalibrateInstrumentZero/:ids	controllers.Application.calibrateInstrument(ids, zeroCalibration="true")
-PUT		/CalibrateInstrumentSpan/:ids	controllers.Application.calibrateInstrument(ids, zeroCalibration="false")
-PUT		/CalibrateInstrument/:ids	controllers.Application.calibrateInstrumentFull(ids)
-PUT		/ResetInstrument/:ids		controllers.Application.resetInstrument(ids)
-GET		/ExecuteSeq/:ids/:seq		controllers.Application.getExecuteSeq(ids, seq:Int)
-PUT		/ExecuteSeq/:ids/:seq		controllers.Application.executeSeq(ids, seq:Int)
-
-GET		/InstrumentStatus			controllers.Query.instrumentStatus()
-GET		/InstrumentStatusReport/:id/:start/:end		controllers.Query.instrumentStatusReport(id, start, end)
 GET		/ManualAudit			controllers.Query.manualAudit()
 GET		/ManualAuditHistory		controllers.Query.manualAuditHistory()
 GET		/ManualAuditHistory/:start/:end		controllers.Query.manualAuditHistoryReport(start:Long, end:Long)

@@ -450,18 +450,6 @@ object Query extends Controller {
       Ok(output)
   }
 
-  def calibration() = Security.Authenticated {
-    Ok(views.html.calibration())
-  }
-
-  def calibrationReport(startStr: String, endStr: String) = Security.Authenticated {
-    val (start, end) =
-      (DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd")),
-        DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd")) + 1.day)
-    val report = Calibration.calibrationReport(start, end)
-    Ok(views.html.calibrationReport(report, "校正報表", start, end))
-  }
-
   def alarm() = Security.Authenticated {
     Ok(views.html.alarm())
   }
@@ -474,31 +462,6 @@ object Query extends Controller {
     Ok(views.html.alarmReport(start, end, report))
   }
 
-  def instrumentStatus() = Security.Authenticated {
-    Ok(views.html.instrumentStatus())
-  }
-
-  def instrumentStatusReport(id: String, startStr: String, endStr: String) = Security.Authenticated {
-    val (start, end) =
-      (DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd")),
-        DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd")))
-
-    val report = InstrumentStatus.query(id, start, end + 1.day)
-    val keyList = if (report.isEmpty)
-      List.empty[String]
-    else
-      report.map { _.statusList }.maxBy { _.length }.map { _.key }
-
-    val reportMap = for {
-      record <- report
-      time = record.time
-    } yield {
-      (time, record.statusList.map { s => (s.key -> s.value) }.toMap)
-    }
-
-    val statusTypeMap = Instrument.getStatusTypeMap(id)
-    Ok(views.html.instrumentStatusReport(id, start, end, reportMap.toList, keyList, statusTypeMap))
-  }
 
   def manualAudit() = Security.Authenticated {
     Ok(views.html.manualAudit(""))

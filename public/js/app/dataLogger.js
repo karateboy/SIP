@@ -5,18 +5,13 @@ var app = angular.module('dataLoggerApp',
 		[ 'ngRoute',
 		  'ngResource',
 		  'ui.bootstrap',
-		  'newInstrumentView',
-		  'adam4017View',
-		  'tapiConfigView',
 		  'mtConfigView',
-		  'verewaConfigView',
 		  'mtRealtimeChartView',
 		  'mtRealtimeChartView2',
 		  'miniMonitorTypeListView',
 		  'monitorTypeListView',
 		  'manualAuditView',
-		  'manualAuditHistoryView',
-		  'baselineConfigView']);
+		  'manualAuditHistoryView']);
 
 app.factory('BreadcrumbService', [ function() {
 	var service = {
@@ -54,13 +49,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "數據查詢>歷史趨勢圖";
 			} ]
 		}
-	}).when('/Calibration', {
-		templateUrl : "/Calibration",
-		resolve : {
-			breadcrumb : [ 'BreadcrumbService', function(bs) {
-				return bs.title = "數據查詢>校正資料查詢";
-			} ]
-		}
 	}).when('/Alarm', {
 		templateUrl : "/Alarm",
 		resolve : {
@@ -82,27 +70,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "報表查詢>月份時報表";
 			} ]
 		}	
-	}).when('/MaintainInstrument', {
-		templateUrl : "/MaintainInstrument",
-		resolve : {
-			breadcrumb : [ 'BreadcrumbService', function(bs) {
-				return bs.title = "操作維護>";
-			} ]
-		}
-	}).when('/ManageInstrument', {
-		templateUrl : "/ManageInstrument",
-		resolve : {
-			breadcrumb : [ 'BreadcrumbService', function(bs) {
-				return bs.title = "系統管理>儀器管理";
-			} ]
-		}
-	}).when('/InstrumentStatus', {
-		templateUrl : "/InstrumentStatus",
-		resolve : {
-			breadcrumb : [ 'BreadcrumbService', function(bs) {
-				return bs.title = "系統管理>儀器狀態查詢";
-			} ]
-		}
 	}).when('/MonitorTypeConfig', {
 		templateUrl : "/MonitorTypeConfig",
 		resolve : {

@@ -37,7 +37,7 @@ object Monitor extends Enumeration {
       f.onFailure(errorHandler)
       f.onSuccess({
         case _: Seq[t] =>
-          newMonitor(buildMonitor("台南科學園區", "南科實中測站"))
+
       })
       Some(f.mapTo[Unit])
     } else
@@ -92,10 +92,12 @@ object Monitor extends Enumeration {
       }
     }
     mvList = list.map(m => Monitor.withName(m._id))
+
   }
 
   var map: Map[Value, Monitor] = Map(mList.map { e => Value(e._id) -> e }: _*)
   var mvList = mList.map(mt => Monitor.withName(mt._id))
+  def indParkSet = mvList.map { map(_).indParkName }.foldRight(Set.empty[String])((name, set) => set + name)
 
   def getMonitorValueByName(indParkName: String, dp_no: String) = {
     try {

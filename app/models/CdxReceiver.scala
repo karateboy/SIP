@@ -77,6 +77,17 @@ class CdxReceiver extends Actor with ActorLogging {
           os.close()
         }
       }
+      
+      def removeFileFromServer(fileName:String)={
+        val resultHolder = new Holder[Integer]
+        val errMsgHolder = new Holder("")
+        val successHolder = new Holder[java.lang.Boolean]
+        CdxWebService.service.getFileFinish(account, password, fileName, "Inbox", errMsgHolder, resultHolder, successHolder)
+        if (resultHolder.value != 1) {
+          Logger.error(s"errMsg:${errMsgHolder.value}")
+          Logger.error(s"ret:${resultHolder.value.toString}")
+        }
+      }
 
       def backupFile(fileName: String) = {
         import java.nio.file._
@@ -93,11 +104,12 @@ class CdxReceiver extends Actor with ActorLogging {
         if(fileName.startsWith("AQX")){
           val file = new java.io.File(s"$path$fileName") 
           parser(file)
-          backupFile(fileName)
+          backupFile(fileName)          
         }else{
           import java.nio.file._
           Files.deleteIfExists(Paths.get(s"$path$fileName"))
-        }        
+        }
+        removeFileFromServer(fileName)
       }
       Logger.info("Done")
     }

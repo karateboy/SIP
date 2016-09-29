@@ -413,7 +413,7 @@ object Query extends Controller {
                     startStr: String, endStr: String) = Security.Authenticated {
     implicit request =>
       import scala.collection.JavaConverters._
-      val monitor = Monitor.withName(monitorStr)
+      val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
 
       val monitorTypeStrArray = monitorTypeStr.split(':')
       val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }

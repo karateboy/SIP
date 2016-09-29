@@ -7,60 +7,9 @@ import play.api.libs.functional.syntax._
 import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
-case class MonitorTypeV1(_id: String, desp: String, unit: String, std_law: Option[Double],
-                         prec: Int, order: Int, std_internal: Option[Double] = None,
-                         zd_internal: Option[Double] = None, zd_law: Option[Double] = None,
-                         span: Option[Double] = None, span_dev_internal: Option[Double] = None, span_dev_law: Option[Double] = None,
-                         measuredBy: Option[String] = None, measuringBy: Option[String] = None) {
-  def toMonitorType = {
-    val newMeasuringBy = measuringBy map { List(_) }
-
-    MonitorType(_id, desp, unit, std_law,
-      prec, order, std_internal,
-      zd_internal, zd_law,
-      span, span_dev_internal, span_dev_law,
-      newMeasuringBy)
-  }
-}
 
 case class MonitorType(_id: String, desp: String, unit: String, std_law: Option[Double],
-                       prec: Int, order: Int, std_internal: Option[Double] = None,
-                       zd_internal: Option[Double] = None, zd_law: Option[Double] = None,
-                       span: Option[Double] = None, span_dev_internal: Option[Double] = None, span_dev_law: Option[Double] = None,
-                       measuringBy: Option[List[String]] = None) {
-  def addMeasuring(instrumentId: String, append: Boolean) = {
-    val newMeasuringBy =
-      if (measuringBy.isEmpty)
-        List(instrumentId)
-      else {
-        if (append)
-          measuringBy.get ++ List(instrumentId)
-        else
-          instrumentId :: measuringBy.get
-      }
-    MonitorType(_id, desp, unit, std_law,
-      prec, order, std_internal,
-      zd_internal, zd_law,
-      span, span_dev_internal, span_dev_law,
-      Some(newMeasuringBy))
-  }
-
-  def stopMeasuring(instrumentId: String) = {
-    val newMeasuringBy =
-      if (measuringBy.isEmpty)
-        None
-      else
-        Some(measuringBy.get.filter { id => id != instrumentId })
-
-    MonitorType(_id, desp, unit, std_law,
-      prec, order, std_internal,
-      zd_internal, zd_law,
-      span, span_dev_internal, span_dev_law,
-      newMeasuringBy)
-  }
-}
-//MeasuredBy => History...
-//MeasuringBy => Current...
+                       prec: Int, order: Int, std_internal: Option[Double] = None)
 
 object MonitorType extends Enumeration {
   import org.mongodb.scala.bson._
@@ -76,28 +25,7 @@ object MonitorType extends Enumeration {
   }
   val colName = "monitorTypes"
   val collection = MongoDB.database.getCollection(colName)
-  val defaultMonitorTypes = List(
-    MonitorType("SO2", "二氧化硫", "ppb", None, 1, 1),
-    MonitorType("NOx", "氮氧化物", "ppb", None, 1, 2),
-    MonitorType("NO2", "二氧化氮", "ppb", None, 1, 3),
-    MonitorType("NO", "一氧化氮", "ppb", None, 1, 4),
-    MonitorType("CO", "一氧化碳", "ppm", None, 1, 5),
-    MonitorType("CO2", "二氧化碳", "ppm", None, 1, 6),
-    MonitorType("O3", "臭氧", "ppb", None, 1, 7),
-    MonitorType("THC", "總碳氫化合物", "ppm", None, 1, 8),
-    MonitorType("TS", "總硫", "ppb", None, 1, 9),
-    MonitorType("CH4", "甲烷", "ppm", None, 1, 10),
-    MonitorType("NMHC", "非甲烷碳氫化合物", "ppm", None, 1, 11),
-    MonitorType("NH3", "氨", "ppb", None, 1, 12),
-    MonitorType("TSP", "TSP", "μg/m3", None, 1, 13),
-    MonitorType("PM10", "PM10懸浮微粒", "μg/m3", None, 1, 14),
-    MonitorType("PM25", "PM2.5細懸浮微粒", "μg/m3", None, 1, 15),
-    MonitorType("WD_SPEED", "風速", "m/sec", None, 1, 16),
-    MonitorType("WD_DIR", "風向", "degrees", None, 1, 17),
-    MonitorType("TEMP", "溫度", "℃", None, 1, 18),
-    MonitorType("HUMID", "濕度", "%", None, 1, 19),
-    MonitorType("PRESS", "氣壓", "hPa", None, 1, 20),
-    MonitorType("RAIN", "雨量", "mm/h", None, 1, 21))
+  val defaultMonitorTypes = List()
 
   lazy val WIN_SPEED = MonitorType.withName("WD_SPEED")
   lazy val WIN_DIRECTION = MonitorType.withName("WD_DIR")
@@ -117,7 +45,7 @@ object MonitorType extends Enumeration {
       f.onFailure(errorHandler)
       f.onSuccess({
         case _: Seq[t] =>
-          insertMt
+          //insertMt
       })
       Some(f.mapTo[Unit])
     } else
@@ -136,27 +64,11 @@ object MonitorType extends Enumeration {
 
   def toMonitorType(d: Document) = {
     val ret = Json.parse(d.toJson()).validate[MonitorType]
-    implicit val v1Reader = Json.reads[MonitorTypeV1]
     ret.fold(error => {
-      val ret2 = Json.parse(d.toJson()).validate[MonitorTypeV1]
-      ret2.fold(err => {
-        Logger.error(JsError.toJson(error).toString())
-        throw new Exception(JsError.toJson(error).toString)
-      }, mt => {
-        Logger.info("Upgrade MonitorTypeV1")
-        if (mt.measuredBy.isDefined) {
-          val measuringList = if (mt.measuringBy.isDefined)
-            List(mt.measuringBy.get)
-          else
-            List.empty[String]
-          setMeasuringBy(mt._id, measuringList)
-        }
-        mt.toMonitorType
-      })
-
+      Logger.error(JsError.toJson(error).toString())
+      throw new Exception(JsError.toJson(error).toString)
     },
-      mt =>
-        mt)
+      mt => mt)
   }
 
   private def mtList: List[MonitorType] =
@@ -181,12 +93,24 @@ object MonitorType extends Enumeration {
 
   var map: Map[Value, MonitorType] = Map(mtList.map { e => Value(e._id) -> e }: _*)
   var mtvList = mtList.sortBy { _.order }.map(mt => MonitorType.withName(mt._id))
-  def activeMtvList = mtvList.filter { mt => map(mt).measuringBy.isDefined }
-  def realtimeMtvList = mtvList.filter { mt =>
-    val measuringBy = map(mt).measuringBy
-    measuringBy.isDefined && (!measuringBy.get.isEmpty)
+  def activeMtvList = mtvList
+  def realtimeMtvList = mtvList
+
+  def getMonitorTypeValueByName(_id: String, unit: String) = {
+    try {
+      MonitorType.withName(_id)
+    } catch {
+      case _: NoSuchElementException =>
+        val mt = MonitorType(_id, _id, unit, None, 2, mtvList.size)
+        newMonitorType(mt)
+        val value = Value(mt._id)
+        map = map + (value -> mt)
+        mtvList = (value :: mtvList.reverse).reverse
+        value
+    }
   }
 
+ 
   def newMonitorType(mt: MonitorType) = {
     val doc = toDocument(mt)
     import org.mongodb.scala._
@@ -195,45 +119,8 @@ object MonitorType extends Enumeration {
         Logger.error(ex.getMessage, ex)
         throw ex
       })
-    map = map + (Value(mt._id) -> mt)
   }
 
-  def setMeasuringBy(mt: MonitorType.Value, instrumentIds: List[String]) {
-    setMeasuringBy(map(mt)._id, instrumentIds)
-  }
-
-  def setMeasuringBy(mt_id: String, instrumentIds: List[String]) {
-    import org.mongodb.scala._
-    import org.mongodb.scala.model.Filters._
-    import org.mongodb.scala.model.Updates._
-    import org.mongodb.scala.model.FindOneAndUpdateOptions
-
-    import scala.concurrent.ExecutionContext.Implicits.global
-    val idFilter = equal("_id", mt_id)
-    val idArray = new BsonArray()
-    instrumentIds.foreach { id => idArray.add(new BsonString(id)) }
-
-    val opt = FindOneAndUpdateOptions().returnDocument(com.mongodb.client.model.ReturnDocument.AFTER)
-    val f1 = collection.findOneAndUpdate(idFilter, set("measuringBy", idArray), opt).toFuture()
-    f1 onFailure (errorHandler)
-  }
-
-  def addMeasuring(mt: MonitorType.Value, instrumentId: String, append: Boolean) {
-    val newMt = map(mt).addMeasuring(instrumentId, append)
-    map = map + (mt -> newMt)
-    setMeasuringBy(newMt._id, newMt.measuringBy.get)
-  }
-
-  def stopMeasuring(instrumentId: String) = {
-    for {
-      mt <- realtimeMtvList
-      instrumentList = map(mt).measuringBy.get if instrumentList.contains(instrumentId)
-    } {
-      val newMt = map(mt).stopMeasuring(instrumentId)
-      map = map + (mt -> newMt)
-      setMeasuringBy(mt, newMt.measuringBy.get)
-    }
-  }
 
   import org.mongodb.scala.model.Filters._
   def upsertMonitorType(mt: MonitorType) = {
@@ -340,17 +227,5 @@ object MonitorType extends Enumeration {
       val (overInternal, overLaw) = overStd(mt, v)
       MonitorStatus.getCssClassStr(r.get.status, overInternal, overLaw)
     }
-  }
-
-  def displayMeasuringBy(mt: MonitorType.Value) = {
-    val mtCase = map(mt)
-    if (mtCase.measuringBy.isDefined) {
-      val instrumentList = mtCase.measuringBy.get
-      if (instrumentList.isEmpty)
-        "停用"
-      else
-        instrumentList.mkString(",")
-    } else
-      "-"
   }
 }

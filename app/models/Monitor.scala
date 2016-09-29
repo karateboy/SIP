@@ -8,7 +8,7 @@ import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class Monitor( _id: String, indParkName: String, dp_no: String)
+case class Monitor(_id: String, indParkName: String, dp_no: String)
 
 object Monitor extends Enumeration {
   implicit val monitorRead: Reads[Monitor.Value] = EnumUtils.enumReads(Monitor)
@@ -26,9 +26,11 @@ object Monitor extends Enumeration {
   val colName = "monitors"
   val collection = MongoDB.database.getCollection(colName)
 
-  def buildMonitor(indParkName: String, dp_no: String) = 
-    Monitor(s"${indParkName}#${dp_no}" , indParkName, dp_no)
-    
+  def monitorId(indParkName: String, dp_no: String) = s"${indParkName}#${dp_no}"
+
+  def buildMonitor(indParkName: String, dp_no: String) =
+    Monitor(monitorId(indParkName, dp_no), indParkName, dp_no)
+
   def init(colNames: Seq[String]) = {
     if (!colNames.contains(colName)) {
       val f = MongoDB.database.createCollection(colName).toFuture()
@@ -59,15 +61,17 @@ object Monitor extends Enumeration {
   }
 
   def newMonitor(m: Monitor) = {
+    Logger.debug(s"Create monitor value ${m._id}!")
+    val v = Value(m._id)
+    map = map + (v -> m)
+    mvList = (v :: mvList.reverse).reverse
+
     val f = collection.insertOne(toDocument(m)).toFuture()
     f.onFailure(errorHandler)
     f.onSuccess({
       case _: Seq[t] =>
-        val v = Value(m._id)
-        map = map + (v -> m)
-        mvList = (v::mvList.reverse).reverse
     })
-    f.mapTo[Unit]
+    Monitor.withName(m._id)
   }
 
   private def mList: List[Monitor] =
@@ -93,4 +97,13 @@ object Monitor extends Enumeration {
   var map: Map[Value, Monitor] = Map(mList.map { e => Value(e._id) -> e }: _*)
   var mvList = mList.map(mt => Monitor.withName(mt._id))
 
+  def getMonitorValueByName(indParkName: String, dp_no: String) = {
+    try {
+      val id = monitorId(indParkName, dp_no)
+      Monitor.withName(id)
+    } catch {
+      case _: NoSuchElementException =>
+        newMonitor(buildMonitor(indParkName, dp_no))
+    }
+  }
 }

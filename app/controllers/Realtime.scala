@@ -32,10 +32,6 @@ object Realtime extends Controller {
               recordOpt = dataMap.get(mt)
             } yield {
               val mCase = map(mt)
-              val measuringByStr = mCase.measuringBy.map {
-                instmentList =>
-                  instmentList.mkString(",")
-              }.getOrElse("??")
 
               if (recordOpt.isDefined) {
                 val record = recordOpt.get
@@ -46,11 +42,11 @@ object Realtime extends Controller {
                 else
                   "通訊中斷"
 
-                MonitorTypeStatus(mCase.desp, format(mt, Some(record.value)), mCase.unit, measuringByStr,
+                MonitorTypeStatus(mCase.desp, format(mt, Some(record.value)), mCase.unit, "",
                   MonitorStatus.map(record.status).desp,
                   MonitorStatus.getCssClassStr(record.status, overInternal, overLaw), mCase.order)
               } else {
-                MonitorTypeStatus(mCase.desp, format(mt, None), mCase.unit, measuringByStr,
+                MonitorTypeStatus(mCase.desp, format(mt, None), mCase.unit, "",
                   "通訊中斷",
                   "abnormal_status", mCase.order)
               }

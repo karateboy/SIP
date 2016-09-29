@@ -45,7 +45,7 @@ object Record {
   def toDocument(monitor: Monitor.Value, dt: DateTime, dataList: List[(MonitorType.Value, (Double, String))]) = {
     import org.mongodb.scala.bson._
     val bdt: BsonDateTime = dt
-    var doc = Document("time" -> bdt, "monitor" -> monitor.toString)
+    var doc = Document("_id" -> s"${monitor}${dt}", "time" -> bdt, "monitor" -> monitor.toString)
     for {
       data <- dataList
       mt = data._1
@@ -72,14 +72,24 @@ object Record {
     import org.mongodb.scala.bson.BsonString
     val col = MongoDB.database.getCollection(colName)
 
-    val f = col.replaceOne(and(equal("monitor", doc("monitor")), equal("time", doc("time"))), doc, UpdateOptions().upsert(true)).toFuture()
-    f.onFailure({
-      case ex: Exception => Logger.error(ex.getMessage, ex)
+    val findFuture = col.find(equal("_id", doc("_id"))).toFuture()
+    findFuture.onFailure(errorHandler)
+    findFuture.onSuccess({
+      case docs =>
+        if (docs.isEmpty) {
+          val f = col.insertOne(doc).toFuture()
+          f.onFailure(errorHandler)
+        } else {
+          val originalDoc = docs.head          
+          val f = col.replaceOne(equal("_id", doc("_id")), originalDoc ++ doc, UpdateOptions().upsert(true)).toFuture()
+          f.onFailure(errorHandler)
+        }
     })
-    f
+
+    findFuture
   }
 
-  def updateRecordStatus(monitor:Monitor.Value, dt: Long, mt: MonitorType.Value, status: String)(colName: String) = {
+  def updateRecordStatus(monitor: Monitor.Value, dt: Long, mt: MonitorType.Value, status: String)(colName: String) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._
     import org.mongodb.scala.model.Updates._
@@ -88,14 +98,14 @@ object Record {
     val bdt = new BsonDateTime(dt)
     val fieldName = s"${MonitorType.BFName(mt)}.s"
 
-    val f = col.updateOne(and(equal("monitor", monitor.toString), equal("time", bdt)), set(fieldName, status)).toFuture()
+    val f = col.updateOne(equal("_id", s"${monitor}${dt}"), set(fieldName, status)).toFuture()
     f.onFailure({
       case ex: Exception => Logger.error(ex.getMessage, ex)
     })
     f
   }
 
-  def getRecordMap(colName: String)(mtList: List[MonitorType.Value], monitor:Monitor.Value, startTime: DateTime, endTime: DateTime) = {
+  def getRecordMap(colName: String)(mtList: List[MonitorType.Value], monitor: Monitor.Value, startTime: DateTime, endTime: DateTime) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._
     import org.mongodb.scala.model.Projections._
@@ -137,7 +147,7 @@ object Record {
   implicit val mtRecordWrite = Json.writes[MtRecord]
   implicit val recordListWrite = Json.writes[RecordList]
 
-  def getRecordListFuture(colName: String)(monitor:Monitor.Value, startTime: DateTime, endTime: DateTime) = {
+  def getRecordListFuture(colName: String)(monitor: Monitor.Value, startTime: DateTime, endTime: DateTime) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._
     import org.mongodb.scala.model.Projections._

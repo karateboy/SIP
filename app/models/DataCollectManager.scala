@@ -131,26 +131,26 @@ class DataCollectManager extends Actor {
     }
 
     case GetLatestData =>
-      //Filter out older than 6 second
-      val latestMap = latestDataMap.flatMap { kv =>
-        val mt = kv._1
-        val instRecordMap = kv._2
-        val filteredRecordMap = instRecordMap.filter {
-          kv =>
-            val r = kv._2
-            r.time >= DateTime.now() - 6.second
-        }
+//      //Filter out older than 6 second
+//      val latestMap = latestDataMap.flatMap { kv =>
+//        val mt = kv._1
+//        val instRecordMap = kv._2
+//        val filteredRecordMap = instRecordMap.filter {
+//          kv =>
+//            val r = kv._2
+//            r.time >= DateTime.now() - 6.second
+//        }
+//
+//        val measuringList = MonitorType.map(mt).measuringBy.get
+//        val instrumentIdOpt = measuringList.find { instrumentId => filteredRecordMap.contains(instrumentId) }
+//        instrumentIdOpt map {
+//          mt -> filteredRecordMap(_)
+//        }
+//      }
+//
+//      context become handler(instrumentMap, collectorInstrumentMap, latestDataMap, mtDataList)
 
-        val measuringList = MonitorType.map(mt).measuringBy.get
-        val instrumentIdOpt = measuringList.find { instrumentId => filteredRecordMap.contains(instrumentId) }
-        instrumentIdOpt map {
-          mt -> filteredRecordMap(_)
-        }
-      }
-
-      context become handler(instrumentMap, collectorInstrumentMap, latestDataMap, mtDataList)
-
-      sender ! latestMap
+      sender ! Map.empty[MonitorType.Value, Record]
   }
 
   override def postStop(): Unit = {

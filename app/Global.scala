@@ -13,8 +13,9 @@ object Global extends GlobalSettings {
     MongoDB.init()
     DataCollectManager.startup
     
-    import com.wecc.CdxReceiver
-    //CdxReceiver.startup
+    CdxReceiver.startup
+    //CdxReceiver.getInboxFiles
+    CdxReceiver.parseXML
   }
 
   override def onStop(app: Application) {

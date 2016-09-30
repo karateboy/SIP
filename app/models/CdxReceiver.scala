@@ -77,8 +77,8 @@ class CdxReceiver extends Actor with ActorLogging {
           os.close()
         }
       }
-      
-      def removeFileFromServer(fileName:String)={
+
+      def removeFileFromServer(fileName: String) = {
         val resultHolder = new Holder[Integer]
         val errMsgHolder = new Holder("")
         val successHolder = new Holder[java.lang.Boolean]
@@ -98,14 +98,14 @@ class CdxReceiver extends Actor with ActorLogging {
 
       Logger.info(s"#=${fileList.size()}")
       for (idx <- 0 to fileList.size() - 1) {
-        val fileName =fileList.get(idx) 
+        val fileName = fileList.get(idx)
         Logger.debug(s"get ${fileList.get(idx)}")
         getFile(fileName)
-        if(fileName.startsWith("AQX")){
-          val file = new java.io.File(s"$path$fileName") 
+        if (fileName.startsWith("AQX")) {
+          val file = new java.io.File(s"$path$fileName")
           parser(file)
-          backupFile(fileName)          
-        }else{
+          backupFile(fileName)
+        } else {
           import java.nio.file._
           Files.deleteIfExists(Paths.get(s"$path$fileName"))
         }
@@ -138,11 +138,18 @@ class CdxReceiver extends Actor with ActorLogging {
           val monitorType = MonitorType.getMonitorTypeValueByName(desp.text.trim(), unit.text.trim())
           val timeMap = recordMap.getOrElseUpdate(monitor, Map.empty[DateTime, Map[MonitorType.Value, (Double, String)]])
           val mtMap = timeMap.getOrElseUpdate(mDate, Map.empty[MonitorType.Value, (Double, String)])
-          mtMap.put(monitorType, (value.text.toDouble, status.text.trim))
+          val mtValue = try {
+            value.text.toDouble
+          } catch {
+            case _: NumberFormatException =>
+              0.0
+          }
+
+          mtMap.put(monitorType, (mtValue, status.text.trim))
         }
       } catch {
         case ex: Throwable =>
-          Logger.info("skip Invalid record")
+          Logger.info("skip Invalid record", ex)
       }
     }
 
@@ -165,9 +172,8 @@ class CdxReceiver extends Actor with ActorLogging {
       monitorMap <- recordMap
       monitor = monitorMap._1
       timeMaps = monitorMap._2
-      timeMap <- timeMaps
-      dateTime = timeMap._1
-      mtMaps = timeMap._2
+      dateTime = timeMaps.keys.toList.sorted.last
+      mtMaps = timeMaps(dateTime)
     } {
       if (!mtMaps.isEmpty)
         Record.upsertRecord(Record.toDocument(monitor, dateTime, mtMaps.toList))(Record.HourCollection)
@@ -180,14 +186,29 @@ class CdxReceiver extends Actor with ActorLogging {
 
     def listAllFiles = {
       import java.io.FileFilter
-
       new java.io.File(dir).listFiles.filter(_.getName.endsWith(".xml"))
+    }
+
+    def backupFile(fileName: String) = {
+      import java.nio.file._
+      val srcPath = Paths.get(s"$path$fileName")
+      val destPath = Paths.get(s"${path}backup/${fileName}")
+      try {
+        Files.move(srcPath, destPath, StandardCopyOption.REPLACE_EXISTING)
+      } catch {
+        case ex: Throwable =>
+          Logger.error("backup failed", ex)
+      }
     }
 
     val files = listAllFiles
     for (f <- files) {
-      parser(f)
-      //f.delete()
+      if (f.getName.startsWith("AQX")) {
+        parser(f)
+        backupFile(f.getName)
+      } else {
+        f.delete()
+      }
     }
   }
 

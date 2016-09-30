@@ -1,8 +1,8 @@
 @* monthlyReport Template File *@
 @import com.github.nscala_time.time.Imports._
 @import MonitorStatus._
-@(reportDate:DateTime, mTypes:List[MonitorType.Value], mtTimeStatMap: Map[MonitorType.Value, Map[DateTime, Stat]], statMap: Map[MonitorType.Value, Stat])
-<h3>監測年報表</h3>
+@(monitor:Monitor.Value, reportDate:DateTime, mTypes:List[MonitorType.Value], mtTimeStatMap: Map[MonitorType.Value, Map[DateTime, Stat]], statMap: Map[MonitorType.Value, Stat])
+<h3>@(Monitor.map(monitor).indParkName + Monitor.map(monitor).dp_no)監測年報表</h3>
 <h4>日期:@reportDate.toString("yyyy年")</h4>
 @reportLegend("")
 <table id="reportTable" class="table table-bordered" cellspacing="0" width="100%">

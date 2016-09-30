@@ -14,8 +14,8 @@ object Global extends GlobalSettings {
     DataCollectManager.startup
     
     CdxReceiver.startup
-    CdxReceiver.getInboxFiles
-    //CdxReceiver.parseXML
+    //CdxReceiver.getInboxFiles
+    CdxReceiver.parseXML
   }
 
   override def onStop(app: Application) {

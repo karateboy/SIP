@@ -17,7 +17,7 @@ import models._
 
 object Application extends Controller {
 
-  val title = "資料擷取器"
+  val title = "特殊性工業區監測系統"
 
   def index = Security.Authenticated {
     implicit request =>
@@ -36,6 +36,11 @@ object Application extends Controller {
     Ok(s"匯入 $path")
   }
 
+  def parseXML = Security.Authenticated {
+    CdxReceiver.parseXML
+    Ok(s"parse XML $path")
+  }
+  
   def userManagement() = Security.Authenticated {
     implicit request =>
       val userInfoOpt = Security.getUserinfo(request)

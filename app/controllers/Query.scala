@@ -98,7 +98,7 @@ object Query extends Controller {
     count
   }
 
-  def getPeriodReportMap(monitor:Monitor.Value, mt: MonitorType.Value, tabType: TableType.Value, period: Period,
+  def getPeriodReportMap(monitor: Monitor.Value, mt: MonitorType.Value, tabType: TableType.Value, period: Period,
                          statusFilter: MonitorStatusFilter.Value = MonitorStatusFilter.ValidData)(start: DateTime, end: DateTime) = {
     val recordList = Record.getRecordMap(TableType.mapCollection(tabType))(List(mt), monitor, start, end)(mt)
     def periodSlice(period_start: DateTime, period_end: DateTime) = {
@@ -217,19 +217,23 @@ object Query extends Controller {
 
     def getSeries() = {
 
-      val mtReportPairs =
+      val monitorReportPairs =
         for {
-          monitor<-monitors
-          mt <- monitorTypes
-          reportMap = getPeriodReportMap(monitor, mt, tabType, period, statusFilter)(start, end)
+          monitor <- monitors
         } yield {
-          mt -> reportMap
+          val pair =
+            for {
+              mt <- monitorTypes
+              reportMap = getPeriodReportMap(monitor, mt, tabType, period, statusFilter)(start, end)
+            } yield mt -> reportMap
+          monitor -> pair.toMap
         }
 
-      val mtReportMap = Map(mtReportPairs: _*)
+      val monitorReportMap = monitorReportPairs.toMap
       for {
+        m <- monitors
         mt <- monitorTypes
-        valueMap = mtReportMap(mt)
+        valueMap = monitorReportMap(m)(mt)
         timeData = timeSeq.map { time =>
 
           if (valueMap.contains(time))
@@ -240,11 +244,11 @@ object Query extends Controller {
       } yield {
         if (monitorTypes.length > 1 && monitorTypes.contains(windMtv)) {
           if (mt != windMtv)
-            seqData(MonitorType.map(mt).desp, timeData)
+            seqData(s"${Monitor.map(m).dp_no}_${MonitorType.map(mt).desp}", timeData)
           else
-            seqData(MonitorType.map(mt).desp, timeData, 1, Some("scatter"))
+            seqData(s"${Monitor.map(m).dp_no}_${MonitorType.map(mt).desp}", timeData, 1, Some("scatter"))
         } else {
-          seqData(MonitorType.map(mt).desp, timeData)
+          seqData(s"${Monitor.map(m).dp_no}_${MonitorType.map(mt).desp}", timeData)
         }
       }
     }
@@ -359,7 +363,7 @@ object Query extends Controller {
                         startStr: String, endStr: String, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       import scala.collection.JavaConverters._
-      val monitorStrArray = monitorStr.split(':')
+      val monitorStrArray = java.net.URLDecoder.decode(monitorStr, "UTF-8").split(':')
       val monitors = monitorStrArray.map { Monitor.withName }
 
       val monitorTypeStrArray = monitorTypeStr.split(':')
@@ -454,7 +458,7 @@ object Query extends Controller {
     Ok(views.html.alarm())
   }
 
-  def alarmReport(level:Int, startStr: String, endStr: String) = Security.Authenticated {
+  def alarmReport(level: Int, startStr: String, endStr: String) = Security.Authenticated {
     val (start, end) =
       (DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd")),
         DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd")) + 1.day)
@@ -462,12 +466,11 @@ object Query extends Controller {
     Ok(views.html.alarmReport(start, end, report))
   }
 
-
   def manualAudit() = Security.Authenticated {
     Ok(views.html.manualAudit(""))
   }
 
-  def recordList(mStr:String, mtStr: String, startLong: Long, endLong: Long) = Security.Authenticated {
+  def recordList(mStr: String, mtStr: String, startLong: Long, endLong: Long) = Security.Authenticated {
     val monitor = Monitor.withName(mStr)
     val monitorType = MonitorType.withName(mtStr)
 
@@ -479,7 +482,7 @@ object Query extends Controller {
 
   case class ManualAuditParam(reason: String, updateList: Seq[UpdateRecordParam])
   case class UpdateRecordParam(time: Long, status: String)
-  def updateRecord(monitorStr:String, monitorTypeStr: String) = Security.Authenticated(BodyParsers.parse.json) {
+  def updateRecord(monitorStr: String, monitorTypeStr: String) = Security.Authenticated(BodyParsers.parse.json) {
     implicit request =>
       val user = request.user
       implicit val read = Json.reads[UpdateRecordParam]
@@ -524,7 +527,6 @@ object Query extends Controller {
 
     resultF
   }
-
 
   //
   //  def windRose() = Security.Authenticated {

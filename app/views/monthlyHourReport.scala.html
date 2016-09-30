@@ -2,9 +2,9 @@
 @import controllers.Report._
 @import com.github.nscala_time.time.Imports._
 @import MonitorStatus._
-@(mt:MonitorType.Value, reportDate:DateTime, timeMap: Map[DateTime, Record], hourStatMap: Map[Int, Stat], dayStatMap: Map[DateTime, Stat], overallStat:Stat)
+@(monitor:Monitor.Value, mt:MonitorType.Value, reportDate:DateTime, timeMap: Map[DateTime, Record], hourStatMap: Map[Int, Stat], dayStatMap: Map[DateTime, Stat], overallStat:Stat)
 
-<h3>監測月分時報表</h3>
+<h3>@(Monitor.map(monitor).indParkName + Monitor.map(monitor).dp_no)@(MonitorType.map(mt).desp)監測月分時報表 </h3>
 <h4>日期:@reportDate.toString("yyyy年MM月")</h4>
 @recordLegend()
 <table id="reportTable" class="table" cellspacing="0" width="100%">

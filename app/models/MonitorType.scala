@@ -27,8 +27,8 @@ object MonitorType extends Enumeration {
   val collection = MongoDB.database.getCollection(colName)
   val defaultMonitorTypes = List()
 
-  lazy val WIN_SPEED = MonitorType.withName("WD_SPEED")
-  lazy val WIN_DIRECTION = MonitorType.withName("WD_DIR")
+  lazy val WIN_SPEED = MonitorType.withName("風速")
+  lazy val WIN_DIRECTION = MonitorType.withName("風向")
   def init(colNames: Seq[String]) = {
     def insertMt = {
       val f = collection.insertMany(defaultMonitorTypes.map { toDocument }).toFuture()

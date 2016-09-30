@@ -12,8 +12,13 @@
 	            			<div class="col-lg-11">
 	            				<div class="btn-group" data-toggle="buttons">	            				
 	            				@for(indPark<-Monitor.indParkSet){
-	            					<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="indPark" id="@indPark">@indPark</label>
+	            					@if(indPark == Monitor.indParkSet.head){
+	            						<label class="btn btn-outline btn-primary dim active">
+										<input type="radio" name="indPark" id="@indPark" checked>@indPark</label>
+	            					}else{
+	            						<label class="btn btn-outline btn-primary dim">
+										<input type="radio" name="indPark" id="@indPark">@indPark</label>
+	            					}
 	            				}
 	            				</div>
 	            			</div>	            			            		
@@ -22,14 +27,9 @@
 	            			<label class="col-lg-1 control-label">測站</label>
 	            			<div class="col-lg-11">
 	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(m<-Monitor.mvList){
-	            					@if(m == Monitor.mvList.head){
-	            						<label class="btn btn-outline btn-primary dim active">
-										<input type="radio" name="monitor" id="@m" checked>@Monitor.map(m).dp_no</label>	
-	            					}else{
-	            						<label class="btn btn-outline btn-primary dim">
-										<input type="radio" name="monitor" id="@m">@Monitor.map(m).dp_no</label>
-	            					}	            					
+	            				@for(m<-Monitor.mvList){	            					
+	            					<label class="btn btn-outline btn-primary dim">
+									<input type="radio" name="monitor" id="@m" indPark="@Monitor.map(m).indParkName">@Monitor.map(m).dp_no</label>	            					
 	            				}
 	            				</div>
 	            			</div>	            			            		
@@ -54,7 +54,7 @@
 	            			<label class="col-lg-1 control-label">資料來源</label>						
 	            			<div class="col-lg-11 btn-group" data-toggle="buttons">
            						@for(tt<-TableType.values.toList.sorted){
-           							@if(tt == TableType.values.toList.sorted.last){
+           							@if(tt == TableType.values.toList.sorted.head){
            								<label class="btn btn-outline btn-primary dim active">
 										<input type="radio" name="tableType" id="@tt" checked>@TableType.map(tt)</label>
            							}else{
@@ -110,12 +110,34 @@ $( document ).ready(function() {
     $("#reportEnd").on("dp.change", function (e) {
         $('#reportStart').data("DateTimePicker").maxDate(e.date);
     });
-	
+
+    $("input[name='indPark']").change(function(){
+		var me = $(this)
+		var indPark = me.attr('id');
+		var $monitors = $("input[name='monitor']");
+		for(var i=0;i<$monitors.length;i++){
+			var $m = $monitors.eq(i);
+			$m.prop('checked', false);
+			$m.parent().removeClass("active");
+
+			if($m.attr("indPark") == indPark){
+				$m.prop('disabled', false);
+				$m.parent().removeClass("disabled");
+				//$m.parent().removeClass("invisible");					
+			}else{
+				$m.prop('disabled', true);
+				$m.parent().addClass("disabled");
+				//$m.parent().addClass("invisible");
+			}
+		} 
+	});
+
+    $("input[name='indPark']").change();
+    
 	var monitor, monitorTypes, reportStart, reportEnd;
 	
 	function validate(){
 		monitor = $("input[name='monitor']:checked").attr('id');
-		console.log(monitor);
 		if(!monitor){
 			alert('請選擇測站');
 			return false;
@@ -160,7 +182,6 @@ $( document ).ready(function() {
 		var tabType = $("input[name='tableType']:checked").attr('id');
 		var base_url = 	encodeURIComponent(monitor) + "/" + encodeURIComponent(monitorTypeParam) + "/" + tabType + "/" + reportStart + "/" + reportEnd;
 		var url = "/HistoryReport/" + base_url; 
-		console.log(url);
 		
 		$.ajax({
 			url : url,

@@ -68,6 +68,7 @@ PUT		/Record/:monitor/:monitorType					controllers.Query.updateRecord(monitor, m
 
 #import Data
 GET		/importEpaXLS			controllers.Application.importEpa103
+GET		/parseXML				controllers.Application.parseXML
 
 # websockets
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket

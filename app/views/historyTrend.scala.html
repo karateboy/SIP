@@ -7,6 +7,33 @@
                 </div>
             	<div class="panel-body panel-collapse in" id="reportParam">
             		<form class="form-horizontal">
+            			<div class="form-group">
+	            			<label class="col-lg-1 control-label">工業區</label>
+	            			<div class="col-lg-11">
+	            				<div class="btn-group" data-toggle="buttons">	            				
+	            				@for(indPark<-Monitor.indParkSet){
+	            					@if(indPark == Monitor.indParkSet.head){
+	            						<label class="btn btn-outline btn-primary dim active">
+										<input type="radio" name="indPark" id="@indPark" checked>@indPark</label>
+	            					}else{
+	            						<label class="btn btn-outline btn-primary dim">
+										<input type="radio" name="indPark" id="@indPark">@indPark</label>
+	            					}
+	            				}
+	            				</div>
+	            			</div>	            			            		
+	                    </div>
+	                    <div class="form-group">
+	            			<label class="col-lg-1 control-label">測站</label>
+	            			<div class="col-lg-11">
+	            				<div class="btn-group" data-toggle="buttons">	            				
+	            				@for(m<-Monitor.mvList){	            					
+	            					<label class="btn btn-outline btn-primary dim">
+									<input type="checkbox" name="monitor" id="@m" indPark="@Monitor.map(m).indParkName">@Monitor.map(m).dp_no</label>	            					
+	            				}
+	            				</div>
+	            			</div>	            			            		
+	                    </div>
 	                    <div class="form-group">
 	            			<label class="col-lg-1 control-label">測項</label>
 	            			<div class="col-lg-11">	            				
@@ -156,10 +183,37 @@ $( document ).ready(function() {
 			$('#reportEnd').data("DateTimePicker").daysOfWeekDisabled([]);			
 		}
 	});
+
+    $("input[name='indPark']").change(function(){
+		var me = $(this)
+		var indPark = me.attr('id');
+		var $monitors = $("input[name='monitor']");
+		for(var i=0;i<$monitors.length;i++){
+			var $m = $monitors.eq(i);
+			$m.prop('checked', false);
+			$m.parent().removeClass("active");
+
+			if($m.attr("indPark") == indPark){
+				$m.prop('disabled', false);
+				$m.parent().removeClass("disabled");					
+			}else{
+				$m.prop('disabled', true);
+				$m.parent().addClass("disabled");
+			}
+		} 
+	});
+
+    $("input[name='indPark']").change();
 	
-	var monitorTypes, reportUnit, reportStart, reportEnd, chartType;
+	var monitors, monitorTypes, reportUnit, reportStart, reportEnd, chartType;
 	
-	function validate(){		
+	function validate(){
+		monitors = $("input[name='monitor']:checked");
+		if (monitors.length == 0) {
+			alert("請選擇測站");
+			return false;
+		}
+				
 		monitorTypes = $("input[name='monitorType']:checked");
 		if(monitorTypes.length == 0) {
 			alert('請選擇測項');
@@ -195,6 +249,14 @@ $( document ).ready(function() {
 			
 		$('#reportDiv').html('');
 		$("body").css("cursor", "progress");
+
+		var monitorParam='';
+		for (var i = 0; i < monitors.length; i++) {
+			if(monitorParam=='')
+				monitorParam = monitors[i].id;
+			else
+				monitorParam += ':' + monitors[i].id;
+		}	
 		
 		var monitorTypeParam='';
 		for (var i = 0; i < monitorTypes.length; i++) {
@@ -210,7 +272,7 @@ $( document ).ready(function() {
 			return false;
 		}
 		
-		var base_url = 	monitorTypeParam + "/" + reportUnit + "/" + monitorStatusFilter + "/" + reportStart + "/" + reportEnd;
+		var base_url = 	encodeURIComponent(monitorParam) + "/" + encodeURIComponent(monitorTypeParam) + "/" + reportUnit + "/" + monitorStatusFilter + "/" + reportStart + "/" + reportEnd;
 		var url = "/JSON/HistoryTrend/" + base_url; 
 		function pointFormatter(){
 			var d = new Date(this.x);

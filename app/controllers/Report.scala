@@ -82,7 +82,7 @@ object Report extends Controller {
 
   def getMonitorReport(monitorStr:String, reportTypeStr: String, startDateStr: String, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
-      val monitor = Monitor.withName(monitorStr)
+      val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
       val reportType = PeriodReport.withName(reportTypeStr)
       val start = DateTime.parse(startDateStr)
       val outputType = OutputType.withName(outputTypeStr)
@@ -99,19 +99,19 @@ object Report extends Controller {
               }
               val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(start, start + 1.day)
 
-              ("日報", views.html.dailyReport(start, MonitorType.activeMtvList, mtTimeMap, statMap))
+              ("日報", views.html.dailyReport(monitor, start, MonitorType.activeMtvList, mtTimeMap, statMap))
 
             case PeriodReport.MonthlyReport =>
               val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, start, start + 1.month)
               val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(start, start + 1.month)
               val overallStatMap = getOverallStatMap(statMap)
-              ("月報", views.html.monthlyReport(start, MonitorType.activeMtvList, statMap, overallStatMap))
+              ("月報", views.html.monthlyReport(monitor, start, MonitorType.activeMtvList, statMap, overallStatMap))
 
             case PeriodReport.YearlyReport =>
               val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, start, start + 1.year)
               val statMap = Query.getPeriodStatReportMap(periodMap, 1.month)(start, start + 1.year)
               val overallStatMap = getOverallStatMap(statMap)
-              ("年報", views.html.yearlyReport(start, MonitorType.activeMtvList, statMap, overallStatMap))
+              ("年報", views.html.yearlyReport(monitor, start, MonitorType.activeMtvList, statMap, overallStatMap))
 
             //case PeriodReport.MonthlyReport =>
             //val nDays = monthlyReport.typeArray(0).dataList.length
@@ -156,8 +156,8 @@ object Report extends Controller {
   }
 
   def monthlyHourReport(monitorStr:String, monitorTypeStr: String, startDateStr: String, outputTypeStr: String) = Security.Authenticated {
-    val monitor = Monitor.withName(monitorStr)
-    val mt = MonitorType.withName(monitorTypeStr)
+    val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
+    val mt = MonitorType.withName(java.net.URLDecoder.decode(monitorTypeStr, "UTF-8"))
     val start = DateTime.parse(startDateStr)
     val outputType = OutputType.withName(outputTypeStr)
     val title = "月份時報表"
@@ -208,7 +208,7 @@ object Report extends Controller {
       val hourStatMap = Map(hourValues: _*)
       val dayStatMap = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)
       val overallStat = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)(mt)(start)
-      Ok(views.html.monthlyHourReport(mt, start, timeMap, hourStatMap, dayStatMap(mt), overallStat))
+      Ok(views.html.monthlyHourReport(monitor, mt, start, timeMap, hourStatMap, dayStatMap(mt), overallStat))
     } else {
       import java.io.File
       import java.nio.file.Files

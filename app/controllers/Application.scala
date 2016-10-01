@@ -140,6 +140,15 @@ object Application extends Controller {
     val mtList = MonitorType.mtvList.map { mt => MonitorType.map(mt) }
     Ok(Json.toJson(mtList))
   }
+  
+  def monitorList = Security.Authenticated {
+    val mList = Monitor.mvList map {Monitor.map}
+    Ok(Json.toJson(mList))
+  }
+
+  def indParkList = Security.Authenticated {
+    Ok(Json.toJson(Monitor.indParkSet))
+  }
 
   def upsertMonitorType(id: String) = Security.Authenticated(BodyParsers.parse.json) {
     Logger.info(s"upsert Mt:$id")
@@ -169,4 +178,8 @@ object Application extends Controller {
     }
     Ok(Json.obj("ok" -> true))
   }  
+  
+  def auditConfig = Security.Authenticated {
+    Ok(views.html.auditConfig())
+  }
 }

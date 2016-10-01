@@ -471,8 +471,8 @@ object Query extends Controller {
   }
 
   def recordList(mStr: String, mtStr: String, startLong: Long, endLong: Long) = Security.Authenticated {
-    val monitor = Monitor.withName(mStr)
-    val monitorType = MonitorType.withName(mtStr)
+    val monitor = Monitor.withName(java.net.URLDecoder.decode(mStr, "UTF-8"))
+    val monitorType = MonitorType.withName(java.net.URLDecoder.decode(mtStr, "UTF-8"))
 
     val (start, end) = (new DateTime(startLong), new DateTime(endLong))
 
@@ -489,8 +489,8 @@ object Query extends Controller {
       implicit val maParamRead = Json.reads[ManualAuditParam]
       val result = request.body.validate[ManualAuditParam]
 
-      val monitor = Monitor.withName(monitorStr)
-      val monitorType = MonitorType.withName(monitorTypeStr)
+      val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
+      val monitorType = MonitorType.withName(java.net.URLDecoder.decode(monitorTypeStr, "UTF-8"))
 
       result.fold(err => {
         Logger.error(JsError.toJson(err).toString())

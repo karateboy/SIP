@@ -59,8 +59,12 @@ GET		/MonitorType			controllers.Application.monitorTypeList
 POST	/MonitorType/:id		controllers.Application.upsertMonitorType(id)
 PUT		/MonitorType/:id		controllers.Application.upsertMonitorType(id)
 
+GET		/Monitor				controllers.Application.monitorList
+GET		/IndPark				controllers.Application.indParkList
+
 GET		/Record/:monitor/:monitorType/:start/:end		controllers.Query.recordList(monitor, monitorType, start:Long, end:Long)
 PUT		/Record/:monitor/:monitorType					controllers.Query.updateRecord(monitor, monitorType)
+GET		/AuditConfig			controllers.Application.auditConfig
 
 #GET		/WindRose				controllers.Query.windRose
 #GET		/MonitorTypeRose		controllers.Query.monitorTypeRose

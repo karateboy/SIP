@@ -76,31 +76,23 @@ object Record {
     f
   }
 
-  import org.mongodb.scala.model.Filters._
   def upsertRecord(doc: Document)(colName: String) = {
     import org.mongodb.scala.model.UpdateOptions
     import org.mongodb.scala.bson.BsonString
+    import org.mongodb.scala.bson._
+    import org.mongodb.scala.model.Filters._
+    import org.mongodb.scala.model.Updates._
+
     val col = MongoDB.database.getCollection(colName)
 
-    val findFuture = col.find(equal("_id", doc("_id"))).toFuture()
-    findFuture.onFailure(errorHandler)
-    findFuture.onSuccess({
-      case docs =>
-        if (docs.isEmpty) {
-          val f = col.insertOne(doc).toFuture()
-          f.onFailure(errorHandler)
-        } else {
-          val originalDoc = docs.head
-          val newDoc = originalDoc ++ doc
+    val updateList = doc.toList.map(kv=>set(kv._1, kv._2))
 
-          val f = col.replaceOne(equal("_id", doc("_id")), newDoc, UpdateOptions().upsert(true)).toFuture()
-          f.onFailure(errorHandler)
-        }
-    })
+    val f = col.updateOne(equal("_id", doc("_id")), combine(updateList:_*), UpdateOptions().upsert(true)).toFuture()
+    f.onFailure(errorHandler)
 
-    findFuture
+    f
   }
-
+  
   def updateRecordStatus(monitor: Monitor.Value, dt: Long, mt: MonitorType.Value, status: String)(colName: String) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._

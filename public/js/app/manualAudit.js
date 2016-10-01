@@ -11,17 +11,31 @@ angular
 				id : '@_id'
 			});
 		} ])
+		.factory('MonitorService', [ '$resource', function($resource) {
+			return $resource('/Monitor/:id', {
+				id : '@_id'
+			});
+		} ])
+		.factory('IndParkService', [ '$resource', function($resource) {
+			return $resource('/IndPark/:id', {
+				id : '@_id'
+			});
+		} ])
 		.controller(
 				'manualAuditCtrl',
 				[
 						'MonitorTypeService',
+						'MonitorService',
+						'IndParkService',
 						'$scope',
 						'$http',
-						function($monitorType, $scope, $http) {
+						function($monitorType, $monitor, $indPark, $scope, $http) {
 							var self = this;
 							self.monitorTypeList = $monitorType.query();
-							self.activeMt = function(mt) {
-								return (mt.measuringBy || mt.measuredBy)
+							self.monitorList = $monitor.query();
+							self.indParkList = $indPark.query();
+							self.indParkMonitor = function(m) {
+								return (m.indParkName == $scope.selectedIndPark)
 							}
 
 							self.dateRangeStart = moment(23, "HH").subtract(2,
@@ -55,7 +69,9 @@ angular
 								}
 							}
 
+							$scope.selectedMonitorId;
 							$scope.selectedMtId;
+							$scope.selectedIndPark="";
 							function getSelectedMt() {
 								for (var i = 0; i < self.monitorTypeList.length; i++) {
 									if (self.monitorTypeList[i]._id == $scope.selectedMtId)
@@ -114,7 +130,7 @@ angular
 							$scope.recordList = [];
 
 							self.query = function() {
-								var url = "/Record/" + $scope.selectedMtId
+								var url = "/Record/" + encodeURIComponent($scope.selectedMonitorId) + "/" + encodeURIComponent($scope.selectedMtId)
 										+ "/" + self.dateRangeStart.valueOf()
 										+ "/" + self.dateRangeEnd.valueOf();
 
@@ -156,7 +172,7 @@ angular
 									updateList: updateList
 								};
 								
-								var url = "/Record/" + $scope.selectedMtId;
+								var url = "/Record/" + encodeURIComponent($scope.selectedMonitorId) + "/" + encodeURIComponent($scope.selectedMtId);
 								$http.put(url, auditParam).then(function(resp){
 									if(resp.data.ok){
 										//reload...

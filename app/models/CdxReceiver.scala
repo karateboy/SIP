@@ -172,7 +172,7 @@ class CdxReceiver extends Actor with ActorLogging {
       monitorMap <- recordMap
       monitor = monitorMap._1
       timeMaps = monitorMap._2
-      dateTime = timeMaps.keys.toList.sorted.last
+      dateTime <- timeMaps.keys.toList.sorted
       mtMaps = timeMaps(dateTime)
     } {
       if (!mtMaps.isEmpty)

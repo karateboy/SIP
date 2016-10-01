@@ -77,6 +77,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "系統管理>測項管理";
 			} ]
 		}
+	}).when('/AuditConfig', {
+		templateUrl : "/AuditConfig",
+		resolve : {
+			breadcrumb : [ 'BreadcrumbService', function(bs) {
+				return bs.title = "系統管理>資料檢核設定";
+			} ]
+		}
 	}).when('/ManualAudit', {
 		templateUrl : "/ManualAudit",
 		resolve : {

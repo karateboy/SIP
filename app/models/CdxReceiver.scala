@@ -2,20 +2,34 @@ package models
 
 import akka.actor.{ Actor, ActorLogging, Props, ActorRef }
 import javax.xml.ws.Holder
-import com.github.nscala_time.time.Imports._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api._
 import akka.actor.actorRef2Scala
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object CdxReceiver {
   val props = Props[CdxReceiver]
   case object GetInBoxFiles
   case object ParseXML
 
+  import com.typesafe.config.ConfigFactory
+  val cdxConfig = ConfigFactory.load("cdx")
+  val enable = cdxConfig.getBoolean("enable")
+  val account = cdxConfig.getString("account")
+  val password = cdxConfig.getString("password")
+
   var receiver: ActorRef = _
   def startup() = {
     receiver = Akka.system.actorOf(props, name = "cdxReceiver")
+    Logger.info(s"CDX receiver is $enable")
+    if (enable) {
+      val timer = {
+        import scala.concurrent.duration._
+        Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(5, MINUTES), receiver, GetInBoxFiles)
+      }
+    }
+
   }
 
   def getInboxFiles = {
@@ -34,8 +48,8 @@ class CdxReceiver extends Actor with ActorLogging {
   def receive = {
     case GetInBoxFiles =>
       try {
-        getInBoxFileList("epbyljjliao", "Yx4M2KA4", "AQX_P_267")
-        getInBoxFileList("epbyljjliao", "Yx4M2KA4", "AQX_P_268")
+        getInBoxFileList(account, password, "AQX_P_267")
+        getInBoxFileList(account, password, "AQX_P_268")
         Logger.info("GetInBoxFiles done.")
       } catch {
         case ex: Throwable =>
@@ -44,6 +58,7 @@ class CdxReceiver extends Actor with ActorLogging {
     case ParseXML =>
       try {
         parseAllXml(path)(parser)
+        Logger.info("ParseXML done.")
       } catch {
         case ex: Throwable =>
           Logger.error("ParseXML failed", ex)

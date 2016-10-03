@@ -42,7 +42,8 @@ GET		/Recalculate/:start/:end	controllers.Application.recalculateHour(start, end
 
 #Realtime
 GET		/MonitorTypeStatusList		controllers.Realtime.MonitorTypeStatusList()
-GET		/RealtimeStatus			controllers.Realtime.realtimeStatus()
+GET		/RealtimeStatus				controllers.Realtime.realtimeStatus()
+GET		/RealtimeStatusContent		controllers.Realtime.realtimeStatusContent()
 
 #Report
 GET		/Report					controllers.Report.monitorReport()

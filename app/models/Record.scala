@@ -85,14 +85,14 @@ object Record {
 
     val col = MongoDB.database.getCollection(colName)
 
-    val updateList = doc.toList.map(kv=>set(kv._1, kv._2))
+    val updateList = doc.toList.map(kv => set(kv._1, kv._2))
 
-    val f = col.updateOne(equal("_id", doc("_id")), combine(updateList:_*), UpdateOptions().upsert(true)).toFuture()
+    val f = col.updateOne(equal("_id", doc("_id")), combine(updateList: _*), UpdateOptions().upsert(true)).toFuture()
     f.onFailure(errorHandler)
 
     f
   }
-  
+
   def updateRecordStatus(monitor: Monitor.Value, dt: Long, mt: MonitorType.Value, status: String)(colName: String) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._
@@ -118,9 +118,9 @@ object Record {
     import scala.concurrent.duration._
 
     val col = MongoDB.database.getCollection(colName)
-    val projFields = "monitor" :: "time" :: mtList.map { MonitorType.BFName(_)}
-    val proj = include(projFields : _*)
-    
+    val projFields = "monitor" :: "time" :: mtList.map { MonitorType.BFName(_) }
+    val proj = include(projFields: _*)
+
     val f = col.find(and(equal("monitor", monitor.toString), gte("time", startTime.toDate()), lt("time", endTime.toDate()))).projection(proj).sort(ascending("time")).toFuture()
     val docs = waitReadyResult(f)
 
@@ -189,6 +189,45 @@ object Record {
           }
         RecordList(time.getMillis, mtDataList)
       }
+    }
+  }
+
+  def getLatestRecordMapFuture(colName: String)(startTime: DateTime) = {
+    import org.mongodb.scala.bson._
+    import org.mongodb.scala.model.Filters._
+    import org.mongodb.scala.model.Projections._
+    import org.mongodb.scala.model.Sorts._
+    import scala.concurrent._
+    import scala.concurrent.duration._
+
+    val mtList = MonitorType.activeMtvList
+    val col = MongoDB.database.getCollection(colName)
+    val projFields = "monitor" :: "time" :: MonitorType.mtvList.map { MonitorType.BFName(_) }
+    val proj = include(projFields: _*)
+    val f = col.find(equal("time", startTime.toDate())).projection(proj).sort(ascending("time")).toFuture()
+
+    for {
+      docs <- f
+    } yield {
+      val mtPair =
+        for {
+          doc <- docs
+          monitor = Monitor.withName(doc("monitor").asString().getValue)
+        } yield {
+          val pair =
+            for {
+              mt <- MonitorType.mtvList
+              mtBFName = MonitorType.BFName(mt)
+              mtDocOpt = doc.get(mtBFName) if mtDocOpt.isDefined && mtDocOpt.get.isDocument()
+              mtDoc = mtDocOpt.get.asDocument()
+              v = mtDoc.get("v") if v.isDouble()
+              s = mtDoc.get("s") if s.isString()
+            } yield {
+              mt -> Record(monitor, startTime, v.asDouble().doubleValue(), s.asString().getValue)
+            }
+          monitor -> (pair.toMap)
+        }
+      mtPair.toMap
     }
   }
 }

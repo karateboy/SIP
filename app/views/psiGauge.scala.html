@@ -1,8 +1,10 @@
 @* psiGauge Template File *@
 @(param: Any)
+<div class="col-lg-3">
 <div class="ibox">
     <div class="ibox-content">
     	<div id="psiChart"></div>
+    </div>
     </div>
 </div>
 <script>
@@ -31,7 +33,7 @@ $(document).ready(function(){
 	        },
 
 	        title: {
-	            text: '即時PSI'
+	            text: '即時PSI (示意圖)'
 	        },
 	        pane: {
 	            startAngle: -150,

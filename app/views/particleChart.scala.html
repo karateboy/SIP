@@ -29,7 +29,7 @@ $(document).ready(function(){
 			href : 'http://www.wecc.com.tw/'
 		},
         title: {
-            text: '粒狀物分析',
+            text: '警報分析 (示意)',
             x: -50
         },
         plotOptions: {
@@ -52,11 +52,11 @@ $(document).ready(function(){
             enabled: false
         },
         series: [{
-            name: '粒狀物',
+            name: '警報',
             data: [
-                ['TSP',   69.9],
-                ['PM10',  30.9],
-                ['PM2.5', 10.6]
+                ['資訊',   69],
+                ['警告',  30],
+                ['嚴重', 10]
             ]
         }]
     });

@@ -57,11 +57,19 @@ object Realtime extends Controller {
       result
   }
 
-  def realtimeStatus() = Security.Authenticated {
+  def realtimeStatus = Security.Authenticated {
+    Ok(views.html.realtimeStatusA(""))
+  }
+  def realtimeStatusContent() = Security.Authenticated.async {
     implicit request =>
       import MonitorType._
       val user = request.user
       val userProfileOpt = User.getUserByEmail(user.id)
-      Ok(views.html.realtimeStatus(""))
+      val lastHour = (DateTime.now - 1.hour).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0)
+      val latestRecordMap = Record.getLatestRecordMapFuture(Record.HourCollection)(lastHour)
+
+      for (map <- latestRecordMap) yield {
+        Ok(views.html.realtimeStatus(map))
+      }
   }
 }

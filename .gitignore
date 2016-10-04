@@ -22,5 +22,6 @@ server.pid
 /.sbtserver
 /conf/application.conf
 /conf/server.conf
+/conf/cdx.conf
 /node_modules
 .idea

@@ -1,5 +1,6 @@
 @* realtimeStatus Template File *@
-@(recordMap: Map[Monitor.Value, Map[MonitorType.Value, Record]])
+@import com.github.nscala_time.time.Imports._
+@(recordMap: Map[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])])
 <div class="row">
 <div class="ibox">
     <div class="ibox-content">
@@ -9,6 +10,7 @@
 					<tr>
 						<th>工業區</th>
 						<th>測站</th>
+						<th>資料時間</th>
 						@for(mt <- MonitorType.mtvList){
 							<th>@MonitorType.map(mt).desp</th>
 						}
@@ -19,9 +21,17 @@
 						<tr>
 							<th>@Monitor.map(m).indParkName</th>
 							<th>@Monitor.map(m).dp_no</th>
-							@for(mt <- MonitorType.mtvList){								
-								<td class="@MonitorType.getCssClassStr(mt, recordMap.getOrElse(m, Map.empty[MonitorType.Value, Record]).get(mt))">
-									@Html(MonitorType.formatRecord(mt, recordMap.getOrElse(m, Map.empty[MonitorType.Value, Record]).get(mt)))</td>
+							@if(!recordMap.contains(m)){
+								<th>-</th>
+								@for(mt <- MonitorType.mtvList){
+									<td>-</td>
+								}
+							}else{
+								<th>@recordMap(m)._1.toString("HH:mm")</th>
+								@for(mt <- MonitorType.mtvList){								
+								<td class="@MonitorType.getCssClassStr(mt, recordMap(m)._2.get(mt))">
+									@Html(MonitorType.formatRecord(mt, recordMap(m)._2.get(mt)))</td>
+								}
 							}
 						</tr>
 					}

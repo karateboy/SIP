@@ -65,8 +65,7 @@ object Realtime extends Controller {
       import MonitorType._
       val user = request.user
       val userProfileOpt = User.getUserByEmail(user.id)
-      val lastHour = (DateTime.now - 1.hour).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0)
-      val latestRecordMap = Record.getLatestRecordMapFuture(Record.HourCollection)(lastHour)
+      val latestRecordMap = Record.getLatestRecordMapFuture(Record.HourCollection)
 
       for (map <- latestRecordMap) yield {
         Ok(views.html.realtimeStatus(map))

@@ -111,7 +111,6 @@ class CdxReceiver extends Actor with ActorLogging {
         Files.move(srcPath, destPath, StandardCopyOption.REPLACE_EXISTING)
       }
 
-      Logger.info(s"#=${fileList.size()}")
       for (idx <- 0 to fileList.size() - 1) {
         val fileName = fileList.get(idx)
         Logger.debug(s"get ${fileList.get(idx)}")
@@ -126,7 +125,6 @@ class CdxReceiver extends Actor with ActorLogging {
         }
         removeFileFromServer(fileName)
       }
-      Logger.info("Done")
     }
   }
 
@@ -224,30 +222,6 @@ class CdxReceiver extends Actor with ActorLogging {
       } else {
         f.delete()
       }
-    }
-  }
-
-  def getXmlStr(hour: DateTime) = {
-    //    val xml = DbHelper.getXmlRecord(hour)
-    //
-    //    scala.xml.XML.save("temp.xml", xml, "UTF-8", true)
-    //
-    //    scala.io.Source.fromFile("temp.xml")("UTF-8").mkString
-  }
-
-  def upload(hour: DateTime, serviceId: String, user: String, password: String) = {
-    val xmlStr = getXmlStr(hour)
-    val fileName = s"${serviceId}_${hour.toString("MMdd")}${hour.getHourOfDay}_${user}.xml"
-    val errMsgHolder = new Holder("")
-    val resultHolder = new Holder(Integer.valueOf(0))
-    val unknownHolder = new Holder(new java.lang.Boolean(true))
-    //CdxWebService.service.putFile(user, password, fileName, xmlStr.getBytes("UTF-8"), errMsgHolder, resultHolder, unknownHolder)
-    if (resultHolder.value != 1) {
-      log.error(s"errMsg:${errMsgHolder.value}")
-      log.error(s"ret:${resultHolder.value.toString}")
-      log.error(s"unknown:${unknownHolder.value.toString}")
-    } else {
-      log.info(s"Success upload ${hour.toString}")
     }
   }
 }

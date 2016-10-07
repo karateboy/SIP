@@ -150,6 +150,11 @@ object Application extends Controller {
     Ok(Json.toJson(Monitor.indParkSet))
   }
 
+  def reportUnitList = Security.Authenticated {
+    implicit val ruWrite = Json.writes[ReportUnit]
+    Ok(Json.toJson(ReportUnit.values.map { ReportUnit.map}))
+  }
+  
   def upsertMonitorType(id: String) = Security.Authenticated(BodyParsers.parse.json) {
     Logger.info(s"upsert Mt:$id")
     implicit request =>

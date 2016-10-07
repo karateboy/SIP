@@ -359,8 +359,8 @@ object Query extends Controller {
     chart
   }
 
-  def historyTrendChart(monitorStr: String, monitorTypeStr: String, reportUnitStr: String, statusFilterStr: String,
-                        startStr: String, endStr: String, outputTypeStr: String) = Security.Authenticated {
+  def historyTrendChart(monitorStr: String, monitorTypeStr: String, reportUnitStr: String, 
+                        startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       import scala.collection.JavaConverters._
       val monitorStrArray = java.net.URLDecoder.decode(monitorStr, "UTF-8").split(':')
@@ -369,7 +369,7 @@ object Query extends Controller {
       val monitorTypeStrArray = monitorTypeStr.split(':')
       val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
       val reportUnit = ReportUnit.withName(reportUnitStr)
-      val statusFilter = MonitorStatusFilter.withName(statusFilterStr)
+      val statusFilter = MonitorStatusFilter.ValidData
       val (tabType, start, end) =
         if (reportUnit == ReportUnit.Hour || reportUnit == ReportUnit.Min || reportUnit == ReportUnit.TenMin) {
           val tab = if (reportUnit == ReportUnit.Hour)
@@ -377,14 +377,11 @@ object Query extends Controller {
           else
             TableType.min
 
-          (tab, DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")),
-            DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")))
+          (tab, new DateTime(startLong), new DateTime(endLong))
         } else if (reportUnit == ReportUnit.Day) {
-          (TableType.hour, DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd")),
-            DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd")))
+          (TableType.hour, new DateTime(startLong), new DateTime(endLong))
         } else {
-          (TableType.hour, DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-M")),
-            DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-M")))
+          (TableType.hour, new DateTime(startLong), new DateTime(endLong))
         }
 
       val outputType = OutputType.withName(outputTypeStr)
@@ -414,7 +411,7 @@ object Query extends Controller {
   }
 
   def historyReport(monitorStr: String, monitorTypeStr: String, tabTypeStr: String,
-                    startStr: String, endStr: String) = Security.Authenticated {
+                    startLong: Long, endLong: Long) = Security.Authenticated {
     implicit request =>
       import scala.collection.JavaConverters._
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
@@ -422,15 +419,7 @@ object Query extends Controller {
       val monitorTypeStrArray = monitorTypeStr.split(':')
       val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
       val tabType = TableType.withName(tabTypeStr)
-      val (start, end) =
-        if (tabType == TableType.hour) {
-          val orignal_start = DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
-          val orignal_end = DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
-
-          (orignal_start.withMinuteOfHour(0), orignal_end.withMinute(0) + 1.hour)
-        } else
-          (DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")),
-            DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")))
+      val (start, end) = (new DateTime(startLong), new DateTime(endLong))
 
       val timeList = tabType match {
         case TableType.hour =>

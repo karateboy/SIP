@@ -1,5 +1,5 @@
 @* trendReport Template File *@
-<div class="row">
+<div class="row" ng-controller="historyTrendCtrl as ctrl">
    	<div class="col-lg-12">
    			<div class="panel panel-primary">
             	<div class="panel-heading panel-title" >
@@ -10,112 +10,90 @@
             			<div class="form-group">
 	            			<label class="col-lg-1 control-label">工業區</label>
 	            			<div class="col-lg-11">
-	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(indPark<-Monitor.indParkSet){
-	            					@if(indPark == Monitor.indParkSet.head){
-	            						<label class="btn btn-outline btn-primary dim active">
-										<input type="radio" name="indPark" id="@indPark" checked>@indPark</label>
-	            					}else{
-	            						<label class="btn btn-outline btn-primary dim">
-										<input type="radio" name="indPark" id="@indPark">@indPark</label>
-	            					}
-	            				}
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedIndPark[park]" ng-repeat="park in ctrl.indParkList"  
+	            					uib-btn-checkbox>{{park}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-	                    <div class="form-group">
+            			<div class="form-group" ng-show="ctrl.selectedIndPark().length">
 	            			<label class="col-lg-1 control-label">測站</label>
 	            			<div class="col-lg-11">
-	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(m<-Monitor.mvList){	            					
-	            					<label class="btn btn-outline btn-primary dim">
-									<input type="checkbox" name="monitor" id="@m" indPark="@Monitor.map(m).indParkName">@Monitor.map(m).dp_no</label>	            					
-	            				}
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedMonitorId[m._id]" ng-repeat="m in ctrl.monitorList | filter:ctrl.indParkMonitor"  
+	            					uib-btn-checkbox>{{m.indParkName+"-"+m.dp_no}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-	                    <div class="form-group">
+            			<div class="form-group" ng-show="ctrl.selectedMonitorId().length">
 	            			<label class="col-lg-1 control-label">測項</label>
-	            			<div class="col-lg-11">	            				
-	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(mt<-MonitorType.activeMtvList){
-	            					@if(mt == MonitorType.activeMtvList.head){
-	            						<label class="btn btn-outline btn-primary dim active">
-										<input type="checkbox" name="monitorType" id="@mt" checked>@MonitorType.map(mt).desp</label>	
-	            					}else{
-	            						<label class="btn btn-outline btn-primary dim">
-										<input type="checkbox" name="monitorType" id="@mt">@MonitorType.map(mt).desp</label>
-	            					}	            					
-	            				}
+	            			<div class="col-lg-11">
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedMtId[mt._id]" ng-repeat="mt in ctrl.monitorTypeList"  
+	            					uib-btn-checkbox>{{mt.desp}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-	                    <div class="form-group">
-	            			<label class="col-lg-1 control-label">時間單位</label>						
-	            			<div class="col-lg-11 btn-group" data-toggle="buttons">
-           						@for(ru<-ReportUnit.values.toList.sorted){
-           							@if(ru == ReportUnit.Hour){
-           								<label class="btn btn-outline btn-primary dim active">
-											<input type="radio" name="reportUnit" id="@ru" checked>@ReportUnit.map(ru)</label>
-           							}else{
-        	   							<label class="btn btn-outline btn-primary dim">
-											<input type="radio" name="reportUnit" id="@ru">@ReportUnit.map(ru)</label>
-           							}
-           						}
-	            			</div>            		
+	                    <div class="form-group" ng-show="ctrl.selectedMtId().length">
+	            			<label class="col-lg-1 control-label">時間單位</label>	
+	            			<div class="col-lg-11">
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedReportUnit" ng-repeat="reportUnit in ctrl.reportUnitList"  
+	            					uib-btn-radio='reportUnit.id'>{{reportUnit.name}}</label>	            			
+	            				</div>
+	            			</div>
 	                    </div>
-	                    <div class="form-group">
-	            			<label class="col-lg-1 control-label">狀態碼</label>						
-	            			<div class="col-lg-11 btn-group" data-toggle="buttons">
-           						@for(msf<-MonitorStatusFilter.values.toList.sorted){ 
-           							@if(msf == MonitorStatusFilter.values.toList.sorted.head){
-           								<label class="btn btn-outline btn-primary dim active">
-											<input type="radio" name="monitorStatusFilter" id="@msf" checked>@MonitorStatusFilter.map(msf)</label>
-           							}else{
-           								<label class="btn btn-outline btn-primary dim">
-											<input type="radio" name="monitorStatusFilter" id="@msf">@MonitorStatusFilter.map(msf)</label>
-           							}            							
-            					}
-	            			</div>            		
+	                    <div class="form-group" ng-show="selectedReportUnit">
+	            			<label class="col-lg-1 control-label">圖表類型</label>
+	            			<div class="col-lg-11">
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedChartType" ng-repeat="chartType in ctrl.chartTypeList"  
+	            					uib-btn-radio='chartType.id'>{{chartType.name}}</label>	            			
+	            				</div>
+	            			</div>						
 	                    </div>	                    
-	                    <div class="form-group">
-	            			<label class="col-lg-1 control-label">圖表類型</label>						
-	            			<div class="col-lg-11 btn-group" data-toggle="buttons">
-           						<label class="btn btn-outline btn-primary dim active">
-									<input type="radio" name="chartType" id="line" checked>折線圖</label>
-								<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="chartType" id="spline">曲線圖</label>
-								<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="chartType" id="area">面積圖</label>	
-								<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="chartType" id="areaspline">曲線面積圖</label>		
-								<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="chartType" id="column">柱狀圖</label>
-
-								<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="chartType" id="scatter">點圖</label>			
-	            			</div>            		
-	                    </div>	                    
-	                    <div class="form-group">
-	            			<label class="col-lg-1 control-label">查詢區間</label>	
-	            			<div class="col-lg-5">
-	            				<div class="input-daterange input-group" id="datepicker">
-                    			<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="input-sm form-control" name="start" id="reportStart" required/>
-                       			<span class="input-group-addon">至</span>
-                        		<input type="text" class="input-sm form-control" name="end" id="reportEnd" required/>                        
-                    		</div>
-	            			</div>												
-	                    </div>
-	                    
+	                    <div class="form-group" ng-show="selectedChartType">
+	            			<label class="col-lg-1 control-label">查詢區間</label>
+	            			<div class="col-lg-4">
+								<div class="dropdown">
+  									<a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown" data-target="#">
+    									<div class="input-group date">
+      									<input type="text" class="form-control" data-ng-model="ctrl.dateRangeStart" date-time-input="YYYY-MM-DD HH:mm">
+      									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    									</div>
+  									</a>
+  									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    								<datetimepicker data-ng-model="ctrl.dateRangeStart" 
+    									data-datetimepicker-config="{ dropdownSelector: '#dropdown1', minView:'hour', modelType:'moment' }" 
+    									data-before-render="ctrl.beforeRenderStartDate($view, $dates, $leftDate, $upDate, $rightDate)"/>
+  									</ul>
+								</div>									            			
+	            			</div>
+	            			<div class="col-lg-4">
+								<div class="dropdown">
+  									<a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#">
+    									<div class="input-group date">
+      									<input type="text" class="form-control" data-ng-model="ctrl.dateRangeEnd" date-time-input="YYYY-MM-DD HH:mm">
+      									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    									</div>
+  									</a>
+  									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    								<datetimepicker data-ng-model="ctrl.dateRangeEnd" 
+    								data-datetimepicker-config="{ dropdownSelector: '#dropdown2', minView:'hour', modelType:'moment' }" 
+    								data-before-render="ctrl.beforeRenderEndDate($view, $dates, $leftDate, $upDate, $rightDate)"/>
+  									</ul>
+								</div>	            			
+	            			</div>
+	            		</div>													                    
 						<div class="form-group">
 							<div class="col-lg-1 col-lg-offset-1">
-								<button type="button" class="btn btn-primary" id="queryReport">查詢</button>
+								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-disabled="selectedMtId().length == 0">查詢</button>
 							</div>							
 						</div>	                    	                    	                    
             		</form>
             	</div>
         	</div>
-        	<div class="panel panel-success" id="reportPanel" style="display:none" >
+        	<div class="panel panel-success" ng-show="ctrl.displayResult">
             	<div class="panel-body panel-collapse">
             		<div align="right">            			
             			<label class="btn btn-outline" data-toggle="tooltip" data-placement="bottom" title="Excel"><a href="#" id="downloadExcel"><i class="fa fa-file-excel-o fa-2x"></i></a></label>            			
@@ -144,199 +122,7 @@ $( document ).ready(function() {
 	            // toggle class
 	            $(this).parents('label').toggleClass('active');
 	        });
-	});
-	
-	$('#reportStart').datetimepicker({
-		format: 'YYYY-M-D HH:00',
-		defaultDate: moment().subtract(1, 'days'),
-    	locale: "zh-TW"
-	});
-	$('#reportEnd').datetimepicker({
-		format: 'YYYY-M-D HH:00',
-		defaultDate: moment(),
-    	locale: "zh-TW"
-	});
-    $("#reportStart").on("dp.change", function (e) {
-        $('#reportEnd').data("DateTimePicker").minDate(e.date);
-    });
-    
-    $("#reportEnd").on("dp.change", function (e) {
-        $('#reportStart').data("DateTimePicker").maxDate(e.date);
-    });
-
-    $("input[name='reportUnit']").change(function(){
-		var me = $(this)
-		if(me.attr('id') == 'Hour'||me.attr('id') == 'Min'||me.attr('id') == 'TenMin'){
-			$('#reportStart').data("DateTimePicker").format("YYYY-M-D HH:mm");
-			$('#reportEnd').data("DateTimePicker").format("YYYY-M-D HH:mm");
-			$('#reportStart').data("DateTimePicker").daysOfWeekDisabled([]);
-			$('#reportEnd').data("DateTimePicker").daysOfWeekDisabled([]);						
-		}else if(me.attr('id') == 'Day'){
-			$('#reportStart').data("DateTimePicker").format("YYYY-M-D");
-			$('#reportEnd').data("DateTimePicker").format("YYYY-M-D");
-			$('#reportStart').data("DateTimePicker").daysOfWeekDisabled([]);
-			$('#reportEnd').data("DateTimePicker").daysOfWeekDisabled([]);												
-		}else {
-			$('#reportStart').data("DateTimePicker").format("YYYY-M");
-			$('#reportEnd').data("DateTimePicker").format("YYYY-M");
-			$('#reportStart').data("DateTimePicker").daysOfWeekDisabled([]);
-			$('#reportEnd').data("DateTimePicker").daysOfWeekDisabled([]);			
-		}
-	});
-
-    $("input[name='indPark']").change(function(){
-		var me = $(this)
-		var indPark = me.attr('id');
-		var $monitors = $("input[name='monitor']");
-		for(var i=0;i<$monitors.length;i++){
-			var $m = $monitors.eq(i);
-			$m.prop('checked', false);
-			$m.parent().removeClass("active");
-
-			if($m.attr("indPark") == indPark){
-				$m.prop('disabled', false);
-				$m.parent().removeClass("disabled");					
-			}else{
-				$m.prop('disabled', true);
-				$m.parent().addClass("disabled");
-			}
-		} 
-	});
-
-    $("input[name='indPark']").change();
-	
-	var monitors, monitorTypes, reportUnit, reportStart, reportEnd, chartType;
-	
-	function validate(){
-		monitors = $("input[name='monitor']:checked");
-		if (monitors.length == 0) {
-			alert("請選擇測站");
-			return false;
-		}
-				
-		monitorTypes = $("input[name='monitorType']:checked");
-		if(monitorTypes.length == 0) {
-			alert('請選擇測項');
-			return false;
-		}
-
-		reportUnit = $("input[name='reportUnit']:checked").attr('id');
-		if(!reportUnit) {
-			alert("請選擇報表單位");
-			return false;
-		}
-		
-		reportStart = $('#reportStart').val();
-		if(reportStart.length === 0){
-			alert('請選擇開始日期');
-			return false;
-		}
-		
-		reportEnd = $('#reportEnd').val();
-		if(reportStart.length === 0){
-			alert('請選擇結束日期');
-			return false;
-		}
-
-		chartType = $("input[name='chartType']:checked").attr('id');
-		 
-		return true;
-	}
-	
-	$('#queryReport').click(function(){
-		if(!validate())
-			return;
-			
-		$('#reportDiv').html('');
-		$("body").css("cursor", "progress");
-
-		var monitorParam='';
-		for (var i = 0; i < monitors.length; i++) {
-			if(monitorParam=='')
-				monitorParam = monitors[i].id;
-			else
-				monitorParam += ':' + monitors[i].id;
-		}	
-		
-		var monitorTypeParam='';
-		for (var i = 0; i < monitorTypes.length; i++) {
-			if(monitorTypeParam=='')
-				monitorTypeParam = monitorTypes[i].id;
-			else
-				monitorTypeParam += ':' + monitorTypes[i].id;
-		}	
-
-		var monitorStatusFilter = $("input[name='monitorStatusFilter']:checked").attr('id');
-		if(!monitorStatusFilter) {
-			alert("請選擇狀態碼");
-			return false;
-		}
-		
-		var base_url = 	encodeURIComponent(monitorParam) + "/" + encodeURIComponent(monitorTypeParam) + "/" + reportUnit + "/" + monitorStatusFilter + "/" + reportStart + "/" + reportEnd;
-		var url = "/JSON/HistoryTrend/" + base_url; 
-		function pointFormatter(){
-			var d = new Date(this.x);
-			return d.toLocaleString() + ": " + Math.round(this.y) + "度";
-		}
-		
-		$.ajax({
-			url : url,
-			data : "",
-			contentType : "application/json; charset=utf-8",
-			type : "GET",
-			dataType : "json",
-			cache:false,
-			success : function(result) {
-				$("#reportPanel").css('display','block');				
-						
-				result.chart = {
-					type: chartType,
-					zoomType: 'x',
-		            panning: true,
-		            panKey: 'shift',
-		            alignTicks: false,
-		            height: 500
-				};
-				
-				result.colors=[
-				'#7CB5EC','#434348','#90ED7D','#F7A35C','#8085E9','#F15C80',
-				'#E4D354','#2B908F','#FB9FA8','#91E8E1','#7CB5EC','#80C535','#969696'];
-				result.tooltip ={
-	            	valueDecimals: 2};
-	            result.legend={enabled:true};
-				result.credits={
-					enabled:false,
-					href:'http://www.wecc.com.tw/'
-				};
-				result.xAxis.type = "datetime";
-				result.xAxis.dateTimeLabelFormats = {
-	                day: '%b%e日',
-	                week: '%b%e日',
-	            	month: '%y年%b',
-	            };
-				
-				result.plotOptions= {
-						scatter:{
-							tooltip:{
-								pointFormatter: pointFormatter
-							}
-						}
-					};
-
-									
-				
-				$("#downloadExcel").prop("href", "/Excel/HistoryTrend/" + base_url);
-				$('#reportDiv').highcharts(result);
-			},
-			error : function(xhr, status, errorThrown) {
-				console.log("錯誤訊息:" + status + "-" + errorThrown);
-			},
-
-			complete : function(xhr, status) {
-				$("body").css("cursor", "default");
-			}
-		});
-	});
+	});	
 });
 </script>
 

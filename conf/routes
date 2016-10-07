@@ -21,11 +21,11 @@ POST	/User/:id			controllers.Application.updateUser(id)
 DELETE  /User/:id			controllers.Application.deleteUser(id)	
 
 GET		/HistoryTrend				controllers.Query.historyTrend
-GET		/JSON/HistoryTrend/:monitors/:monitorType/:reportUnit/:statusFilter/:start/:end		controllers.Query.historyTrendChart(monitors, monitorType, reportUnit, statusFilter, start, end, outputTypeStr="html")
-GET		/Excel/HistoryTrend/:monitors/:monitorType/:reportUnit/:statusFilter/:start/:end	controllers.Query.historyTrendChart(monitors,monitorType, reportUnit, statusFilter, start, end, outputTypeStr="excel")
+GET		/JSON/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end		controllers.Query.historyTrendChart(monitors, monitorType, reportUnit, start:Long, end:Long, outputTypeStr="html")
+GET		/Excel/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end	controllers.Query.historyTrendChart(monitors,monitorType, reportUnit, start:Long, end:Long, outputTypeStr="excel")
 
 GET		/History					controllers.Query.history
-GET		/HistoryReport/:monitor/:monitorType/:tabType/:start/:end		controllers.Query.historyReport(monitor, monitorType, tabType, start, end)
+GET		/HistoryReport/:monitor/:monitorType/:tabType/:start/:end		controllers.Query.historyReport(monitor, monitorType, tabType, start:Long, end:Long)
 GET		/Alarm						controllers.Query.alarm
 GET		/AlarmReport/:level/:start/:end	controllers.Query.alarmReport(level:Int, start, end)
 
@@ -62,6 +62,7 @@ PUT		/MonitorType/:id		controllers.Application.upsertMonitorType(id)
 
 GET		/Monitor				controllers.Application.monitorList
 GET		/IndPark				controllers.Application.indParkList
+GET		/ReportUnit				controllers.Application.reportUnitList
 
 GET		/Record/:monitor/:monitorType/:start/:end		controllers.Query.recordList(monitor, monitorType, start:Long, end:Long)
 PUT		/Record/:monitor/:monitorType					controllers.Query.updateRecord(monitor, monitorType)

@@ -36,7 +36,7 @@ angular.module('realtimeStatusListView', [])
 	
 	function reload(){
 		loadContent();
-		timer = $timeout(reload, 5000);		
+		timer = $timeout(reload, 60000);		
 	};
 
 	timer = $timeout(reload, 0);

@@ -11,6 +11,8 @@ var app = angular.module('dataLoggerApp',
 		  'realtimeStatusListView',
 		  'miniMonitorTypeListView',
 		  'monitorTypeListView',
+		  'historyView',
+		  'historyTrendView',
 		  'manualAuditView',
 		  'manualAuditHistoryView']);
 

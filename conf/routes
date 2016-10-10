@@ -20,6 +20,11 @@ GET		/User				controllers.Application.getAllUsers
 POST	/User/:id			controllers.Application.updateUser(id)
 DELETE  /User/:id			controllers.Application.deleteUser(id)	
 
+GET		/GroupManagement	controllers.Application.groupManagement
+PUT		/Group				controllers.Application.newGroup
+GET		/Group				controllers.Application.getAllGroups
+POST	/Group/:id			controllers.Application.updateGroup(id)
+
 GET		/HistoryTrend				controllers.Query.historyTrend
 GET		/JSON/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end		controllers.Query.historyTrendChart(monitors, monitorType, reportUnit, start:Long, end:Long, outputTypeStr="html")
 GET		/Excel/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end	controllers.Query.historyTrendChart(monitors,monitorType, reportUnit, start:Long, end:Long, outputTypeStr="excel")

@@ -40,7 +40,7 @@ object Application extends Controller {
     CdxReceiver.parseXML
     Ok(s"parse XML $path")
   }
-  
+
   def userManagement() = Security.Authenticated {
     implicit request =>
       val userInfoOpt = Security.getUserinfo(request)
@@ -108,6 +108,86 @@ object Application extends Controller {
     Ok(Json.toJson(users))
   }
 
+  def groupManagement() = Security.Authenticated {
+    implicit request =>
+      val userInfoOpt = Security.getUserinfo(request)
+      if (userInfoOpt.isEmpty)
+        Forbidden("No such user!")
+      else {
+        val userInfo = userInfoOpt.get
+        val user = User.getUserByEmail(userInfo.id).get
+        if (!user.isAdmin)
+          Forbidden("無權限!")
+        else
+          Ok(views.html.groupManagement(userInfo))
+      }
+  }
+
+  def newGroup = Security.Authenticated(BodyParsers.parse.json) {
+    implicit request =>
+      val userInfoOpt = Security.getUserinfo(request)
+      if (userInfoOpt.isEmpty)
+        Forbidden("No such user!")
+      else {
+        val userInfo = userInfoOpt.get
+        val user = User.getUserByEmail(userInfo.id).get
+        if (!user.isAdmin)
+          Forbidden("無權限!")
+        else {
+          val groupResult = request.body.validate[Group]
+
+          groupResult.fold(error => {
+            Logger.error(JsError.toJson(error).toString())
+            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+          },
+            group => {
+              Group.newGroup(group)
+              Ok(Json.obj("ok" -> true))
+            })
+        }
+      }
+  }
+  
+  import scala.concurrent.ExecutionContext.Implicits.global
+  def getAllGroups = Security.Authenticated.async {
+      val f = Group.getGroupList
+      for(groupList <- f)yield{
+        Ok(Json.toJson(groupList))
+      }
+  }
+  
+  def deleteGroup(id:String) = Security.Authenticated.async{
+    val f = Group.delGroup(id)
+    for(ret <- f) yield{
+      Ok(Json.obj("ok" -> true))
+    }
+  }
+  
+  def updateGroup(id:String) = Security.Authenticated(BodyParsers.parse.json){
+    implicit request =>
+      val userInfoOpt = Security.getUserinfo(request)
+      if (userInfoOpt.isEmpty)
+        Forbidden("No such user!")
+      else {
+        val userInfo = userInfoOpt.get
+        val user = User.getUserByEmail(userInfo.id).get
+        if (!user.isAdmin)
+          Forbidden("無權限!")
+        else {
+          val groupResult = request.body.validate[Group]
+
+          groupResult.fold(error => {
+            Logger.error(JsError.toJson(error).toString())
+            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+          },
+            group => {
+              Group.newGroup(group)
+              Ok(Json.obj("ok" -> true))
+            })
+        }
+      }
+  }
+  
   def monitorTypeConfig = Security.Authenticated {
     implicit request =>
       Ok(views.html.monitorTypeConfig())
@@ -140,9 +220,9 @@ object Application extends Controller {
     val mtList = MonitorType.mtvList.map { mt => MonitorType.map(mt) }
     Ok(Json.toJson(mtList))
   }
-  
+
   def monitorList = Security.Authenticated {
-    val mList = Monitor.mvList map {Monitor.map}
+    val mList = Monitor.mvList map { Monitor.map }
     Ok(Json.toJson(mList))
   }
 
@@ -152,9 +232,9 @@ object Application extends Controller {
 
   def reportUnitList = Security.Authenticated {
     implicit val ruWrite = Json.writes[ReportUnit]
-    Ok(Json.toJson(ReportUnit.values.map { ReportUnit.map}))
+    Ok(Json.toJson(ReportUnit.values.map { ReportUnit.map }))
   }
-  
+
   def upsertMonitorType(id: String) = Security.Authenticated(BodyParsers.parse.json) {
     Logger.info(s"upsert Mt:$id")
     implicit request =>
@@ -169,21 +249,21 @@ object Application extends Controller {
           Ok(Json.obj("ok" -> true))
         })
   }
-  
+
   def dataManagement = Security.Authenticated {
     Ok(views.html.dataManagement())
   }
-  
-  def recalculateHour(startStr:String, endStr:String) = Security.Authenticated {
+
+  def recalculateHour(startStr: String, endStr: String) = Security.Authenticated {
     val start = DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
     val end = DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
-    
-    for( hour <- Query.getPeriods(start, end, 1.hour)){
+
+    for (hour <- Query.getPeriods(start, end, 1.hour)) {
       DataCollectManager.recalculateHourData(hour, false)(MonitorType.mtvList)
     }
     Ok(Json.obj("ok" -> true))
-  }  
-  
+  }
+
   def auditConfig = Security.Authenticated {
     Ok(views.html.auditConfig())
   }

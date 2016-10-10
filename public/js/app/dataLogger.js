@@ -110,6 +110,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "系統管理>使用者管理";
 			} ]
 		}
+	}).when('/GroupManagement', {
+		templateUrl : "/GroupManagement",
+		resolve : {
+			breadcrumb : [ 'BreadcrumbService', function(bs) {
+				return bs.title = "系統管理>權限群組管理";
+			} ]
+		}
 	}).when('/DataManagement', {
 		templateUrl : "/DataManagement",
 		resolve : {

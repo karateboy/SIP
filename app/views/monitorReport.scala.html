@@ -2,68 +2,70 @@
 @import com.github.nscala_time.time.Imports._
 @(param:String)(implicit request: RequestHeader)
 
-<div class="row">
+<div class="row" ng-controller="reportCtrl as ctrl">
    	<div class="col-lg-12">
-        	<div class="panel panel-primary" id="paramPanel">
+        	<div class="panel panel-primary">
             	<div class="panel-heading panel-title" >
             		查詢參數	
                 </div>
             	<div class="panel-body panel-collapse in" id="reportParam">
             		<form class="form-horizontal">
-            			<div class="form-group">
+            		    <div class="form-group">
 	            			<label class="col-lg-1 control-label">工業區</label>
 	            			<div class="col-lg-11">
-	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(indPark<-Monitor.indParkSet){
-	            					@if(indPark == Monitor.indParkSet.head){
-	            						<label class="btn btn-outline btn-primary dim active">
-										<input type="radio" name="indPark" id="@indPark" checked>@indPark</label>
-	            					}else{
-	            						<label class="btn btn-outline btn-primary dim">
-										<input type="radio" name="indPark" id="@indPark">@indPark</label>
-	            					}
-	            				}
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedIndPark" ng-repeat="park in ctrl.indParkList"  
+	            					uib-btn-radio="park">{{park}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-            			<div class="form-group">
+            			<div class="form-group" ng-show="selectedIndPark">
 	            			<label class="col-lg-1 control-label">測站</label>
 	            			<div class="col-lg-11">
-	            				<div class="btn-group" data-toggle="buttons">	            				
-	            				@for(m<-Monitor.mvList){	            					
-	            					<label class="btn btn-outline btn-primary dim">
-									<input type="radio" name="monitor" id="@m" indPark="@Monitor.map(m).indParkName">@Monitor.map(m).dp_no</label>	            					
-	            				}
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedMonitorId" ng-repeat="m in ctrl.monitorList | filter:ctrl.indParkMonitor"  
+	            					uib-btn-radio="m._id">{{m.indParkName+"-"+m.dp_no}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
- 	                    <div class="form-group">
+            			<div class="form-group" ng-show="selectedMonitorId">
 	            			<label class="col-lg-1 control-label">報表種類</label>
 	            			<div class="col-lg-11">
-	            				<div class="btn-group" data-toggle="buttons">
-	            					@for(rt <- PeriodReport.values.toList.sorted){
-	            						@if(rt == PeriodReport.values.toList.sorted.head){
-	            							<label class="btn btn-outline btn-primary dim active">
-												<input type="radio" name="reportType" id="@rt" checked>@PeriodReport.map(rt)</label>									
-	            						}else{
-	            							<label class="btn btn-outline btn-primary dim">
-												<input type="radio" name="reportType" id="@rt">@PeriodReport.map(rt)</label>
-	            						}
-	            					}
+	            				<div class="btn-group">	            				            				
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedReportType" ng-repeat="reportType in ctrl.reportTypeList"  
+	            					uib-btn-radio="reportType.id">{{reportType.name}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-	                    <div class="form-group">
+            		
+	                    <div class="form-group" ng-show="selectedReportType">
 	            			<label class="col-lg-1 control-label">查詢日期</label>
-	            			<div class="col-lg-5">
-	            				<div class="input-group date">
-  									<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id="reportDate" required value='@DateTime.now.toString("YYYY-MM-dd")'>
-  								</div>
-	            			</div>	            			            		
-	                    </div>
-	                    <div class="form-group">
+	            			<div class="col-lg-4">
+	            				<div class="dropdown" ng-show="selectedReportType =='daily'">
+  									<a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" >
+    									<div class="input-group"><input type="text" class="form-control" data-ng-model="ctrl.dateStart" date-time-input="YYYY-MM-DD">
+    									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+    									</div>
+  									</a>
+  									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    									<datetimepicker data-ng-model="ctrl.dateStart" data-datetimepicker-config="{startView:'day', minView:'day' }"/>
+  									</ul>
+								</div>
+								<div class="dropdown" ng-show="selectedReportType =='monthly'">
+  									<a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" >
+    									<div class="input-group"><input type="text" class="form-control" data-ng-model="ctrl.dateStart" date-time-input="YYYY-MM">
+    									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+    									</div>
+  									</a>
+  									<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    									<datetimepicker data-ng-model="ctrl.dateStart" data-datetimepicker-config="{ startView:'month', minView:'month' }"/>
+  									</ul>
+								</div>									            			
+	            			</div>
+	            		</div>													                    
+						<div class="form-group">
 							<div class="col-lg-1 col-lg-offset-1">
-								<button type="button" class="btn btn-primary" id="queryReport">查詢</button>
+								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-enabled="selectedReportType">查詢</button>
 							</div>							
 						</div>
             		</form>
@@ -90,13 +92,12 @@
   			</div>
 
         	
-        	<div class="panel panel-success" style="display:none" id="reportPanel">
+        	<div class="panel panel-success" ng-show="ctrl.displayResult" id="reportPanel">
              	<div class="panel-body panel-collapse" id="monitorReport">
             		<div align="right">
             			<label class="btn btn-outline" data-toggle="tooltip" data-placement="bottom" title="PDF"><a href="#" id="downloadPDF"><i class="fa fa-file-pdf-o fa-2x pdf"></i></a></label>
             			<label class="btn btn-outline" data-toggle="tooltip" data-placement="bottom" title="Excel"><a href="#" id="downloadExcel"><i class="fa fa-file-excel-o fa-2x"></i></a></label>            			
-                	</div>
-            		
+                	</div>            		
 					<div id="reportDiv" align="center">
             		</div>
             	</div>
@@ -149,46 +150,6 @@ $( document ).ready(function() {
 		$("body").css("cursor", "default");		
 	}
 	
-	$('#reportDate').datetimepicker({
-		format: 'YYYY-MM-D',
-		defaultDate: moment().subtract(1, 'days'),
-    	locale: "zh-TW"
-	});
-	
-    $("input[name='reportType']").change(function(){
-		var me = $(this)
-		if(me.attr('id') == 'daily'){
-			$('#reportDate').data("DateTimePicker").format("YYYY-M-D");			
-		}else if(me.attr('id') == 'monthly' || me.attr('id') == 'MinMonthly'){
-			$('#reportDate').data("DateTimePicker").format("YYYY-M");
-		}else{
-			$('#reportDate').data("DateTimePicker").format("YYYY");			
-		}		
-	});
-
-    $("input[name='indPark']").change(function(){
-		var me = $(this)
-		var indPark = me.attr('id');
-		var $monitors = $("input[name='monitor']");
-		for(var i=0;i<$monitors.length;i++){
-			var $m = $monitors.eq(i);
-			$m.prop('checked', false);
-			$m.parent().removeClass("active");
-
-			if($m.attr("indPark") == indPark){
-				$m.prop('disabled', false);
-				$m.parent().removeClass("disabled");
-				//$m.parent().removeClass("invisible");					
-			}else{
-				$m.prop('disabled', true);
-				$m.parent().addClass("disabled");
-				//$m.parent().addClass("invisible");
-			}
-		} 
-	});
-
-    $("input[name='indPark']").change();
-    
 	var monitor, reportType, reportDate;
 	
 	function validate(){

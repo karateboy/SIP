@@ -80,11 +80,11 @@ object Report extends Controller {
     }
   }
 
-  def getMonitorReport(monitorStr:String, reportTypeStr: String, startDateStr: String, outputTypeStr: String) = Security.Authenticated {
+  def getMonitorReport(monitorStr:String, reportTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
       val reportType = PeriodReport.withName(reportTypeStr)
-      val start = DateTime.parse(startDateStr)
+      val start = new DateTime(startDate)
       val outputType = OutputType.withName(outputTypeStr)
 
       if (outputType == OutputType.html || outputType == OutputType.pdf) {
@@ -155,10 +155,10 @@ object Report extends Controller {
     Ok(views.html.monitorMonthlyHourReport())
   }
 
-  def monthlyHourReport(monitorStr:String, monitorTypeStr: String, startDateStr: String, outputTypeStr: String) = Security.Authenticated {
+  def monthlyHourReport(monitorStr:String, monitorTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
     val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
     val mt = MonitorType.withName(java.net.URLDecoder.decode(monitorTypeStr, "UTF-8"))
-    val start = DateTime.parse(startDateStr)
+    val start = new DateTime(startDate)
     val outputType = OutputType.withName(outputTypeStr)
     val title = "月份時報表"
     if (outputType == OutputType.html || outputType == OutputType.pdf) {

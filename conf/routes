@@ -47,12 +47,12 @@ GET		/RealtimeStatusContent		controllers.Realtime.realtimeStatusContent()
 
 #Report
 GET		/Report					controllers.Report.monitorReport()
-GET		/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate, outputTypeStr="html")
-GET		/PDF/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate, outputTypeStr="pdf")
-GET		/Excel/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate, outputTypeStr="excel")
+GET		/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="html")
+GET		/PDF/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="pdf")
+GET		/Excel/monitorReport/:monitor/:reportType/:reportDate	controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="excel")
 
 GET		/MonitorMonthlyHourReport		controllers.Report.monitorMonthlyHourReport
-GET		/MonthlyHourReport/:monitor/:monitorType/:reportDate	controllers.Report.monthlyHourReport(monitor, monitorType, reportDate, outputTypeStr="html")
+GET		/MonthlyHourReport/:monitor/:monitorType/:reportDate	controllers.Report.monthlyHourReport(monitor, monitorType, reportDate:Long, outputTypeStr="html")
 
 
 #JSON

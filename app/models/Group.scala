@@ -8,7 +8,7 @@ import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class Group(_id: String, privilege: Privilege){
+case class Group(_id: String, privilege: Privilege) {
   def name = _id
 }
 
@@ -23,13 +23,22 @@ object Group {
   val colName = "groups"
   val collection = MongoDB.database.getCollection(colName)
 
+  val adminGroup = Group("admin", Privilege.defaultPrivilege)
   def init(colNames: Seq[String]) = {
     if (!colNames.contains(colName)) {
       val f = MongoDB.database.createCollection(colName).toFuture()
       f.onFailure(errorHandler)
       f.onSuccess({
         case _: Seq[t] =>
-
+          val f = collection.count().toFuture()
+          f.onSuccess({
+            case count: Seq[Long] =>
+              if (count(0) == 0) {
+                Logger.info("Create default group:" + adminGroup)
+                val newGF = newGroup(adminGroup)
+                newGF.onFailure(errorHandler)
+              }
+          })
       })
       Some(f.mapTo[Unit])
     } else
@@ -58,6 +67,7 @@ object Group {
     f.onSuccess({
       case _: Seq[t] =>
     })
+    f
   }
 
   import org.mongodb.scala.model.Filters._
@@ -68,15 +78,14 @@ object Group {
   }
 
   def getGroupList =
-  {
+    {
       val f = collection.find().toFuture()
-      for{r <- f} yield
-        r.map { toGroup }.toList
-  }
+      for { r <- f } yield r.map { toGroup }.toList
+    }
 
-  def delGroup(_id:String)={
+  def delGroup(_id: String) = {
     val f = collection.deleteOne(equal("_id", _id)).toFuture()
     f.onFailure(errorHandler)
-    f    
+    f
   }
 }

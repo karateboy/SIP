@@ -10,7 +10,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
 
 case class User(email: String, password: String, name: String, phone: String, isAdmin: Boolean,
-                alarmConfig: Option[AlarmConfig] = Some(AlarmConfig.defaultConfig), widgets: Option[List[MonitorType.Value]] = Some(List.empty[MonitorType.Value]))
+                groupId: String = Group.adminGroup._id,
+                alarmConfig: Option[AlarmConfig] = Some(AlarmConfig.defaultConfig), 
+                widgets: Option[List[MonitorType.Value]] = Some(List.empty[MonitorType.Value]))
 
 object User {
   import org.mongodb.scala._

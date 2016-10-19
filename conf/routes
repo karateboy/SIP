@@ -21,9 +21,10 @@ POST	/User/:id			controllers.Application.updateUser(id)
 DELETE  /User/:id			controllers.Application.deleteUser(id)	
 
 GET		/GroupManagement	controllers.Application.groupManagement
-PUT		/Group				controllers.Application.newGroup
+POST	/Group/:id			controllers.Application.newGroup(id)
 GET		/Group				controllers.Application.getAllGroups
-POST	/Group/:id			controllers.Application.updateGroup(id)
+PUT		/Group/:id			controllers.Application.updateGroup(id)
+DELETE	/Group/:id			controllers.Application.deleteGroup(id)
 
 GET		/HistoryTrend				controllers.Query.historyTrend
 GET		/JSON/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end		controllers.Query.historyTrendChart(monitors, monitorType, reportUnit, start:Long, end:Long, outputTypeStr="html")
@@ -68,6 +69,7 @@ PUT		/MonitorType/:id		controllers.Application.upsertMonitorType(id)
 GET		/Monitor				controllers.Application.monitorList
 GET		/IndPark				controllers.Application.indParkList
 GET		/ReportUnit				controllers.Application.reportUnitList
+GET		/MenuRight				controllers.Application.menuRightList
 
 GET		/Record/:monitor/:monitorType/:start/:end		controllers.Query.recordList(monitor, monitorType, start:Long, end:Long)
 PUT		/Record/:monitor/:monitorType					controllers.Query.updateRecord(monitor, monitorType)

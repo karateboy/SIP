@@ -7,9 +7,11 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import scala.language.implicitConversions
 
+case class MenuRight(id:MenuRight.Value, desp:String)
 object MenuRight extends Enumeration{
   implicit val mReads: Reads[MenuRight.Value] = EnumUtils.enumReads(MenuRight)
   implicit val mWrites: Writes[MenuRight.Value] = EnumUtils.enumWrites
+  implicit val mrWrites = Json.writes[MenuRight]
 
   val RealtimeInfo = Value("RealtimeInfo")
   val DataQuery = Value("DataQuery")

@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.Play.current
 import play.api.data._
 import play.api.data.Forms._
@@ -123,71 +124,100 @@ object Application extends Controller {
       }
   }
 
-  def newGroup = Security.Authenticated(BodyParsers.parse.json) {
-    implicit request =>
-      val userInfoOpt = Security.getUserinfo(request)
-      if (userInfoOpt.isEmpty)
+  def adminOnly(permited: Future[Result])(implicit request: play.api.mvc.Security.AuthenticatedRequest[play.api.mvc.AnyContent, controllers.Security.UserInfo]) = {
+    val userInfoOpt = Security.getUserinfo(request)
+    if (userInfoOpt.isEmpty)
+      Future {
         Forbidden("No such user!")
-      else {
-        val userInfo = userInfoOpt.get
-        val user = User.getUserByEmail(userInfo.id).get
-        if (!user.isAdmin)
+      }
+    else {
+      val userInfo = userInfoOpt.get
+      val user = User.getUserByEmail(userInfo.id).get
+      if (!user.isAdmin)
+        Future {
           Forbidden("無權限!")
-        else {
-          val groupResult = request.body.validate[Group]
-
-          groupResult.fold(error => {
-            Logger.error(JsError.toJson(error).toString())
-            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
-          },
-            group => {
-              Group.newGroup(group)
-              Ok(Json.obj("ok" -> true))
-            })
         }
+      else {
+        permited
       }
-  }
-  
-  import scala.concurrent.ExecutionContext.Implicits.global
-  def getAllGroups = Security.Authenticated.async {
-      val f = Group.getGroupList
-      for(groupList <- f)yield{
-        Ok(Json.toJson(groupList))
-      }
-  }
-  
-  def deleteGroup(id:String) = Security.Authenticated.async{
-    val f = Group.delGroup(id)
-    for(ret <- f) yield{
-      Ok(Json.obj("ok" -> true))
     }
   }
-  
-  def updateGroup(id:String) = Security.Authenticated(BodyParsers.parse.json){
+
+  def newGroup(id: String) = Security.Authenticated.async {
     implicit request =>
+      adminOnly({
+        val newGroup = Group(id, Privilege.defaultPrivilege)
+        val f = Group.newGroup(newGroup)
+
+        val requestF =
+          for (result <- f) yield {
+            Ok(Json.obj("ok" -> true))
+          }
+
+        requestF.recover({
+          case _: Throwable =>
+            Logger.info("recover...")
+            Ok(Json.obj("ok" -> false))
+        })
+      })
+  }
+
+  import scala.concurrent.ExecutionContext.Implicits.global
+  def getAllGroups = Security.Authenticated.async {
+    val f = Group.getGroupList
+    for (groupList <- f) yield {
+      Ok(Json.toJson(groupList))
+    }
+  }
+
+  def deleteGroup(id: String) = Security.Authenticated.async {
+    implicit request =>
+      adminOnly({
+        val f = Group.delGroup(id)
+        val requestF = for (ret <- f) yield {
+          Ok(Json.obj("ok" -> true))
+        }
+        requestF.recover({
+          case _: Throwable =>
+            Logger.info("recover...")
+            Ok(Json.obj("ok" -> false))
+        })
+      })
+  }
+
+  def updateGroup(id: String) = Security.Authenticated.async(BodyParsers.parse.json) {
+    implicit request =>
+      Logger.debug("updateGroup")
       val userInfoOpt = Security.getUserinfo(request)
       if (userInfoOpt.isEmpty)
-        Forbidden("No such user!")
+        Future {
+          Forbidden("No such user!")
+        }
       else {
         val userInfo = userInfoOpt.get
         val user = User.getUserByEmail(userInfo.id).get
         if (!user.isAdmin)
-          Forbidden("無權限!")
+          Future {
+            Forbidden("無權限!")
+          }
         else {
           val groupResult = request.body.validate[Group]
 
           groupResult.fold(error => {
             Logger.error(JsError.toJson(error).toString())
-            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+            Future { BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString())) }
           },
             group => {
-              Group.newGroup(group)
-              Ok(Json.obj("ok" -> true))
+              val f = Group.updateGroup(group)
+              val requestF = for (ret <- f) yield {
+                Ok(Json.obj("ok" -> true))
+              }
+              requestF
             })
         }
       }
   }
-  
+
   def monitorTypeConfig = Security.Authenticated {
     implicit request =>
       Ok(views.html.monitorTypeConfig())
@@ -266,5 +296,10 @@ object Application extends Controller {
 
   def auditConfig = Security.Authenticated {
     Ok(views.html.auditConfig())
+  }
+
+  def menuRightList = Security.Authenticated {
+    val menuRightList = MenuRight.values.toSeq.map { v => MenuRight(v, MenuRight.map(v)) }
+    Ok(Json.toJson(menuRightList))
   }
 }

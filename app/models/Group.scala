@@ -33,8 +33,9 @@ object Group {
           val f = collection.count().toFuture()
           f.onSuccess({
             case count: Seq[Long] =>
-              if (count(0) == 0) {
-                Logger.info("Create default group:" + adminGroup)
+              Logger.info("group count=" + count.head)
+              if (count.head == 0) {
+                Logger.info("Create default group:" + adminGroup._id)
                 val newGF = newGroup(adminGroup)
                 newGF.onFailure(errorHandler)
               }
@@ -87,5 +88,11 @@ object Group {
     val f = collection.deleteOne(equal("_id", _id)).toFuture()
     f.onFailure(errorHandler)
     f
+  }
+
+  def findGroup(_id:String) = {
+    val f = collection.find(equal("_id", _id)).first().toFuture()
+    f.onFailure(errorHandler)
+    for { r <- f } yield r.map { toGroup }    
   }
 }

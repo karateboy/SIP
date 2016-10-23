@@ -15,9 +15,9 @@ POST	/authenticate				controllers.Login.authenticate
 
 GET		/Dashboard			controllers.Application.dashboard
 GET		/UserManagement		controllers.Application.userManagement
-PUT		/User				controllers.Application.newUser
+POST	/User				controllers.Application.newUser
 GET		/User				controllers.Application.getAllUsers
-POST	/User/:id			controllers.Application.updateUser(id)
+PUT		/User/:id			controllers.Application.updateUser(id)
 DELETE  /User/:id			controllers.Application.deleteUser(id)	
 
 GET		/GroupManagement	controllers.Application.groupManagement

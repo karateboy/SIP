@@ -63,28 +63,49 @@ object Application extends Controller {
   import models.User._
   implicit val userParamRead: Reads[User] = Json.reads[User]
 
-  def newUser = Security.Authenticated(BodyParsers.parse.json) {
+  def newUser = Security.Authenticated.async(BodyParsers.parse.json) {
     implicit request =>
-      val newUserParam = request.body.validate[User]
+      adminOnly({
+        val newUserParam = request.body.validate[User]
 
-      newUserParam.fold(
-        error => {
-          Logger.error(JsError.toJson(error).toString())
-          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
-        },
-        param => {
-          User.newUser(param)
-          Ok(Json.obj("ok" -> true))
-        })
+        newUserParam.fold(
+          error => {
+            Logger.error(JsError.toJson(error).toString())
+            Future { BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString())) }
+          },
+          param => {
+            val f = User.newUser(param)
+            val requestF =
+              for (result <- f) yield {
+                Ok(Json.obj("ok" -> true))
+              }
+
+            requestF.recover({
+              case _: Throwable =>
+                Logger.info("recover from newUser error...")
+                Ok(Json.obj("ok" -> false))
+            })
+          })
+      })
   }
 
-  def deleteUser(email: String) = Security.Authenticated {
+  def deleteUser(email: String) = Security.Authenticated.async {
     implicit request =>
-      val userInfoOpt = Security.getUserinfo(request)
-      val userInfo = userInfoOpt.get
+      adminOnly({
+        Logger.info(email.toString)
+        val f = User.deleteUser(email)
+        val requestF =
+          for (result <- f) yield {
+            val deleteResult = result.head
+            Ok(Json.obj("ok" -> (deleteResult.getDeletedCount == 0)))
+          }
 
-      User.deleteUser(email)
-      Ok(Json.obj("ok" -> true))
+        requestF.recover({
+          case _: Throwable =>
+            Logger.info("recover from deleteUser error...")
+            Ok(Json.obj("ok" -> false))
+        })
+      })
   }
 
   def updateUser(id: String) = Security.Authenticated(BodyParsers.parse.json) {
@@ -124,7 +145,7 @@ object Application extends Controller {
       }
   }
 
-  def adminOnly(permited: Future[Result])(implicit request: play.api.mvc.Security.AuthenticatedRequest[play.api.mvc.AnyContent, controllers.Security.UserInfo]) = {
+  def adminOnly[A, B <: controllers.Security.UserInfo](permited: Future[Result])(implicit request: play.api.mvc.Security.AuthenticatedRequest[A, B]) = {
     val userInfoOpt = Security.getUserinfo(request)
     if (userInfoOpt.isEmpty)
       Future {
@@ -246,18 +267,57 @@ object Application extends Controller {
       }
   }
 
-  def monitorTypeList = Security.Authenticated {
-    val mtList = MonitorType.mtvList.map { mt => MonitorType.map(mt) }
-    Ok(Json.toJson(mtList))
+  def monitorTypeList = Security.Authenticated.async {
+    implicit request =>
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        if (groupSeq.length == 0)
+          Ok(Json.toJson(List.empty[MonitorType.Value]))
+        else {
+          val group = groupSeq(0)
+          val mtList = group.privilege.allowedMonitorTypes.map { mt => MonitorType.map(mt) }
+          Ok(Json.toJson(mtList))
+        }
+      }
   }
 
-  def monitorList = Security.Authenticated {
-    val mList = Monitor.mvList map { Monitor.map }
-    Ok(Json.toJson(mList))
+  def monitorList = Security.Authenticated.async {
+    implicit request =>
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        if (groupSeq.length == 0)
+          Ok(Json.toJson(List.empty[Monitor.Value]))
+        else {
+          val group = groupSeq(0)
+          val mList = group.privilege.allowedMonitors.map { Monitor.map }
+          Ok(Json.toJson(mList))
+        }
+      }
   }
 
-  def indParkList = Security.Authenticated {
-    Ok(Json.toJson(Monitor.indParkSet))
+  def indParkList = Security.Authenticated.async {
+    implicit request =>
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        if (groupSeq.length == 0)
+          Ok(Json.toJson(List.empty[String]))
+        else {
+          val group = groupSeq(0)
+          Ok(Json.toJson(group.privilege.allowedIndParks))
+        }
+      }
   }
 
   def reportUnitList = Security.Authenticated {
@@ -298,8 +358,21 @@ object Application extends Controller {
     Ok(views.html.auditConfig())
   }
 
-  def menuRightList = Security.Authenticated {
-    val menuRightList = MenuRight.values.toSeq.map { v => MenuRight(v, MenuRight.map(v)) }
-    Ok(Json.toJson(menuRightList))
+  def menuRightList = Security.Authenticated.async {
+    implicit request =>
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        if (groupSeq.length == 0)
+          Ok(Json.toJson(List.empty[MenuRight.Value]))
+        else {
+          val group = groupSeq(0)
+          val menuRightList = group.privilege.allowedMenuRights.map { v => MenuRight(v, MenuRight.map(v))} 
+          Ok(Json.toJson(menuRightList))
+        }
+      }
   }
 }

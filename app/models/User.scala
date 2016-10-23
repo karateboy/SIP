@@ -22,7 +22,7 @@ object User {
   val ColName = "users"
   val collection = MongoDB.database.getCollection(ColName)
   def toDocument(user: User) = Document("_id" -> user.email, "password" -> user.password,
-    "name" -> user.name, "phone" -> user.phone, "isAdmin" -> user.isAdmin,
+    "name" -> user.name, "phone" -> user.phone, "isAdmin" -> user.isAdmin, "groupId"->user.groupId,
     "alarmConfig" -> user.alarmConfig, "widgets" -> user.widgets)
 
   def init(colNames:Seq[String]){
@@ -61,6 +61,7 @@ object User {
       name = doc("name").asString.getValue,
       phone = doc("phone").asString().getValue,
       isAdmin = doc("isAdmin").asBoolean().getValue,
+      groupId = doc("groupId").asString().getValue,
       alarmConfig = alarmConfigOpt,
       widgets = widgetArray)
   }
@@ -75,14 +76,12 @@ object User {
     }
   }
   def newUser(user: User) = {
-    val f = collection.insertOne(toDocument(user)).toFuture()
-    waitReadyResult(f)
+    collection.insertOne(toDocument(user)).toFuture()
   }
 
   import org.mongodb.scala.model.Filters._
   def deleteUser(email: String) = {
-    val f = collection.deleteOne(equal("_id", email)).toFuture()
-    waitReadyResult(f)
+    collection.deleteOne(equal("_id", email)).toFuture()
   }
 
   def updateUser(user: User) = {
@@ -100,6 +99,17 @@ object User {
       Some(toUser(ret(0)))
   }
 
+  def getUserByEmailFuture(email: String) = {
+    val f = collection.find(equal("_id", email)).first().toFuture()
+    f.onFailure { errorHandler }
+    for(ret <- f)
+      yield
+      if(ret.length == 0)
+        None
+      else
+        Some(toUser(ret(0)))
+  }
+  
   def getAllUsers() = {
     val f = collection.find().toFuture()
     f.onFailure { errorHandler }

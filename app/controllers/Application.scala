@@ -279,7 +279,12 @@ object Application extends Controller {
           Ok(Json.toJson(List.empty[MonitorType.Value]))
         else {
           val group = groupSeq(0)
-          val mtList = group.privilege.allowedMonitorTypes.map { mt => MonitorType.map(mt) }
+          val mtList =
+            if (userOpt.get.isAdmin) {
+              MonitorType.mtvList.map { MonitorType.map }
+            } else
+              group.privilege.allowedMonitorTypes.map { MonitorType.map }
+
           Ok(Json.toJson(mtList))
         }
       }
@@ -297,7 +302,11 @@ object Application extends Controller {
           Ok(Json.toJson(List.empty[Monitor.Value]))
         else {
           val group = groupSeq(0)
-          val mList = group.privilege.allowedMonitors.map { Monitor.map }
+          val mList =
+            if (userOpt.get.isAdmin) {
+              Monitor.mvList.map { Monitor.map }
+            } else
+              group.privilege.allowedMonitors.map { Monitor.map }
           Ok(Json.toJson(mList))
         }
       }
@@ -315,7 +324,13 @@ object Application extends Controller {
           Ok(Json.toJson(List.empty[String]))
         else {
           val group = groupSeq(0)
-          Ok(Json.toJson(group.privilege.allowedIndParks))
+          val indParks =
+            if (userOpt.get.isAdmin) {
+              Monitor.indParkSet.toList
+            } else
+              group.privilege.allowedIndParks
+
+          Ok(Json.toJson(indParks))
         }
       }
   }
@@ -370,7 +385,12 @@ object Application extends Controller {
           Ok(Json.toJson(List.empty[MenuRight.Value]))
         else {
           val group = groupSeq(0)
-          val menuRightList = group.privilege.allowedMenuRights.map { v => MenuRight(v, MenuRight.map(v))} 
+          val menuRightList =
+            if (userOpt.get.isAdmin) {
+              MenuRight.values.toList.map { v => MenuRight(v, MenuRight.map(v)) }
+            } else
+              group.privilege.allowedMenuRights.map { v => MenuRight(v, MenuRight.map(v)) }
+
           Ok(Json.toJson(menuRightList))
         }
       }

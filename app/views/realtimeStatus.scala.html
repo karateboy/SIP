@@ -1,6 +1,6 @@
 @* realtimeStatus Template File *@
 @import com.github.nscala_time.time.Imports._
-@(recordMap: Map[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])])
+@(recordMap: Map[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])], privilege: Privilege)
 <div class="row">
 <div class="ibox">
     <div class="ibox-content">
@@ -17,7 +17,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@for(m<-Monitor.mvList){
+				@for(m<-Monitor.mvList if privilege.allowedIndParks.contains(Monitor.map(m).indParkName)){
 					<tr>
 						<th>@Monitor.map(m).indParkName</th>
 						<th>@Monitor.map(m).dp_no</th>
@@ -28,7 +28,7 @@
 							}
 						}else{
 							<th>@recordMap(m)._1.toString("HH:mm")</th>
-							@for(mt <- MonitorType.mtvList){								
+							@for(mt <- MonitorType.mtvList if privilege.allowedMonitorTypes.contains(mt)){								
 							<td class="@MonitorType.getCssClassStr(mt, recordMap(m)._2.get(mt))">
 								@Html(MonitorType.formatRecord(mt, recordMap(m)._2.get(mt)))</td>
 							}

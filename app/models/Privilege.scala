@@ -41,4 +41,5 @@ object Privilege {
   implicit val privilegeRead = Json.reads[Privilege]
   
   lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, Monitor.values.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq)
+  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[Monitor.Value], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value])
 }

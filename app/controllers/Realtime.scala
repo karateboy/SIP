@@ -64,11 +64,19 @@ object Realtime extends Controller {
     implicit request =>
       import MonitorType._
       val user = request.user
-      val userProfileOpt = User.getUserByEmail(user.id)
+      val userFuture = User.getUserByEmailFuture(user.id)
       val latestRecordMap = Record.getLatestRecordMapFuture(Record.HourCollection)
 
-      for (map <- latestRecordMap) yield {
-        Ok(views.html.realtimeStatus(map))
+      for {
+        userOpt <- User.getUserByEmailFuture(user.id) if userOpt.isDefined
+        groups <- Group.findGroup(userOpt.get.groupId)
+        map <- latestRecordMap} yield { 
+          if(groups.isEmpty)
+            Ok(views.html.realtimeStatus(Map.empty[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])], Privilege.emptyPrivilege))
+          else{
+            val group = groups(0)
+            Ok(views.html.realtimeStatus(map, group.privilege))
+          }
       }
   }
 }

@@ -395,4 +395,105 @@ object Application extends Controller {
         }
       }
   }
+
+  case class SipRecord(monitorId: String, monitorTypeId: String, time: Long, value: Double, status: String)
+  case class SipCalibration(monitorId: String, monitorTypeId: String, startTime: Long, endTime: Long,
+                            span: Double, zero_std: Double, zero_val: Double, span_std: Double, span_val: Double)
+
+  implicit val sipRecordReads = Json.reads[SipRecord]
+  implicit val sipCalibrationReads = Json.reads[SipCalibration]
+
+  def receiveHourData = receiveMonitorData(Record.HourCollection)
+  def receiveMinData = receiveMonitorData(Record.MinCollection)
+
+  def receiveMonitorData(collectionName: String) = Action.async(BodyParsers.parse.json) {
+    implicit request =>
+      val recordsResult = request.body.validate[Seq[SipRecord]]
+
+      recordsResult.fold(
+        error => {
+          Logger.error(JsError.toJson(error).toString())
+          Future { BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString())) }
+        },
+        records => {
+          import scala.collection.mutable.Map
+          val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
+          for (record <- records) {
+            try {
+              val mDate = new DateTime(record.time)
+              val monitor = Monitor.withName(record.monitorId)
+              val monitorType = MonitorType.getMonitorTypeValueByName(record.monitorTypeId, "ppb")
+              val timeMap = recordMap.getOrElseUpdate(monitor, Map.empty[DateTime, Map[MonitorType.Value, (Double, String)]])
+              val mtMap = timeMap.getOrElseUpdate(mDate, Map.empty[MonitorType.Value, (Double, String)])
+              mtMap.put(monitorType, (record.value, record.status))
+            } catch {
+              case ex: Throwable =>
+                Logger.error("skip invalid record ", ex)
+            }
+          }
+
+          val f =
+            for {
+              monitorMap <- recordMap
+              monitor = monitorMap._1
+              timeMaps = monitorMap._2
+              dateTime <- timeMaps.keys.toList.sorted
+              mtMaps = timeMaps(dateTime) if (!mtMaps.isEmpty)
+            } yield {
+              Record.upsertRecord(Record.toDocument(monitor, dateTime, mtMaps.toList))(collectionName)
+            }
+
+          val retF = Future.sequence(f.toList)
+
+          val requestF =
+            for (result <- retF) yield {
+              Ok(Json.obj("ok" -> true))
+            }
+
+          requestF.recover({
+            case _: Throwable =>
+              Logger.info("recover from upsert hour error...")
+              Ok(Json.obj("ok" -> false))
+          })
+        })
+
+  }
+
+  def receiveCalibration = Action.async(BodyParsers.parse.json) {
+    implicit request =>
+      val recordsResult = request.body.validate[Seq[SipCalibration]]
+
+      recordsResult.fold(
+        error => {
+          Logger.error(JsError.toJson(error).toString())
+          Future { BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString())) }
+        },
+        records => {
+          import scala.collection.mutable.Map
+          val calibrations =
+            for (record <- records) yield {
+              val startTime = new DateTime(record.startTime)
+              val endTime = new DateTime(record.endTime)
+              val monitor = Monitor.withName(record.monitorId)
+              val monitorType = MonitorType.getMonitorTypeValueByName(record.monitorTypeId, "ppb")
+
+              Calibration(monitor, monitorType, startTime, endTime,
+                Some(record.span), Some(record.zero_std), Some(record.zero_val), Some(record.span_std),
+                Some(record.span_val))
+            }
+
+          val retF = Calibration.insert(calibrations)
+          val requestF =
+            for (result <- retF) yield {
+              Ok(Json.obj("ok" -> true))
+            }
+
+          requestF.recover({
+            case _: Throwable =>
+              Logger.info("recover from upsert hour error...")
+              Ok(Json.obj("ok" -> false))
+          })
+        })
+
+  }
 }

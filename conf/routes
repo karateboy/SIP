@@ -83,5 +83,7 @@ GET		/AuditConfig			controllers.Application.auditConfig
 GET		/importEpaXLS			controllers.Application.importEpa103
 GET		/parseXML				controllers.Application.parseXML
 
+POST	/MinData				controllers.Application.receiveMinData
+POST	/HourData				controllers.Application.receiveHourData
 # websockets
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket

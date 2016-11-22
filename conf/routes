@@ -85,5 +85,6 @@ GET		/parseXML				controllers.Application.parseXML
 
 POST	/MinData				controllers.Application.receiveMinData
 POST	/HourData				controllers.Application.receiveHourData
+POST	/Calibration			controllers.Application.receiveCalibration
 # websockets
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket

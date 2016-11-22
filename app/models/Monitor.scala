@@ -8,12 +8,18 @@ import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class Monitor(_id: String, indParkName: String, dp_no: String)
+case class MonitorV1(_id: String, indParkName: String, dp_no: String) {
+  def upgrade = Monitor(_id, indParkName, dp_no, Seq.empty[MonitorType.Value])
+}
+
+case class Monitor(_id: String, indParkName: String, dp_no: String,
+                   monitorTypes: Seq[MonitorType.Value] = Seq.empty[MonitorType.Value])
 
 object Monitor extends Enumeration {
   implicit val monitorRead: Reads[Monitor.Value] = EnumUtils.enumReads(Monitor)
   implicit val monitorWrite: Writes[Monitor.Value] = EnumUtils.enumWrites
   implicit val mWrite = Json.writes[Monitor]
+  implicit val m1Read = Json.reads[MonitorV1]
   implicit val mRead = Json.reads[Monitor]
 
   import org.mongodb.scala.bson._
@@ -28,8 +34,12 @@ object Monitor extends Enumeration {
 
   def monitorId(indParkName: String, dp_no: String) = s"${indParkName}#${dp_no}"
 
-  def buildMonitor(indParkName: String, dp_no: String) =
+  def buildMonitor(indParkName: String, dp_no: String) = {
+    assert(!indParkName.isEmpty)
+    assert(!dp_no.isEmpty)
+
     Monitor(monitorId(indParkName, dp_no), indParkName, dp_no)
+  }
 
   def init(colNames: Seq[String]) = {
     if (!colNames.contains(colName)) {
@@ -53,11 +63,16 @@ object Monitor extends Enumeration {
     val ret = Json.parse(d.toJson()).validate[Monitor]
 
     ret.fold(error => {
-      Logger.error(JsError.toJson(error).toString())
-      throw new Exception(JsError.toJson(error).toString)
+      //Try v1
+      val ret1 = Json.parse(d.toJson()).validate[MonitorV1]
+      ret1.fold(error => {
+        Logger.error(JsError.toJson(error).toString())
+        throw new Exception(JsError.toJson(error).toString)
+      },
+        mv1 =>
+          mv1.upgrade)
     },
-      m =>
-        m)
+      m => m)
   }
 
   def newMonitor(m: Monitor) = {

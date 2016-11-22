@@ -447,13 +447,13 @@ object Application extends Controller {
 
           val requestF =
             for (result <- retF) yield {
-              Ok(Json.obj("ok" -> true))
+              Ok(Json.obj("Ok" -> true))
             }
 
           requestF.recover({
             case _: Throwable =>
-              Logger.info("recover from upsert hour error...")
-              Ok(Json.obj("ok" -> false))
+              Logger.info("recover from upsert data error...")
+              Ok(Json.obj("Ok" -> false))
           })
         })
 
@@ -485,13 +485,13 @@ object Application extends Controller {
           val retF = Calibration.insert(calibrations)
           val requestF =
             for (result <- retF) yield {
-              Ok(Json.obj("ok" -> true))
+              Ok(Json.obj("Ok" -> true))
             }
 
           requestF.recover({
             case _: Throwable =>
               Logger.info("recover from upsert hour error...")
-              Ok(Json.obj("ok" -> false))
+              Ok(Json.obj("Ok" -> false))
           })
         })
 

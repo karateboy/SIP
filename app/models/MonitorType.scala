@@ -9,7 +9,9 @@ import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 case class MonitorType(_id: String, desp: String, unit: String, std_law: Option[Double],
-                       prec: Int, order: Int, std_internal: Option[Double] = None)
+                       prec: Int, order: Int, std_internal: Option[Double] = None,
+                       level1: Option[Double]=None, level2: Option[Double]=None, 
+                       level3: Option[Double]=None, level4: Option[Double]=None)
 
 object MonitorType extends Enumeration {
   import org.mongodb.scala.bson._

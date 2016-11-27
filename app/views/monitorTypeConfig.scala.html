@@ -31,6 +31,11 @@
             				<th>小時內控值</th>
             				<th>小時法規值</th>
             				<th>小數點位數</th>
+            				<th>標準1</th>
+            				<th>標準2</th>
+            				<th>標準3</th>
+            				<th>標準4</th>
+            				
             			</tr>
             		</thead>
             		<tbody>
@@ -42,6 +47,10 @@
             					<td col="std_internal">@MonitorType.format(mt, map(mt).std_internal) </td>
             					<td col="std_law">@MonitorType.format(mt, map(mt).std_law) </td>
             					<td col="prec">@map(mt).prec</td>
+            					<td col="level1">@MonitorType.format(mt, map(mt).level1)</td>
+            					<td col="level2">@MonitorType.format(mt, map(mt).level2)</td>
+            					<td col="level3">@MonitorType.format(mt, map(mt).level3)</td>
+            					<td col="level4">@MonitorType.format(mt, map(mt).level4)</td>
             				</tr>
             			}
             		</tbody>

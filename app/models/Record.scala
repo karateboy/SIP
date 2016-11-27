@@ -164,17 +164,17 @@ object Record {
 
     val mtList = MonitorType.activeMtvList
     val col = MongoDB.database.getCollection(colName)
-    val proj = include(mtList.map { MonitorType.BFName(_) }: _*)
+    val projFields = "time" :: mtList.map { MonitorType.BFName(_) }
+    val proj = include(projFields: _*)
     val f = col.find(and(equal("monitor", monitor.toString), gte("time", startTime.toDate()), lt("time", endTime.toDate()))).projection(proj).sort(ascending("time")).toFuture()
 
     for {
       docs <- f
     } yield {
       for {
-        doc <- docs
+        doc <- docs        
         time = doc("time").asDateTime()
       } yield {
-
         val mtDataList =
           for {
             mt <- mtList
@@ -226,8 +226,58 @@ object Record {
           m -> (time, pair.toMap)
         }
       }
-    for(pairs <-Future.sequence(futureList)) yield{
+    for (pairs <- Future.sequence(futureList)) yield {
       pairs.toMap
     }
   }
+
+  def getWindRose(monitor: Monitor.Value, monitorType: MonitorType.Value, start: DateTime, end: DateTime, level: List[Double], nDiv: Int = 16) = {
+    val windRecordFuture = getRecordListFuture(HourCollection)(monitor, start, end)
+    val windRecords = waitReadyResult(windRecordFuture)
+
+    assert(windRecords.length != 0)
+    val step = 360f / nDiv
+    import scala.collection.mutable.ListBuffer
+    val windDirPair =
+      for (d <- 0 to nDiv - 1) yield {
+        (d -> ListBuffer[Double]())
+      }
+    val windMap = Map(windDirPair: _*)
+
+    var total = 0
+    for {
+      w <- windRecords
+      windDirRecOpt = w.mtDataList.find { p => p.mtName == MonitorType.map(MonitorType.WIN_DIRECTION)._id } if windDirRecOpt.isDefined
+      mtRecOpt = w.mtDataList.find { p => p.mtName == MonitorType.map(monitorType)._id } if mtRecOpt.isDefined
+    } {
+      val mtRec = mtRecOpt.get
+      val windDirRec = windDirRecOpt.get
+      val dir = (Math.ceil((windDirRec.value - (step / 2)) / step).toInt) % nDiv
+      windMap(dir) += mtRec.value
+      total += 1
+    }
+
+    def winSpeedPercent(winSpeedList: ListBuffer[Double]) = {
+      val count = new Array[Double](level.length + 1)
+      def getIdx(v: Double): Int = {
+        for (i <- 0 to level.length - 1) {
+          if (v < level(i))
+            return i
+        }
+
+        return level.length
+      }
+
+      for (w <- winSpeedList) {
+        val i = getIdx(w)
+        count(i) += 1
+      }
+
+      assert(total != 0)
+      count.map(_ * 100 / total)
+    }
+
+    windMap.map(kv => (kv._1, winSpeedPercent(kv._2)))
+  }
+
 }

@@ -359,7 +359,7 @@ object Query extends Controller {
     chart
   }
 
-  def historyTrendChart(monitorStr: String, monitorTypeStr: String, reportUnitStr: String, 
+  def historyTrendChart(monitorStr: String, monitorTypeStr: String, reportUnitStr: String,
                         startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       import scala.collection.JavaConverters._
@@ -517,99 +517,100 @@ object Query extends Controller {
     resultF
   }
 
-  //
-  //  def windRose() = Security.Authenticated {
-  //    implicit request =>
-  //      Ok(views.html.windRose(false))
-  //  }
-  //
-  //  def monitorTypeRose() = Security.Authenticated {
-  //    implicit request =>
-  //      Ok(views.html.windRose(true))
-  //  }
-  //
-  //  def windRoseReport(monitorStr: String, monitorTypeStr: String, nWay: Int, startStr: String, endStr: String) = Security.Authenticated {
-  //    val monitor = EpaMonitor.withName(monitorStr)
-  //    val monitorType = MonitorType.withName(monitorTypeStr)
-  //    val start = DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
-  //    val end = DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm"))
-  //    val mtCase = MonitorType.map(monitorType)
-  //    assert(nWay == 8 || nWay == 16 || nWay == 32)
-  //
-  //    try {
-  //      val level = List(1f, 2f, 5f, 15f)
-  //      val windMap = Record.getMtRose(monitor, monitorType, start, end, level, nWay)
-  //      val nRecord = windMap.values.map { _.length }.sum
-  //
-  //      val dirMap =
-  //        Map(
-  //          (0 -> "北"), (1 -> "北北東"), (2 -> "東北"), (3 -> "東北東"), (4 -> "東"),
-  //          (5 -> "東南東"), (6 -> "東南"), (7 -> "南南東"), (8 -> "南"),
-  //          (9 -> "南南西"), (10 -> "西南"), (11 -> "西西南"), (12 -> "西"),
-  //          (13 -> "西北西"), (14 -> "西北"), (15 -> "北北西"))
-  //
-  //      val dirStrSeq =
-  //        for {
-  //          dir <- 0 to nWay - 1
-  //          dirKey = if (nWay == 8)
-  //            dir * 2
-  //          else if (nWay == 32) {
-  //            if (dir % 2 == 0) {
-  //              dir / 2
-  //            } else
-  //              dir + 16
-  //          } else
-  //            dir
-  //        } yield dirMap.getOrElse(dirKey, "")
-  //
-  //      var last = 0f
-  //      val speedLevel = level.flatMap { l =>
-  //        if (l == level.head) {
-  //          last = l
-  //          List(s"< ${l} ${mtCase.unit}")
-  //        } else if (l == level.last) {
-  //          val ret = List(s"${last}~${l} ${mtCase.unit}", s"> ${l} ${mtCase.unit}")
-  //          last = l
-  //          ret
-  //        } else {
-  //          val ret = List(s"${last}~${l} ${mtCase.unit}")
-  //          last = l
-  //          ret
-  //        }
-  //      }
-  //
-  //      import Highchart._
-  //
-  //      val series = for {
-  //        level <- 0 to level.length
-  //      } yield {
-  //        val data =
-  //          for (dir <- 0 to nWay - 1)
-  //            yield Seq(Some(dir.toDouble), Some(windMap(dir)(level).toDouble))
-  //
-  //        seqData(speedLevel(level), data)
-  //      }
-  //
-  //      val title =
-  //        if (monitorType == "")
-  //          "風瑰圖"
-  //        else {
-  //          mtCase.desp + "玫瑰圖"
-  //        }
-  //
-  //      val chart = HighchartData(
-  //        scala.collection.immutable.Map("polar" -> "true", "type" -> "column"),
-  //        scala.collection.immutable.Map("text" -> title),
-  //        XAxis(Some(dirStrSeq)),
-  //        Seq(YAxis(None, AxisTitle(Some(Some(""))), None)),
-  //        series)
-  //
-  //      Results.Ok(Json.toJson(chart))
-  //    } catch {
-  //      case e: AssertionError =>
-  //        Logger.error(e.toString())
-  //        BadRequest("無資料")
-  //    }
-  //  }
+  def windRose() = Security.Authenticated {
+    implicit request =>
+      Ok(views.html.windRose())
+  }
+
+  import java.nio.file.Files
+  def windRoseReport(monitorStr: String, monitorTypeStr: String, nWay: Int,
+                     startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated {
+    import java.net.URLDecoder._
+    val monitor = Monitor.withName(decode(monitorStr, "UTF-8"))
+
+    val monitorType = MonitorType.withName(decode(monitorTypeStr, "UTF-8"))
+    val start = new DateTime(startLong)
+    val end = new DateTime(endLong)
+    val outputType = OutputType.withName(outputTypeStr)
+
+    try {
+      val mtCase = MonitorType.map(monitorType)
+      val mtLevel = List(mtCase.level1, mtCase.level2, mtCase.level3, mtCase.level4)
+
+      val level = if (mtLevel.forall { _.isDefined })
+        mtLevel.map { _.get }
+      else
+        List(1d, 2d, 5d, 15d)
+
+      val windMap = Record.getWindRose(monitor, monitorType, start, end, level, nWay)
+
+      val nRecord = windMap.values.map { _.length }.sum
+      val dirMap =
+        Map(
+          (0 -> "北"), (1 -> "北北東"), (2 -> "東北"), (3 -> "東北東"), (4 -> "東"),
+          (5 -> "東南東"), (6 -> "東南"), (7 -> "南南東"), (8 -> "南"),
+          (9 -> "南南西"), (10 -> "西南"), (11 -> "西西南"), (12 -> "西"),
+          (13 -> "西北西"), (14 -> "西北"), (15 -> "北北西"))
+      val dirStrSeq =
+        for {
+          dir <- 0 to nWay - 1
+          dirKey = if (nWay == 8)
+            dir * 2
+          else if (nWay == 32) {
+            if (dir % 2 == 0) {
+              dir / 2
+            } else
+              dir + 16
+          } else
+            dir
+        } yield dirMap.getOrElse(dirKey, "")
+      var last = 0d
+      val speedLevel = level.flatMap { l =>
+        if (l == level.head) {
+          last = l
+          List(s"< ${l} ${mtCase.unit}")
+        } else if (l == level.last) {
+          val ret = List(s"${last}~${l} ${mtCase.unit}", s"> ${l} ${mtCase.unit}")
+          last = l
+          ret
+        } else {
+          val ret = List(s"${last}~${l} ${mtCase.unit}")
+          last = l
+          ret
+        }
+      }
+
+      val series = for {
+        level <- 0 to level.length
+      } yield {
+        val data =
+          for (dir <- 0 to nWay - 1)
+            yield Seq(Some(dir.toDouble), Some(windMap(dir)(level).toDouble))
+
+        seqData(speedLevel(level), data)
+      }
+
+      val title = s"${mtCase.desp}玫瑰圖"
+      val chart = HighchartData(
+        scala.collection.immutable.Map("polar" -> "true", "type" -> "column"),
+        scala.collection.immutable.Map("text" -> title),
+        XAxis(Some(dirStrSeq)),
+        Seq(YAxis(None, AxisTitle(Some(Some(""))), None)),
+        series)
+
+      if (outputType == OutputType.excel) {
+        val excelFile = ExcelUtility.exportChartData(chart, Array.fill(nWay)(MonitorType.WIN_SPEED))
+        Results.Ok.sendFile(excelFile, fileName = _ =>
+          play.utils.UriEncoding.encodePathSegment(chart.title("text") + ".xlsx", "UTF-8"),
+          onClose = () => { Files.deleteIfExists(excelFile.toPath()) })
+      } else {
+        Results.Ok(Json.toJson(chart))
+      }
+    } catch {
+      case ex: AssertionError =>
+        Logger.error(ex.getMessage, ex)
+        BadRequest("無資料")
+    }
+  }
 
 }

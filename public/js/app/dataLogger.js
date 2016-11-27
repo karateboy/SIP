@@ -18,6 +18,7 @@ var app = angular.module('dataLoggerApp',
 		  'monthlyHourReportView',
 		  'historyView',
 		  'historyTrendView',
+		  'windRoseView',
 		  'manualAuditView',
 		  'manualAuditHistoryView']);
 
@@ -62,6 +63,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 		resolve : {
 			breadcrumb : [ 'BreadcrumbService', function(bs) {
 				return bs.title = "數據查詢>警報記錄查詢";
+			} ]
+		}
+	}).when('/WindRose', {
+		templateUrl : "/WindRose",
+		resolve : {
+			breadcrumb : [ 'BreadcrumbService', function(bs) {
+				return bs.title = "數據查詢>玫瑰圖";
 			} ]
 		}
 	}).when('/Report', {

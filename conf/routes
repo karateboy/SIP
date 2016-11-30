@@ -93,3 +93,5 @@ POST	/HourData				controllers.Application.receiveHourData
 POST	/Calibration			controllers.Application.receiveCalibration
 # websockets
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket
+
+GET		/TestSMS				controllers.Application.testSMS

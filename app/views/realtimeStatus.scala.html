@@ -2,7 +2,8 @@
 @import com.github.nscala_time.time.Imports._
 @(recordMap: Map[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])], privilege: Privilege)
 <div class="row">
-<div class="ibox">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
     <div class="ibox-content">
     	@recordLegend()
        	<table id="recordTable" class="table table-striped table-responsive">
@@ -11,7 +12,7 @@
 					<th>工業區</th>
 					<th>測站</th>
 					<th>資料時間</th>
-					@for(mt <- MonitorType.mtvList){
+					@for(mt <- MonitorType.mtvList if privilege.allowedMonitorTypes.contains(mt)){
 						<th>@MonitorType.map(mt).desp</th>
 					}
 				</tr>
@@ -23,7 +24,7 @@
 						<th>@Monitor.map(m).dp_no</th>
 						@if(!recordMap.contains(m)){
 							<th>-</th>
-							@for(mt <- MonitorType.mtvList){
+							@for(mt <- MonitorType.mtvList  if privilege.allowedMonitorTypes.contains(mt)){
 								<td>-</td>
 							}
 						}else{
@@ -39,6 +40,7 @@
     	</table>
     </div>
    </div>
+</div>
 </div>
 <script>
 $( document ).ready(function() {

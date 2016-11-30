@@ -3796,6 +3796,7 @@ table.table-mail tr td {
 }
 .ibox-content {
   clear: both;
+  overflow:auto;
 }
 .ibox-heading {
   background-color: #f3f6fb;

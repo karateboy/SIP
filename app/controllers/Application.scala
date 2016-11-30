@@ -494,6 +494,10 @@ object Application extends Controller {
               Ok(Json.obj("Ok" -> false))
           })
         })
-
+  }
+  
+  def testSMS = Security.Authenticated {
+    Every8d.sendSMS("測試", "測試警報", List("0920660136"))
+    Ok("")
   }
 }

@@ -94,6 +94,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "系統管理>測項管理";
 			} ]
 		}
+	}).when('/MonitorConfig', {
+		templateUrl : "/MonitorConfig",
+		resolve : {
+			breadcrumb : [ 'BreadcrumbService', function(bs) {
+				return bs.title = "系統管理>測站管理";
+			} ]
+		}
 	}).when('/AuditConfig', {
 		templateUrl : "/AuditConfig",
 		resolve : {

@@ -9,11 +9,11 @@ import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 case class MonitorV1(_id: String, indParkName: String, dp_no: String) {
-  def upgrade = Monitor(_id, indParkName, dp_no, Seq.empty[MonitorType.Value])
+  def upgrade = Monitor(_id, indParkName, dp_no, None, None)
 }
 
-case class Monitor(_id: String, indParkName: String, dp_no: String,
-                   monitorTypes: Seq[MonitorType.Value] = Seq.empty[MonitorType.Value])
+case class Monitor(_id: String, indParkName: String, dp_no: String,                   
+                   lat:Option[Double]=None, lng:Option[Double]=None)
 
 object Monitor extends Enumeration {
   implicit val monitorRead: Reads[Monitor.Value] = EnumUtils.enumReads(Monitor)
@@ -122,5 +122,37 @@ object Monitor extends Enumeration {
       case _: NoSuchElementException =>
         newMonitor(buildMonitor(indParkName, dp_no))
     }
+  }
+  
+  def format(v:Option[Double])={
+    if(v.isEmpty)
+      "-"
+    else
+      v.get.toString
+  }
+  
+  def updateMonitor(m: Monitor.Value, colname: String, newValue: String) = {
+    import org.mongodb.scala._
+    import org.mongodb.scala.model.Filters._
+    import org.mongodb.scala.model.Updates._
+    import org.mongodb.scala.model.FindOneAndUpdateOptions
+
+    import scala.concurrent.ExecutionContext.Implicits.global
+    Logger.debug(s"col=$colname newValue=$newValue")
+    val idFilter = equal("_id", map(m)._id)
+    val opt = FindOneAndUpdateOptions().returnDocument(com.mongodb.client.model.ReturnDocument.AFTER)
+    val f =
+        if (newValue == "-")
+          collection.findOneAndUpdate(idFilter, set(colname, null), opt).toFuture()
+        else {
+          import java.lang.Double
+          collection.findOneAndUpdate(idFilter, set(colname, Double.parseDouble(newValue)), opt).toFuture()
+        }
+
+    val ret = waitReadyResult(f)
+
+    val mCase = toMonitor(ret(0))
+    Logger.debug(mCase.toString)
+    map = map + (m -> mCase)
   }
 }

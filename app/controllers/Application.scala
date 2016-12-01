@@ -238,6 +238,9 @@ object Application extends Controller {
         }
       }
   }
+  def monitorConfig = Security.Authenticated {
+    Ok(views.html.monitorConfig())
+  }
 
   def monitorTypeConfig = Security.Authenticated {
     implicit request =>
@@ -258,6 +261,28 @@ object Application extends Controller {
         val mt = MonitorType.withName(mtInfo(0))
 
         MonitorType.updateMonitorType(mt, mtInfo(1), mtData.data)
+
+        Ok(mtData.data)
+      } catch {
+        case ex: Throwable =>
+          Logger.error(ex.getMessage, ex)
+          BadRequest(ex.toString)
+      }
+  }
+
+  def saveMonitorConfig() = Security.Authenticated {
+    implicit request =>
+      try {
+        val mtForm = Form(
+          mapping(
+            "id" -> text,
+            "data" -> text)(EditData.apply)(EditData.unapply))
+
+        val mtData = mtForm.bindFromRequest.get
+        val mtInfo = mtData.id.split(":")
+        val m = Monitor.withName(mtInfo(0))
+
+        Monitor.updateMonitor(m, mtInfo(1), mtData.data)
 
         Ok(mtData.data)
       } catch {

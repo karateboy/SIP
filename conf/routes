@@ -42,6 +42,8 @@ GET		/Excel/WindRose/:monitors/:monitorType/:nWay/:start/:end		controllers.Query
 
 GET		/MonitorTypeConfig			controllers.Application.monitorTypeConfig
 POST	/SaveMonitorTypeConfig		controllers.Application.saveMonitorTypeConfig
+GET		/MonitorConfig				controllers.Application.monitorConfig
+POST	/SaveMonitorConfig			controllers.Application.saveMonitorConfig
 
 GET		/ManualAudit			controllers.Query.manualAudit()
 GET		/ManualAuditHistory		controllers.Query.manualAuditHistory()

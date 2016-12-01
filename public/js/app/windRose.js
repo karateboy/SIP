@@ -74,42 +74,19 @@ angular
 								}
 							}
 							
-							function getSelectedArrayFunction(obj){
-								return function(){
-									var ret = [];
-									for (var prop in obj) {
-										if(obj[prop])
-											ret.push(prop);
-									}
-									return ret;
-								}	
-							}
-							
-							$scope.checkedIndPark={};
-							self.selectedIndPark=getSelectedArrayFunction($scope.checkedIndPark);
-							$scope.checkedMonitorId={};
-							self.selectedMonitorId=getSelectedArrayFunction($scope.checkedMonitorId);
-							$scope.checkedMtId={};
-							self.selectedMtId = getSelectedArrayFunction($scope.checkedMtId);
-							self.chartTypeList = [
-							    {id:"line", name:"折線圖"},
-							    {id:"spline", name:"曲線圖"},
-							    {id:"area", name:"面積圖"},
-							    {id:"areaspline", name:"曲線面積圖"},
-							    {id:"column", name:"柱狀圖"},
-							    {id:"scatter", name:"點圖"}
-							];
-							$scope.selectedChartType;
-							
+							$scope.selectedIndPark;
+							$scope.selectedMonitorId;
+							$scope.selectedMtId;
+							$scope.nWay;
 							
 							self.indParkMonitor = function(m) {
-								return (self.selectedIndPark().indexOf(m.indParkName)!=-1)
+								return ($scope.selectedIndPark == m.indParkName)
 							}
 
 							self.displayResult = false;
 							self.query = function() {
-								var base_url = encodeURIComponent(self.selectedMonitorId().join(':')) + 
-									"/" + encodeURIComponent(self.selectedMtId()) + 
+								var base_url = encodeURIComponent($scope.selectedMonitorId) + 
+									"/" + encodeURIComponent($scope.selectedMtId) + 
 									"/" + $scope.nWay +  
 									"/" + self.dateRangeStart.valueOf() + 
 									"/" + self.dateRangeEnd.valueOf();
@@ -170,6 +147,8 @@ angular
 											result.title.x = -70;
 											$("#downloadExcel").prop("href", "/Excel" + url);
 											$('#reportDiv').highcharts(result);																																
-										}, function(error) {});
+										}, function(error) {
+											alert("無資料!");
+										});
 							}													
 						} ]);

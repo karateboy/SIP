@@ -32,17 +32,6 @@ object ModelHelper {
     Logger.error(ex.getMessage, ex)
   }
 
-  import Alarm._
-  def logInstrumentError(id: String, msg: String, ex: Throwable) = {
-    Logger.error(msg, ex)
-    log(instStr(id), Level.ERR, msg)
-  }
-
-  def logInstrumentInfo(id: String, msg: String) = {
-    Logger.info(msg)
-    log(instStr(id), Level.INFO, msg)
-  }
-
   def errorHandler: PartialFunction[Throwable, Any] = {
     case ex: Throwable =>
       Logger.error("Error=>", ex)

@@ -18,6 +18,7 @@ var app = angular.module('dataLoggerApp',
 		  'monthlyHourReportView',
 		  'historyView',
 		  'historyTrendView',
+		  'alarmView',
 		  'windRoseView',
 		  'manualAuditView',
 		  'manualAuditHistoryView']);

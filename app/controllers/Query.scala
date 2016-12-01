@@ -447,11 +447,16 @@ object Query extends Controller {
     Ok(views.html.alarm())
   }
 
-  def alarmReport(level: Int, startStr: String, endStr: String) = Security.Authenticated {
+  def alarmReport(monitorEncodedStr: String, monitorTypeEncodedStr:String, startStr: String, endStr: String) = Security.Authenticated {
+    val monitorStr = java.net.URLDecoder.decode(monitorEncodedStr, "UTF-8")
+    val monitors = monitorStr.split(":") map {Monitor.withName}
+    val monitorTypeStr = java.net.URLDecoder.decode(monitorTypeEncodedStr, "UTF-8")
+    val monitorTypes = monitorTypeStr.split(":") map {MonitorType.withName}
     val (start, end) =
-      (DateTime.parse(startStr, DateTimeFormat.forPattern("YYYY-MM-dd")),
-        DateTime.parse(endStr, DateTimeFormat.forPattern("YYYY-MM-dd")) + 1.day)
-    val report = Alarm.getAlarms(level, start, end + 1.day)
+      (new DateTime(startStr.toLong),
+        new DateTime(endStr.toLong))
+    val report = Alarm.getAlarms(monitors.toList, monitorTypes.toList, start, end)
+    Logger.info("get alarm...")
     Ok(views.html.alarmReport(start, end, report))
   }
 

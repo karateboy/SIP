@@ -33,7 +33,7 @@ GET		/Excel/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end	controll
 GET		/History					controllers.Query.history
 GET		/HistoryReport/:monitor/:monitorType/:tabType/:start/:end		controllers.Query.historyReport(monitor, monitorType, tabType, start:Long, end:Long)
 GET		/Alarm						controllers.Query.alarm
-GET		/AlarmReport/:level/:start/:end	controllers.Query.alarmReport(level:Int, start, end)
+GET		/AlarmReport/:monitors/:monitorTypes/:start/:end	controllers.Query.alarmReport(monitors, monitorTypes, start, end)
 
 GET		/WindRose					controllers.Query.windRose
 GET		/JSON/WindRose/:monitors/:monitorType/:nWay/:start/:end		controllers.Query.windRoseReport(monitors, monitorType, nWay:Int, start:Long, end:Long, outputTypeStr="html")
@@ -95,3 +95,4 @@ POST	/Calibration			controllers.Application.receiveCalibration
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket
 
 GET		/TestSMS				controllers.Application.testSMS
+GET		/TestAlarm				controllers.Application.testAlarm

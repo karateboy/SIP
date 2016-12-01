@@ -11,30 +11,30 @@
 	            			<label class="col-lg-1 control-label">工業區</label>
 	            			<div class="col-lg-11">
 	            				<div class="btn-group">	            				            				
-	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedIndPark[park]" ng-repeat="park in ctrl.indParkList"  
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedIndPark" ng-repeat="park in ctrl.indParkList"  
 	            					uib-btn-radio="park">{{park}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-            			<div class="form-group" ng-show="ctrl.selectedIndPark">
+            			<div class="form-group" ng-show="selectedIndPark">
 	            			<label class="col-lg-1 control-label">測站</label>
 	            			<div class="col-lg-11">
 	            				<div class="btn-group">	            				            				
-	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedMonitorId" ng-repeat="m in ctrl.monitorList | filter:ctrl.indParkMonitor"  
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedMonitorId" ng-repeat="m in ctrl.monitorList | filter:ctrl.indParkMonitor"  
 	            					uib-btn-radio="m._id">{{m.indParkName+"-"+m.dp_no}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-            			<div class="form-group" ng-show="ctrl.selectedMonitorId().length">
+            			<div class="form-group" ng-show="selectedMonitorId">
 	            			<label class="col-lg-1 control-label">測項</label>
 	            			<div class="col-lg-11">
 	            				<div class="btn-group">	            				            				
-	            					<label class="btn btn-outline btn-primary" ng-model="$parent.checkedMtId" ng-repeat="mt in ctrl.monitorTypeList"  
+	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedMtId" ng-repeat="mt in ctrl.monitorTypeList"  
 	            					uib-btn-radio="mt._id">{{mt.desp}}</label>	            			
 	            				</div>
 	            			</div>	            			            		
 	                    </div>
-	                    <div class="form-group" ng-show="ctrl.selectedMtId().length">
+	                    <div class="form-group" ng-show="selectedMtId">
 	            			<label class="col-lg-1 control-label">方位</label>	
 	            			<div class="col-lg-11">
 	            				<div class="btn-group">	            				            				
@@ -44,15 +44,6 @@
 	            			</div>
 	                    </div>
 	                    <div class="form-group" ng-show="nWay">
-	            			<label class="col-lg-1 control-label">圖表類型</label>
-	            			<div class="col-lg-11">
-	            				<div class="btn-group">	            				            				
-	            					<label class="btn btn-outline btn-primary" ng-model="$parent.selectedChartType" ng-repeat="chartType in ctrl.chartTypeList"  
-	            					uib-btn-radio='chartType.id'>{{chartType.name}}</label>	            			
-	            				</div>
-	            			</div>						
-	                    </div>	                    
-	                    <div class="form-group" ng-show="selectedChartType">
 	            			<label class="col-lg-1 control-label">查詢區間</label>
 	            			<div class="col-lg-4">
 								<div class="dropdown">
@@ -87,7 +78,7 @@
 	            		</div>													                    
 						<div class="form-group">
 							<div class="col-lg-1 col-lg-offset-1">
-								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-disabled="selectedMtId().length == 0">查詢</button>
+								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-enable="selectedMtId">查詢</button>
 							</div>							
 						</div>	                    	                    	                    
             		</form>

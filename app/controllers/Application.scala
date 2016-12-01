@@ -417,6 +417,37 @@ object Application extends Controller {
         },
         records => {
           import scala.collection.mutable.Map
+          def checkRecordMap(recordMap: Map[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]) = {
+            for {
+              monitorMap <- recordMap
+              monitor = monitorMap._1
+              timeMaps = monitorMap._2
+              dateTime <- timeMaps.keys.toList.sorted
+              mtMaps = timeMaps(dateTime) if (!mtMaps.isEmpty)
+            } {
+              for (mt <- mtMaps.keys) {
+                val mtCase = MonitorType.map(mt)
+                if (mtCase.std_internal.isDefined) {
+                  val record = mtMaps(mt)
+                  if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
+                    if (record._1 >= mtCase.std_internal.get) {
+                      Alarm.log(monitor, mt, s"測值超過內控值")
+                    }
+                  }
+                }
+
+                if (mtCase.std_law.isDefined) {
+                  val record = mtMaps(mt)
+                  if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
+                    if (record._1 >= mtCase.std_law.get) {
+                      Alarm.log(monitor, mt, s"測值超過法規值")
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
           for (record <- records) {
             try {
@@ -444,6 +475,9 @@ object Application extends Controller {
             }
 
           val retF = Future.sequence(f.toList)
+
+          if (collectionName == Record.HourCollection)
+            checkRecordMap(recordMap)
 
           val requestF =
             for (result <- retF) yield {
@@ -495,9 +529,14 @@ object Application extends Controller {
           })
         })
   }
-  
+
   def testSMS = Security.Authenticated {
     Every8d.sendSMS("測試", "測試警報", List("0920660136"))
+    Ok("")
+  }
+
+  def testAlarm = Security.Authenticated {
+    Alarm.log(Monitor.withName("台塑六輕工業園區#彰化縣大城站"), MonitorType.withName("PM10"), "測試警報")
     Ok("")
   }
 }

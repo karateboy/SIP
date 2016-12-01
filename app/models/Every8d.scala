@@ -12,8 +12,6 @@ object Every8d {
   }
   def sendSMS(subject:String, content:String, mobileList:List[String]) = {
     val sessionStr = service.getConnection(account, password)
-    Logger.info("sendSMS")
-    Logger.debug(sessionStr)
     val sessionXML = xml.XML.loadString(sessionStr)
     sessionXML match {
       case <SMS>{ connections @ _* }</SMS> =>
@@ -31,6 +29,8 @@ object Every8d {
               Logger.error(s"failed to send SMS")
               
             service.closeConnection(session.text)
+          }else{
+            Logger.error(s"${code.text}:${desp.text}")
           }
         }
     }

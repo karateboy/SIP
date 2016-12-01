@@ -431,7 +431,7 @@ object Application extends Controller {
                   val record = mtMaps(mt)
                   if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
                     if (record._1 >= mtCase.std_internal.get) {
-                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過內控值")
+                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過警報值")
                     }
                   }
                 }
@@ -440,7 +440,7 @@ object Application extends Controller {
                   val record = mtMaps(mt)
                   if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
                     if (record._1 >= mtCase.std_law.get) {
-                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過法規值")
+                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過超高警報值")
                     }
                   }
                 }

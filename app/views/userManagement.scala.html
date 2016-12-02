@@ -28,41 +28,41 @@
                 </div>
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">密碼</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='password' type="password" placeholder="Password" class="form-control" 
                 	required ng-model="ctrl.user.password">
                 </div>
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">密碼再輸入</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='password' type="password" placeholder="Password" class="form-control" 
                 	required ng-model="ctrl.user.passwordRetype">
                 </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">顯示名稱</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='name' type="text" placeholder="姓名" class="form-control" 
                 	required ng-model="ctrl.user.name">
                 </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">行動電話</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='phone' type="tel" placeholder="電話號碼" class="form-control" 
                 	required ng-model="ctrl.user.phone">
                 </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">系統管理員</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='admin' type="checkbox" class="form-control" 
                 	ng-model="ctrl.user.isAdmin">
                 </div>
             </div>
             <div class="form-group">
 	    		<label class="col-lg-2 control-label">群組:</label>
-	        		<div class="col-lg-10">
+	        		<div class="col-lg-5">
 	        		<div class="btn-group">	            				            				
 	            	<label class="btn btn-outline btn-primary" ng-model="$parent.userGroup" 
 	            		ng-repeat="group in ctrl.groupList"  uib-btn-radio="group">{{group._id}}</label>	            			
@@ -110,41 +110,42 @@
 	    	</div>
    		<div ng-show="ctrl.displayUser">	   			
             <div class="form-group"><label class="col-lg-2 control-label">密碼</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='password' type="password" placeholder="Password" class="form-control" 
                 	required ng-model="ctrl.user.password">
                 </div>
             </div>
             <div class="form-group"><label class="col-lg-2 control-label">密碼再輸入</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='password' type="password" placeholder="Password" class="form-control" 
                 	required ng-model="ctrl.user.passwordRetype">
                 </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">顯示名稱</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='name' type="text" placeholder="姓名" class="form-control" 
                 	required ng-model="ctrl.user.name">
                 </div>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">行動電話</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='phone' type="tel" placeholder="電話號碼" class="form-control" 
                 	required ng-model="ctrl.user.phone">
                 </div>
+                <button class="btn btn-primary" ng-click="ctrl.testSMS()" ng-enable="ctrl.user.phone">測試簡訊</button>
             </div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">系統管理員</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='admin' type="checkbox" class="form-control" 
                 	ng-model="ctrl.user.isAdmin">
                 </div>
             </div>
             <div class="form-group">
 	    		<label class="col-lg-2 control-label">群組:</label>
-	        		<div class="col-lg-10">
+	        		<div class="col-lg-5">
 	        		<div class="btn-group">	            				            				
 	            	<label class="btn btn-outline btn-primary" ng-model="$parent.userGroup" 
 	            		ng-repeat="group in ctrl.groupList"  uib-btn-radio="group">{{group._id}}</label>	            			
@@ -153,7 +154,7 @@
 	    	</div>
             <div class="form-group">
             	<label class="col-lg-2 control-label">警報通知</label>
-                <div class="col-lg-10">
+                <div class="col-lg-5">
                 	<input name='admin' type="checkbox" class="form-control" 
                 	ng-model="ctrl.user.alarmConfig.enable">
                 </div>

@@ -155,4 +155,16 @@ object Monitor extends Enumeration {
     Logger.debug(mCase.toString)
     map = map + (m -> mCase)
   }
+  
+  def getCenterLat(privilege: Privilege) = {
+    val monitors = privilege.allowedMonitors.filter { m => privilege.allowedIndParks.contains(Monitor.map(m).indParkName) }
+    val latList = monitors.flatMap{m => Monitor.map(m).lat}
+    latList.sum / latList.length
+  }
+  
+  def getCenterLng(privilege: Privilege) = {
+    val monitors = privilege.allowedMonitors.filter { m => privilege.allowedIndParks.contains(Monitor.map(m).indParkName) }
+    val lngList = monitors.flatMap{m => Monitor.map(m).lng}
+    lngList.sum / lngList.length
+  }
 }

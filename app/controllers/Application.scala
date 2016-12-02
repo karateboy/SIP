@@ -20,14 +20,32 @@ object Application extends Controller {
 
   val title = "特殊性工業區監測系統"
 
-  def index = Security.Authenticated {
+  def index = Security.Authenticated.async {
     implicit request =>
-      val user = request.user
-      Ok(views.html.outline(title, user, views.html.dashboard("test")))
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        val group = groupSeq(0)
+
+        Ok(views.html.outline(title, request.user, views.html.dashboard(group.privilege)))
+      }
   }
 
-  def dashboard = Security.Authenticated {
-    Ok(views.html.dashboard(""))
+  def dashboard = Security.Authenticated.async {
+    implicit request =>
+      val userOptF = User.getUserByEmailFuture(request.user.id)
+      for {
+        userOpt <- userOptF if userOpt.isDefined
+        groupF = Group.findGroup(userOpt.get.groupId)
+        groupSeq <- groupF
+      } yield {
+        val group = groupSeq(0)
+
+        Ok(views.html.dashboard(group.privilege))
+      }
   }
 
   val path = current.path.getAbsolutePath + "/importEPA/"
@@ -555,8 +573,8 @@ object Application extends Controller {
         })
   }
 
-  def testSMS = Security.Authenticated {
-    Every8d.sendSMS("測試", "測試警報", List("0920660136"))
+  def testSMS(mobile:String) = Security.Authenticated {
+    Every8d.sendSMS("測試", "測試警報", List(mobile))
     Ok("")
   }
 

@@ -13,7 +13,9 @@ GET		/login						controllers.Login.prompt
 GET		/logout						controllers.Login.logout
 POST	/authenticate				controllers.Login.authenticate
 
-GET		/Dashboard			controllers.Application.dashboard
+GET		/Dashboard					controllers.Application.dashboard
+GET		/JSON/realtime/map			controllers.Realtime.realtimeMap
+
 GET		/UserManagement		controllers.Application.userManagement
 POST	/User				controllers.Application.newUser
 GET		/User				controllers.Application.getAllUsers
@@ -96,5 +98,5 @@ POST	/Calibration			controllers.Application.receiveCalibration
 # websockets
 GET		/MinMonthlyReportSocket		controllers.Report.getMinMonthlySocket
 
-GET		/TestSMS				controllers.Application.testSMS
-GET		/TestAlarm				controllers.Application.testAlarm
+GET		/TestSMS/:mobile			controllers.Application.testSMS(mobile)
+GET		/TestAlarm					controllers.Application.testAlarm

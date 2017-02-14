@@ -105,7 +105,7 @@ angular
 								return (self.selectedIndPark().indexOf(m.indParkName)!=-1)
 							}
 
-							self.displayResult = false;
+							self.displayResult = true;
 							self.query = function() {
 								var base_url = encodeURIComponent(self.selectedMonitorId().join(':')) + 
 									"/" + encodeURIComponent(self.selectedMtId().join(':')) + 
@@ -119,7 +119,6 @@ angular
 								$http.get(url)
 									.then(
 										function(response) {
-											self.displayResult = true;
 											var result = response.data;
 											result.chart = {
 															type: $scope.selectedChartType,

@@ -20,8 +20,8 @@ mappings in Universal ++=
     (x => x -> ("report_template/" + x.getName))
 
 mappings in Universal ++=
-(baseDirectory.value / "importEPA" * "*" get) map
-    (x => x -> ("importEPA/" + x.getName))
+(baseDirectory.value / "importEPA/backup/" * "*" get) map
+    (x => x -> ("importEPA/backup/" + x.getName))
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 

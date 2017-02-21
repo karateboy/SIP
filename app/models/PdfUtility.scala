@@ -22,8 +22,6 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
  * @author user
  */
 object PdfUtility {
-  val CSS_ROOT = "/public/"
-  
   def creatPdfWithReportHeader(title:String, content:play.twirl.api.HtmlFormat.Appendable)={
     val html = views.html.reportTemplate(title, content)
     createPdf(html.toString)
@@ -65,13 +63,13 @@ object PdfUtility {
     // CSS
     val cssResolver =
                 XMLWorkerHelper.getInstance().getDefaultCssResolver(false);
-    val bootstrapCss = XMLWorkerHelper.getCSS(new FileInputStream(current.path + CSS_ROOT +"css/bootstrap.min.css"))
+    val bootstrapCss = XMLWorkerHelper.getCSS(new FileInputStream(current.path + "/report_template/bootstrap.min.css"))
     cssResolver.addCss(bootstrapCss)
     
     //val styleCss = XMLWorkerHelper.getCSS(new FileInputStream(current.path + CSS_ROOT +"css/style.css"))
     //cssResolver.addCss(styleCss)
 
-    val aqmCss = XMLWorkerHelper.getCSS(new FileInputStream(current.path + CSS_ROOT +"css/aqm.css"))
+    val aqmCss = XMLWorkerHelper.getCSS(new FileInputStream(current.path + "/report_template/aqm.css"))
     cssResolver.addCss(aqmCss)
 
     // HTML

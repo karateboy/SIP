@@ -65,7 +65,7 @@
 	            		</div>													                    
 						<div class="form-group">
 							<div class="col-lg-1 col-lg-offset-1">
-								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-enabled="selectedReportType">查詢</button>
+								<button type="submit" class="btn btn-primary" ng-click="ctrl.query()" ng-show="selectedReportType">查詢</button>
 							</div>							
 						</div>
             		</form>
@@ -95,7 +95,6 @@
         	<div class="panel panel-success" ng-show="ctrl.displayResult" id="reportPanel">
              	<div class="panel-body panel-collapse" id="monitorReport">
             		<div align="right">
-            			<label class="btn btn-outline" data-toggle="tooltip" data-placement="bottom" title="PDF"><a href="#" id="downloadPDF"><i class="fa fa-file-pdf-o fa-2x pdf"></i></a></label>
             			<label class="btn btn-outline" data-toggle="tooltip" data-placement="bottom" title="Excel"><a href="#" id="downloadExcel"><i class="fa fa-file-excel-o fa-2x"></i></a></label>            			
                 	</div>            		
 					<div id="reportDiv" align="center" style="overflow:auto;">
@@ -104,115 +103,3 @@
         	</div>
 	</div>
 </div>
-<script>
-	//var ws_url = '@routes.Report.getMinMonthlySocket().webSocketURL()';
-</script>
-<script>
-$( document ).ready(function() {
-	var webSocket;
-	function updateProgress(n){
-		var $bar = $('#progressBar');
-		$bar.prop('aria-valuenow', n);
-		$bar.width(n+"%");
-		$bar.text(n+"%");
-	}
-	
-	function downloadMinMonthly(obj){
-		updateProgress(0);
-		$('#MinMonthlyDialog').modal({keyboard: false});
-		console.log(ws_url);
-		webSocket = new WebSocket(ws_url);
-		webSocket.onmessage = function(evt){
-			var cmd = evt.data.split(":");
-			if(cmd[0] == "progress"){				
-				updateProgress(cmd[1]);
-			}else if(cmd[0] == "finish"){
-				console.log("finish");
-				updateProgress(100);
-				webSocket.close();
-				$('#MinMonthlyDialog').modal('hide');
-				window.open("/DownloadMinMonthlyReport/"+cmd[1],'Download');
-			}
-		}
-		
-		webSocket.onopen = function(evt){
-			console.log("Connection open...");
-			webSocket.send("start:" + obj.monitor + ":" + obj.startTime);
-		}
-		webSocket.onclose = function(evt){
-			console.log("Connection closed.");
-		}
-		webSocket.onerror = function(evt){
-			console.log("Error!");
-			webSocket.close();
-		}
-		
-		$("body").css("cursor", "default");		
-	}
-	
-	var monitor, reportType, reportDate;
-	
-	function validate(){
-		monitor = $("input[name='monitor']:checked").attr('id');
-		if(!monitor){
-			alert('請選擇測站');
-			return false;
-		}
-		
-		reportType = $("input[name='reportType']:checked").attr('id');
-		if (!reportType) {
-			alert('請選擇報表種類');
-			return false;
-		}
-		reportDate = $('#reportDate').val();
-		if(reportDate.length === 0){
-			alert('請選擇報表日期');
-			return false;
-		}
-		
-		return true;
-	}
-
-	
-	$('#queryReport').click(function(){
-		if(!validate())
-			return;
-
-		$("body").css("cursor", "progress");
-
-		if(reportType == 'MinMonthly'){
-			var obj = {
-					'reportType':reportType,
-					'startTime':reportDate
-				};					
-			downloadMinMonthly(obj);	
-		}else {
-			$('#reportDiv').html('');
-			$("#reportPanel").css('display','block');
-			$("#reportPanel").collapse('show');
-				
-			var url="/monitorReport/"+encodeURIComponent(monitor)+"/"+reportType+"/"+reportDate;
-			$.ajax({
-				url: url,
-				data: "",
-				contentType: "application/json; charset=utf-8",
-				type: "GET",
-				cache:false,
-				dataType: "html",
-				success: function(result){
-					$('#reportDiv').html(result);
-		    		$("#downloadPDF").prop("href", "/PDF" + url);
-					$("#downloadExcel").prop("href", "/Excel" + url);	    			    		
-				},
-				error: function(xhr, status, errorThrown){
-					console.log("錯誤訊息:" + status + "-" + errorThrown);
-				},
-
-				complete: function(xhr, status){
-					$("body").css("cursor", "default");
-				}					
-			});				
-		}
-	});
-});
-</script>

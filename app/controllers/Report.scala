@@ -41,7 +41,12 @@ object Report extends Controller {
       val count = values.count(_.avg.isDefined)
       val overCount = values.map { _.overCount }.sum
       val max = values.map { _.avg }.max
-      val min = values.map { _.avg }.min
+      val validValues = values.flatMap { _.avg }
+      val min = if(validValues.isEmpty)
+        None
+      else
+        Some(validValues.min)
+        
       val avg =
         if (mt != MonitorType.WIN_DIRECTION) {
           if (total == 0 || count == 0)
@@ -80,7 +85,7 @@ object Report extends Controller {
     }
   }
 
-  def getMonitorReport(monitorStr:String, reportTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
+  def getMonitorReport(monitorStr: String, reportTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
       val reportType = PeriodReport.withName(reportTypeStr)
@@ -91,31 +96,31 @@ object Report extends Controller {
         val (title, output) =
           reportType match {
             case PeriodReport.DailyReport =>
-              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.mtvList, monitor, start, start + 1.day)
+              val adjustedStart = start.withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.mtvList, monitor, adjustedStart, adjustedStart + 1.day)
               val mtTimeMap = periodMap.map { pair =>
                 val k = pair._1
                 val v = pair._2
                 k -> Map(v.map { r => r.time -> r }: _*)
               }
-              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(start, start + 1.day)
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(adjustedStart, adjustedStart + 1.day)
 
               ("日報", views.html.dailyReport(monitor, start, MonitorType.activeMtvList, mtTimeMap, statMap))
 
             case PeriodReport.MonthlyReport =>
-              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, start, start + 1.month)
-              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(start, start + 1.month)
+              val adjustedStart = start.withDayOfMonth(1).withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, adjustedStart, adjustedStart + 1.month)
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(adjustedStart, adjustedStart + 1.month)
               val overallStatMap = getOverallStatMap(statMap)
-              ("月報", views.html.monthlyReport(monitor, start, MonitorType.activeMtvList, statMap, overallStatMap))
+              ("月報", views.html.monthlyReport(monitor, adjustedStart, MonitorType.activeMtvList, statMap, overallStatMap))
 
             case PeriodReport.YearlyReport =>
-              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, start, start + 1.year)
-              val statMap = Query.getPeriodStatReportMap(periodMap, 1.month)(start, start + 1.year)
+              val adjustedStart = start.withDayOfYear(1).withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, adjustedStart, adjustedStart + 1.year)
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.month)(adjustedStart, adjustedStart + 1.year)
               val overallStatMap = getOverallStatMap(statMap)
-              ("年報", views.html.yearlyReport(monitor, start, MonitorType.activeMtvList, statMap, overallStatMap))
+              ("年報", views.html.yearlyReport(monitor, adjustedStart, MonitorType.activeMtvList, statMap, overallStatMap))
 
-            //case PeriodReport.MonthlyReport =>
-            //val nDays = monthlyReport.typeArray(0).dataList.length
-            //("月報", "")
           }
 
         outputType match {
@@ -129,25 +134,21 @@ object Report extends Controller {
       } else {
         import java.io.File
         import java.nio.file.Files
-        Ok("")
-        //                val (title, excelFile) =
-        //                  reportType match {
-        //                    case PeriodReport.DailyReport =>
-        //                      //val dailyReport = Record.getDailyReport(monitor, startTime)
-        //                      //("日報" + startTime.toString("YYYYMMdd"), ExcelUtility.createDailyReport(monitor, startTime, dailyReport))
-        //        
-        //        }      
-        //            case PeriodReport.MonthlyReport =>
-        //              val adjustStartDate = DateTime.parse(startTime.toString("YYYY-MM-1"))
-        //              val monthlyReport = getMonthlyReport(monitor, adjustStartDate)
-        //              val nDay = monthlyReport.typeArray(0).dataList.length
-        //              ("月報" + startTime.toString("YYYYMM"), ExcelUtility.createMonthlyReport(monitor, adjustStartDate, monthlyReport, nDay))
-        //
-        //          }
-        //
-        //                Ok.sendFile(excelFile, fileName = _ =>
-        //                  play.utils.UriEncoding.encodePathSegment(title + ".xlsx", "UTF-8"),
-        //                  onClose = () => { Files.deleteIfExists(excelFile.toPath()) })
+        val (title, excelFile) =
+          reportType match {
+            case PeriodReport.DailyReport =>
+              val adjustedStart = start.withMillisOfDay(0)
+              ("日報" + start.toString("YYYYMMdd"), ExcelUtility.createDailyReport(monitor, adjustedStart))
+
+            case PeriodReport.MonthlyReport =>
+              val adjustedStart = start.withDayOfMonth(1).withMillisOfDay(0)              
+              ("月報" + adjustedStart.toString("YYYYMM"), ExcelUtility.createMonthlyReport(monitor, adjustedStart))
+
+          }
+
+        Ok.sendFile(excelFile, fileName = _ =>
+          play.utils.UriEncoding.encodePathSegment(title + ".xlsx", "UTF-8"),
+          onClose = () => { Files.deleteIfExists(excelFile.toPath()) })
       }
   }
 
@@ -155,10 +156,13 @@ object Report extends Controller {
     Ok(views.html.monitorMonthlyHourReport())
   }
 
-  def monthlyHourReport(monitorStr:String, monitorTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
+  def monthlyHourReport(monitorStr: String, monitorTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
     val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
     val mt = MonitorType.withName(java.net.URLDecoder.decode(monitorTypeStr, "UTF-8"))
-    val start = new DateTime(startDate)
+    val start = {
+      val original = new DateTime(startDate)
+      original.withDayOfMonth(1).withMillisOfDay(0)
+    }
     val outputType = OutputType.withName(outputTypeStr)
     val title = "月份時報表"
     if (outputType == OutputType.html || outputType == OutputType.pdf) {
@@ -174,7 +178,7 @@ object Report extends Controller {
           val min = values.min
           val max = values.max
           val sum = values.sum
-          val count = records.length
+          val count = records.filter { r => MonitorStatus.isValid(r.status) }.length
           val total = new Duration(start, start + 1.month).getStandardDays.toInt
           val overCount = if (MonitorType.map(mt).std_law.isDefined) {
             values.count { _ > MonitorType.map(mt).std_law.get }

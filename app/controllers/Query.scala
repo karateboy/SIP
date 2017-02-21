@@ -149,7 +149,7 @@ object Query extends Controller {
         val min = values.min
         val max = values.max
         val sum = values.sum
-        val count = records.length
+        val count = records.filter { r => statusFilter.contains(r.status) }.length
         val total = new Duration(period_start, period_start + period).getStandardHours.toInt
         val overCount = if (MonitorType.map(mt).std_law.isDefined) {
           values.count { _ > MonitorType.map(mt).std_law.get }

@@ -470,23 +470,25 @@ object Application extends Controller {
             } {
               for (mt <- mtMaps.keys) {
                 val mtCase = MonitorType.map(mt)
-                if (mtCase.std_internal.isDefined) {
+                var alarmed = false
+                if (mtCase.std_law.isDefined) {
+                  val record = mtMaps(mt)
+                  if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
+                    if (record._1 >= mtCase.std_law.get) {
+                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過超高警報值")
+                      alarmed = true
+                    }
+                  }
+                }
+                
+                if (mtCase.std_internal.isDefined && !alarmed) {
                   val record = mtMaps(mt)
                   if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
                     if (record._1 >= mtCase.std_internal.get) {
                       Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過警報值")
                     }
                   }
-                }
-
-                if (mtCase.std_law.isDefined) {
-                  val record = mtMaps(mt)
-                  if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
-                    if (record._1 >= mtCase.std_law.get) {
-                      Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值超過超高警報值")
-                    }
-                  }
-                }
+                }                
               }
             }
           }

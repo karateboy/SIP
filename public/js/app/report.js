@@ -59,6 +59,7 @@ angular
 										    		$("#downloadPDF").prop("href", "/PDF" + url);
 													$("#downloadExcel").prop("href", "/Excel" + url);
 												}, function(error) {
+													alert(error)
 												});
 							}														
 						} ]);

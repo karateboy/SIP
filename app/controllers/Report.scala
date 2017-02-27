@@ -38,7 +38,7 @@ object Report extends Controller {
       val dateMap = pair._2
       val values = dateMap.values.toList
       val total = values.size
-      val count = values.count(_.avg.isDefined)
+      val count = values.count(_.isEffective)
       val overCount = values.map { _.overCount }.sum
       val max = values.map { _.avg }.max
       val validValues = values.flatMap { _.avg }

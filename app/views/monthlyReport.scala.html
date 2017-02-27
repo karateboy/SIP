@@ -34,6 +34,12 @@
 			}
 		</tr>
 		<tr>
+			<th>有效筆數</th>
+			@for(mt<-mTypes){
+				<th>@statMap(mt).count</th>
+			}
+		</tr>		
+		<tr>
 			<th>有效率(%)</th>
 			@for(mt<-mTypes){
 				<th>@MonitorType.format(mt, statMap(mt).effectPercent)</th>

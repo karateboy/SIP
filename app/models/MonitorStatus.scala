@@ -112,13 +112,31 @@ object MonitorStatus {
     val tagInfo = getTagInfo(tag)
     if (tagInfo.statusType == StatusType.Auto) {
       val t = tagInfo.auditRule.get
-      "自動註記"
+      val ruleExp = AutoAudit.map.getOrElse(t.toLower, "未知的規則")
+      s"自動註記:$ruleExp"
     } else {
       val ms = map(tag)
       ms.desp
     }
   }
 
+  def formatRecordExplain(recOpt:Option[Record])={
+    if(recOpt.isEmpty)
+      "-"
+    else{
+      val record = recOpt.get
+      getExplainStr(record.status)
+    }
+  }
+  
+  def isAudited(s:String) = {
+    val tagInfo = getTagInfo(s)
+    if(tagInfo.statusType == StatusType.Auto)
+      true
+    else
+      false
+  }
+  
   def isValid(s: String) = {
     val tagInfo = getTagInfo(s)
     val VALID_STATS = List(NormalStat, OverNormalStat, BelowNormalStat).map(getTagInfo)

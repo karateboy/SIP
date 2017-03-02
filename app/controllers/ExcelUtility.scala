@@ -294,7 +294,7 @@ object ExcelUtility {
     val overallStatMap = Report.getOverallStatMap(statMap)
 
     {
-      titleRow.createCell(0).setCellValue((Monitor.map(monitor).indParkName + Monitor.map(monitor).dp_no) + "監測日報表")
+      titleRow.createCell(0).setCellValue((Monitor.map(monitor).indParkName + Monitor.map(monitor).dp_no) + "監測月報表")
       dateRow.createCell(0).setCellValue(s"日期:${reportDate.toString("yyyy年MM月")}")
 
       for {
@@ -348,8 +348,12 @@ object ExcelUtility {
       maxRow.createCell(0).setCellValue("最大")
       val minRow = sheet.createRow(days + 6)
       minRow.createCell(0).setCellValue("最小")
-      val effectRow = sheet.createRow(days + 7)
-      effectRow.createCell(0).setCellValue("有效率(%)")
+      val effectHourRow = sheet.createRow(days + 7)
+      effectHourRow.createCell(0).setCellValue("有效時數")
+      val totalHourRow = sheet.createRow(days + 8)
+      totalHourRow.createCell(0).setCellValue("應測時數")
+      val hourEffectivePercentRow = sheet.createRow(days + 9)
+      hourEffectivePercentRow.createCell(0).setCellValue("數據有效率")
 
       for {
         mt_idx <- MonitorType.activeMtvList.zipWithIndex
@@ -360,7 +364,9 @@ object ExcelUtility {
         avgRow.createCell(colN).setCellValue(MonitorType.format(mt, overallStatMap(mt).avg))
         maxRow.createCell(colN).setCellValue(MonitorType.format(mt, overallStatMap(mt).max))
         minRow.createCell(colN).setCellValue(MonitorType.format(mt, overallStatMap(mt).min))
-        effectRow.createCell(colN).setCellValue(MonitorType.format(mt, overallStatMap(mt).effectPercent))
+        effectHourRow.createCell(colN).setCellValue(overallStatMap(mt).hour_count.get)
+        totalHourRow.createCell(colN).setCellValue(overallStatMap(mt).hour_total.get)
+        hourEffectivePercentRow.createCell(colN).setCellValue(MonitorType.format(mt, overallStatMap(mt).hourEffectPercent))
       }
     }
 

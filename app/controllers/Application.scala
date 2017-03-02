@@ -380,7 +380,7 @@ object Application extends Controller {
 
   def reportUnitList = Security.Authenticated {
     implicit val ruWrite = Json.writes[ReportUnit]
-    Ok(Json.toJson(ReportUnit.values.map { ReportUnit.map }))
+    Ok(Json.toJson(ReportUnit.values.toList.sorted.map { ReportUnit.map }))
   }
 
   def upsertMonitorType(id: String) = Security.Authenticated(BodyParsers.parse.json) {
@@ -414,6 +414,41 @@ object Application extends Controller {
 
   def auditConfig = Security.Authenticated {
     Ok(views.html.auditConfig())
+  }
+
+  def getAllMonitorAuditConfig = Security.Authenticated {
+    implicit request =>
+
+      val autoAuditList = Monitor.mvList map { Monitor.map(_).autoAudit.getOrElse(AutoAudit.default) }
+
+      Ok(Json.toJson(autoAuditList))
+  }
+
+  def getMonitorAuditConfig(rawMonitorStr: String) = Security.Authenticated {
+    implicit request =>
+      val monitorStr = java.net.URLDecoder.decode(rawMonitorStr, "UTF-8")
+      val m = Monitor.withName(monitorStr)
+
+      val autoAudit = Monitor.map(m).autoAudit.getOrElse(AutoAudit.default)
+
+      Ok(Json.toJson(autoAudit))
+  }
+
+  def setMonitorAuditConfig(rawMonitorStr: String) = Security.Authenticated(BodyParsers.parse.json) {
+    implicit request =>
+      val monitorStr = java.net.URLDecoder.decode(rawMonitorStr, "UTF-8")
+      val monitor = Monitor.withName(monitorStr)
+      val autoAuditResult = request.body.validate[AutoAudit]
+
+      autoAuditResult.fold(
+        error => {
+          Logger.error(JsError.toJson(error).toString())
+          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+        },
+        autoAudit => {
+          Monitor.updateMonitorAutoAudit(monitor, autoAudit)
+          Ok(Json.obj("ok" -> true))
+        })
   }
 
   def menuRightList = Security.Authenticated.async {
@@ -475,13 +510,13 @@ object Application extends Controller {
                   val record = mtMaps(mt)
                   if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
                     if (record._1 >= mtCase.std_law.get) {
-                      Alarm.log(monitor, mt, 
-                          s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值${MonitorType.format(mt, Some(record._1))}超過超高警報值${MonitorType.format(mt, mtCase.std_law)}")
+                      Alarm.log(monitor, mt,
+                        s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值${MonitorType.format(mt, Some(record._1))}超過超高警報值${MonitorType.format(mt, mtCase.std_law)}")
                       alarmed = true
                     }
                   }
                 }
-                
+
                 if (mtCase.std_internal.isDefined && !alarmed) {
                   val record = mtMaps(mt)
                   if (MonitorStatusFilter.isMatched(MonitorStatusFilter.ValidData, record._2)) {
@@ -489,13 +524,13 @@ object Application extends Controller {
                       Alarm.log(monitor, mt, s"${dateTime.toString("YYYY-MM-dd HH:mm")}測值${MonitorType.format(mt, Some(record._1))}超過警報值${MonitorType.format(mt, mtCase.std_internal)}")
                     }
                   }
-                }                
+                }
               }
-            }
+            }            
           }
 
           val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
-          for (record <- records) {
+          for (record <- records){
             try {
               val mDate = new DateTime(record.time)
               val monitor = Monitor.withName(record.monitorId)
@@ -522,8 +557,10 @@ object Application extends Controller {
 
           val retF = Future.sequence(f.toList)
 
-          if (collectionName == Record.HourCollection)
+          if (collectionName == Record.HourCollection){
             checkRecordMap(recordMap)
+            AutoAudit.audit(recordMap, true)
+          }
 
           val requestF =
             for (result <- retF) yield {
@@ -576,7 +613,7 @@ object Application extends Controller {
         })
   }
 
-  def testSMS(mobile:String) = Security.Authenticated {
+  def testSMS(mobile: String) = Security.Authenticated {
     Every8d.sendSMS("測試", "測試警報", List(mobile))
     Ok("")
   }

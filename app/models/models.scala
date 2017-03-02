@@ -3,8 +3,9 @@ import com.github.nscala_time.time.Imports._
 import scala.language.implicitConversions
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import scala.util.parsing.json.JSONFormat
 import play.api._
+import scala.collection.JavaConversions._
+
 
 /**
  * @author user
@@ -60,6 +61,60 @@ object ModelHelper {
         throw ex
     }
   }
+  
+    import org.mongodb.scala.bson._
+  def getOptionTime(key: String)(implicit doc:Document) = {
+    if (doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(doc(key).asInt64().getValue)
+  }
+  
+  def getOptionStr(key: String)(implicit doc:Document) = {
+    if(doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(doc.getString(key))
+  }
+
+  def getOptionDouble(key: String)(implicit doc:Document) = {
+    if (doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(doc(key).asDouble().getValue)
+  }
+
+  def getOptionInt(key: String)(implicit doc:Document) = {
+    if (doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(doc(key).asInt32().getValue)
+  }
+  
+  def getOptionDoc(key: String)(implicit doc:Document) = {
+    if (doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(doc(key).asDocument())
+  }
+  
+  def getArray[T](key: String, mapper:(BsonValue)=>T)(implicit doc:Document) = {
+
+    val array = doc(key).asArray().getValues
+    
+    val result = array map {
+        v => mapper(v)
+      }
+    result.toSeq
+  }
+  
+  def getOptionArray[T](key:String, mapper:(BsonValue)=>T)(implicit doc:Document) = {
+    if (doc.get(key).isEmpty || doc(key).isNull())
+      None
+    else
+      Some(getArray(key, mapper))    
+  }
+  
 }
 
 object EnumUtils {

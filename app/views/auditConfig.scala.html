@@ -5,7 +5,7 @@ var activeMonitor = $('#monitor').val();
 var auditConfig={};
 function postAuditCfg(){
 	$.ajax({
-		url : "/AuditConfig/" + activeMonitor,
+		url : "/AuditConfig/" + encodeURIComponent(activeMonitor),
 		data : JSON.stringify(auditConfig),
 		contentType : "application/json; charset=utf-8",
 		type : "POST",
@@ -36,14 +36,14 @@ function postAuditCfg(){
         		@for(m<-Monitor.mvList){
         			@if(m == Monitor.mvList.head){
         				<label class="btn btn-outline btn-primary dim active">
-        				<input type="radio" name="monitor" id="@m" checked>@Monitor.map(m).dp_no</label>	
+        				<input type="radio" name="monitor" id="@Monitor.map(m)._id" checked>@Monitor.map(m).dp_no</label>	
         			}else{
         				<label class="btn btn-outline btn-primary dim">
-        				<input type="radio" name="monitor" id="@m" checked>@Monitor.map(m).dp_no</label>
+        				<input type="radio" name="monitor" id="@Monitor.map(m)._id" checked>@Monitor.map(m).dp_no</label>
         			}        					
              	}
 			</div>
-			<input id='monitor' name='monitor' type="hidden" class="form-control" value="@Monitor.mvList.head">
+			<input id='monitor' name='monitor' type="hidden" class="form-control" value="@Monitor.map(Monitor.mvList.head)._id">
          	</div>
         </div>
 	</div>
@@ -132,7 +132,7 @@ $( document ).ready(function(){
 	function refreshAuditConfig(monitor){
 		auditConfig={};
 		$.ajax({
-			url: "/AuditConfig/"+ monitor,
+			url: "/AuditConfig/"+ encodeURIComponent(monitor),
 			data: "",
 			contentType: "application/json; charset=utf-8",
 			method: "GET",

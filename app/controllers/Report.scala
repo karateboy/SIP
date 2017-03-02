@@ -8,6 +8,8 @@ import play.api.Play.current
 import com.github.nscala_time.time.Imports._
 import models._
 import PdfUtility._
+import scala.concurrent.ExecutionContext.Implicits.global
+import models.ModelHelper._
 
 object PeriodReport extends Enumeration {
   val DailyReport = Value("daily")
@@ -38,15 +40,17 @@ object Report extends Controller {
       val dateMap = pair._2
       val values = dateMap.values.toList
       val total = values.size
+      val hour_total = values.map { _.total }.sum
       val count = values.count(_.isEffective)
+      val hour_count = values.map { _.count }.sum
       val overCount = values.map { _.overCount }.sum
       val max = values.map { _.avg }.max
       val validValues = values.flatMap { _.avg }
-      val min = if(validValues.isEmpty)
+      val min = if (validValues.isEmpty)
         None
       else
         Some(validValues.min)
-        
+
       val avg =
         if (mt != MonitorType.WIN_DIRECTION) {
           if (total == 0 || count == 0)
@@ -81,7 +85,9 @@ object Report extends Controller {
         max = max,
         total = total,
         count = count,
-        overCount = overCount)
+        overCount = overCount,
+        hour_count = Some(hour_count),
+        hour_total = Some(hour_total))
     }
   }
 
@@ -141,7 +147,7 @@ object Report extends Controller {
               ("日報" + start.toString("YYYYMMdd"), ExcelUtility.createDailyReport(monitor, adjustedStart))
 
             case PeriodReport.MonthlyReport =>
-              val adjustedStart = start.withDayOfMonth(1).withMillisOfDay(0)              
+              val adjustedStart = start.withDayOfMonth(1).withMillisOfDay(0)
               ("月報" + adjustedStart.toString("YYYYMM"), ExcelUtility.createMonthlyReport(monitor, adjustedStart))
 
           }
@@ -219,4 +225,62 @@ object Report extends Controller {
       Ok("")
     }
   }
+
+  def audit = Security.Authenticated {
+    Ok(views.html.audit())
+  }
+
+  def auditReport(monitorStr: String, monitorTypeStr: String, startLong: Long, endLong: Long) = Security.Authenticated.async {
+    implicit request =>
+      import scala.collection.JavaConverters._
+      val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
+
+      val monitorTypeStrArray = monitorTypeStr.split(':')
+      val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
+      val (start, end) = (new DateTime(startLong), new DateTime(endLong))
+
+      val recordMapF = Record.getAuditRecordMapFuture(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
+      for (recordMap <- recordMapF) yield {
+        val timeList = recordMap.keys.toList.sorted
+
+        val explain = monitorTypes.map { t =>
+          val mtCase = MonitorType.map(t)
+          s"${mtCase.desp}(${mtCase.unit})"
+        }.mkString(",")
+        val output = views.html.auditReport(monitorTypes, explain, start, end, timeList, recordMap)
+        Ok(output)
+
+      }
+  }
+  
+  def reauditReport(monitorStr: String, monitorTypeStr: String, startLong: Long, endLong: Long) = Security.Authenticated.async {
+    implicit request =>
+      import scala.collection.JavaConverters._
+      val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
+
+      val monitorTypeStrArray = monitorTypeStr.split(':')
+      val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
+      val (start, end) = (new DateTime(startLong), new DateTime(endLong))
+
+      val f = Record.resetAuditedRecord(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
+      waitReadyResult(f)
+      
+      val recordListF = Record.getRecordListFuture(Record.HourCollection)(monitor, start, end)
+      val recordList = waitReadyResult(recordListF)
+      AutoAudit.audit2(monitor, recordList, false)
+      
+      val recordMapF = Record.getAuditRecordMapFuture(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
+      for (recordMap <- recordMapF) yield {
+        val timeList = recordMap.keys.toList.sorted
+
+        val explain = monitorTypes.map { t =>
+          val mtCase = MonitorType.map(t)
+          s"${mtCase.desp}(${mtCase.unit})"
+        }.mkString(",")
+        val output = views.html.auditReport(monitorTypes, explain, start, end, timeList, recordMap)
+        Ok(output)
+
+      }
+  }
+
 }

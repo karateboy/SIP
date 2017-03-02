@@ -34,15 +34,21 @@
 			}
 		</tr>
 		<tr>
-			<th>有效筆數</th>
+			<th>有效時數</th>
 			@for(mt<-mTypes){
-				<th>@statMap(mt).count</th>
+				<th>@statMap(mt).hour_count.get</th>
 			}
-		</tr>		
+		</tr>
 		<tr>
-			<th>有效率(%)</th>
+			<th>應測時數</th>
 			@for(mt<-mTypes){
-				<th>@MonitorType.format(mt, statMap(mt).effectPercent)</th>
+				<th>@statMap(mt).hour_total.get</th>
+			}
+		</tr>					
+		<tr>
+			<th>數據有效率(%)</th>
+			@for(mt<-mTypes){
+				<th>@MonitorType.format(mt, statMap(mt).hourEffectPercent)</th>
 			}
 		</tr>
 	</tfoot>

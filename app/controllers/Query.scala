@@ -21,12 +21,23 @@ case class Stat(
     max: Option[Double],
     count: Int,
     total: Int,
-    overCount: Int) {
+    overCount: Int,
+    hour_count:Option[Int]=None,
+    hour_total:Option[Int]=None
+) {
   val effectPercent = {
     if (total > 0)
       Some(count.toDouble * 100 / total)
     else
       None
+  }
+  
+  val hourEffectPercent = {
+    for{
+      h_count <- hour_count
+      h_total <- hour_total
+    }yield
+      h_count.toDouble*100/h_total
   }
 
   val isEffective = {

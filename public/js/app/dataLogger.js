@@ -21,7 +21,8 @@ var app = angular.module('dataLoggerApp',
 		  'alarmView',
 		  'windRoseView',
 		  'manualAuditView',
-		  'manualAuditHistoryView']);
+		  'manualAuditHistoryView',
+		  'auditView']);
 
 app.factory('BreadcrumbService', [ function() {
 	var service = {
@@ -87,6 +88,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 				return bs.title = "報表查詢>月份時報表";
 			} ]
 		}	
+	}).when('/Audit', {
+		templateUrl : "/Audit",
+		resolve : {
+			breadcrumb : [ 'BreadcrumbService', function(bs) {
+				return bs.title = "報表查詢>數據檢核報表";
+			} ]
+		}	
 	}).when('/MonitorTypeConfig', {
 		templateUrl : "/MonitorTypeConfig",
 		resolve : {
@@ -102,7 +110,7 @@ app.config([ '$routeProvider', function($routeProvider) {
 			} ]
 		}
 	}).when('/AuditConfig', {
-		templateUrl : "/AuditConfig",
+		templateUrl : "/AuditConfigPage",
 		resolve : {
 			breadcrumb : [ 'BreadcrumbService', function(bs) {
 				return bs.title = "系統管理>資料檢核設定";

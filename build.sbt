@@ -1,6 +1,6 @@
 name := """SIP"""
 
-version := "1.0.3"
+version := "1.0.6"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 

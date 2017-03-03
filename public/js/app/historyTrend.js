@@ -120,6 +120,7 @@ angular
 									.then(
 										function(response) {
 											var result = response.data;
+											self.displayResult = true;
 											result.chart = {
 															type: $scope.selectedChartType,
 															zoomType: 'x',

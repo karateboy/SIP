@@ -401,7 +401,14 @@ object Query extends Controller {
 
       if (outputType == OutputType.excel) {
         import java.nio.file.Files
-        val excelFile = ExcelUtility.exportChartData(chart, monitorTypes)
+        def allMoniotorTypes = {
+          val mts =
+          for(i <- 1 to monitors.length)yield
+           monitorTypes
+           
+          mts.flatMap { x => x }  
+        }
+        val excelFile = ExcelUtility.exportChartData(chart, allMoniotorTypes.toArray)
         val downloadFileName =
           if (chart.downloadFileName.isDefined)
             chart.downloadFileName.get

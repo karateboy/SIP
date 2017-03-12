@@ -191,8 +191,9 @@ object Record {
     val col = MongoDB.database.getCollection(colName)
     val projFields = "monitor" :: "time" :: mtList.map { MonitorType.BFName(_) }
     val proj = include(projFields: _*)
-    val audited = mtList.map { mt => Filters.regex(MonitorType.BFName(mt) + ".s", "^[a-zA-Z]") }
-    val requirement = equal("monitor", monitor.toString) :: gte("time", startTime.toDate()) :: lt("time", endTime.toDate()) :: audited
+    val audited = or(mtList.map { mt => Filters.regex(MonitorType.BFName(mt) + ".s", "^[a-zA-Z]") } :_*)
+    
+    val requirement = List(equal("monitor", monitor.toString), gte("time", startTime.toDate()), lt("time", endTime.toDate()), audited)
 
     val f = col.find(and(requirement: _*)).projection(proj).sort(ascending("time")).toFuture()
     for (docs <- f) yield {

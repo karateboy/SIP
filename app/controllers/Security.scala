@@ -9,8 +9,8 @@ class AuthenticatedRequest[A](val userinfo:String, request: Request[A]) extends 
 object Security {
   val idKey = "ID"
   val nameKey = "Name"
-  val adminKey = "Admin"
-  case class UserInfo(id:String, name:String, isAdmin:Boolean)
+  val groupKey = "Group"
+  case class UserInfo(id:String, name:String, groupId:String)
   
 
   def getUserinfo(request: RequestHeader):Option[UserInfo] = {
@@ -18,19 +18,19 @@ object Security {
     if(optId.isEmpty)
       return None
       
-    val optAdmin = request.session.get(adminKey)
-    if(optAdmin.isEmpty)
+    val optGroup = request.session.get(groupKey)
+    if(optGroup.isEmpty)
       return None
       
     val optName = request.session.get(nameKey)
     if(optName.isEmpty)
       return None
           
-    Some(UserInfo(optId.get, optName.get, optAdmin.get.toBoolean))
+    Some(UserInfo(optId.get, optName.get, optGroup.get))
   }
   
   def onUnauthorized(request: RequestHeader) = {
-    Results.Redirect(routes.Login.prompt()) 
+    Results.Unauthorized("Login first...")
   }
   
   //def invokeBlock[A](request: Request[A], block: (AuthenticatedRequest[A]) => Future[Result]) = {
@@ -45,7 +45,7 @@ object Security {
   
   def setUserinfo[A](request: Request[A], userInfo:UserInfo)={
     request.session + 
-      (idKey->userInfo.id.toString()) + (adminKey->userInfo.isAdmin.toString()) + 
+      (idKey->userInfo.id.toString()) + (groupKey->userInfo.groupId.toString()) + 
       (nameKey->userInfo.name) 
   }
   

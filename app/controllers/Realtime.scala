@@ -64,11 +64,10 @@ object Realtime extends Controller {
     implicit request =>
       import MonitorType._
       val user = request.user
-      val userFuture = User.getUserByEmailFuture(user.id)
       val latestRecordMap = Record.getLatestRecordMapFuture(Record.HourCollection)
 
       for {
-        userOpt <- User.getUserByEmailFuture(user.id) if userOpt.isDefined
+        userOpt <- User.getUserByIdFuture(user.id) if userOpt.isDefined
         groups <- Group.findGroup(userOpt.get.groupId)
         map <- latestRecordMap
       } yield {

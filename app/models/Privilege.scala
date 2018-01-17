@@ -43,7 +43,7 @@ object Privilege {
   val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[Monitor.Value], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value])
 
   def myMonitorList(email: String) = {
-    val userOptF = User.getUserByEmailFuture(email)
+    val userOptF = User.getUserByIdFuture(email)
     for {
       userOpt <- userOptF if userOpt.isDefined
       groupF = Group.findGroup(userOpt.get.groupId)

@@ -149,7 +149,7 @@ object Monitor extends Enumeration {
 
     val ret = waitReadyResult(f)
 
-    val mCase = toMonitor(ret(0))
+    val mCase = toMonitor(ret)
     Logger.debug(mCase.toString)
     map = map + (m -> mCase)
   }
@@ -168,7 +168,7 @@ object Monitor extends Enumeration {
 
     val ret = waitReadyResult(f)
 
-    val mCase = toMonitor(ret(0))
+    val mCase = toMonitor(ret)
     map = map + (m -> mCase)
   }
   

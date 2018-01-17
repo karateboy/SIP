@@ -3,30 +3,26 @@
 # ~~~~
 
 # Home page
-GET      /                                                                    controllers.Application.index
+GET      /                                                                    controllers.Assets.at(path="/public", file="index.html")
 
 # Map static resources from the /public folder to the /assets URL path
-GET      /assets/*file                                                        controllers.Assets.versioned(path="/public", file: Asset)
-GET      /html/*file                                                          controllers.Assets.at(path="/public/html", file)
+GET      /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
+GET      /html/*file                    controllers.Assets.at(path="/public/html", file)
+GET      /dist/*file                    controllers.Assets.at(path="/public/dist", file)
 
-GET      /login                                                               controllers.Login.prompt
-GET      /logout                                                              controllers.Login.logout
-POST     /authenticate                                                        controllers.Login.authenticate
+GET      /logout                        controllers.Login.logout
+POST     /authenticate                  controllers.Login.authenticate
+GET      /testAuthenticated             controllers.Login.testAuthenticated
 
-GET      /Dashboard                                                           controllers.Application.dashboard
+POST     /User                          controllers.Application.newUser
+GET      /User                          controllers.Application.getAllUsers
+PUT      /User/:id                      controllers.Application.updateUser(id)
+DELETE   /User/:id                      controllers.Application.deleteUser(id)
+
+GET      /Group                         controllers.Application.getGroupInfoList
+
 GET      /JSON/realtime/map                                                   controllers.Realtime.realtimeMap
 
-GET      /UserManagement                                                      controllers.Application.userManagement
-POST     /User                                                                controllers.Application.newUser
-GET      /User                                                                controllers.Application.getAllUsers
-PUT      /User/:id                                                            controllers.Application.updateUser(id)
-DELETE   /User/:id                                                            controllers.Application.deleteUser(id)	
-
-GET      /GroupManagement                                                     controllers.Application.groupManagement
-POST     /Group/:id                                                           controllers.Application.newGroup(id)
-GET      /Group                                                               controllers.Application.getAllGroups
-PUT      /Group/:id                                                           controllers.Application.updateGroup(id)
-DELETE   /Group/:id                                                           controllers.Application.deleteGroup(id)
 
 GET      /HistoryTrend                                                        controllers.Query.historyTrend
 GET      /JSON/HistoryTrend/:monitors/:monitorType/:reportUnit/:start/:end    controllers.Query.historyTrendChart(monitors, monitorType, reportUnit, start:Long, end:Long, outputTypeStr="html")

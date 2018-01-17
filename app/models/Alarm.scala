@@ -109,7 +109,7 @@ object Alarm {
     val f = User.getAllUsersFuture()
     for (users <- f) {
       val phoneList =
-        for (user <- users if user.alarmConfig.isDefined && user.alarmConfig.get.enable) 
+        for (user <- users if user.alarm.getOrElse(false)) 
           yield user.phone
       val msg = s"${Monitor.map(monitor).dp_no}:${MonitorType.map(monitorType).desp} $desc"
       Every8d.sendSMS("警報", msg, phoneList.toList)

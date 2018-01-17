@@ -15,73 +15,13 @@ import play.api.libs.json._
 import com.github.nscala_time.time.Imports._
 import Highchart._
 import models._
+import ModelHelper._
 
 object Application extends Controller {
 
   val title = "特殊性工業區監測系統"
 
-  def index = Security.Authenticated.async {
-    implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
-      for {
-        userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
-      } yield {
-        val group = groupSeq(0)
-
-        Ok(views.html.outline(title, request.user, views.html.dashboard(group.privilege)))
-      }
-  }
-
-  def dashboard = Security.Authenticated.async {
-    implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
-      for {
-        userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
-      } yield {
-        val group = groupSeq(0)
-
-        Ok(views.html.dashboard(group.privilege))
-      }
-  }
-
-  val path = current.path.getAbsolutePath + "/importEPA/"
-
-  def importEpa103 = Action {
-    Epa103Importer.importData(path)
-    Ok(s"匯入 $path")
-  }
-
-  def parseXML = Security.Authenticated {
-    CdxReceiver.parseXML
-    Ok(s"parse XML $path")
-  }
-
-  def userManagement() = Security.Authenticated {
-    implicit request =>
-      val userInfoOpt = Security.getUserinfo(request)
-      if (userInfoOpt.isEmpty)
-        Forbidden("No such user!")
-      else {
-        val userInfo = userInfoOpt.get
-        val user = User.getUserByEmail(userInfo.id).get
-        val userList =
-          if (!user.isAdmin)
-            List.empty[User]
-          else
-            User.getAllUsers.toList
-
-        Ok(views.html.userManagement(userInfo, user, userList))
-      }
-  }
-
-  import models.User._
-  implicit val userParamRead: Reads[User] = Json.reads[User]
-
-  def newUser = Security.Authenticated.async(BodyParsers.parse.json) {
+    def newUser = Security.Authenticated.async(BodyParsers.parse.json) {
     implicit request =>
       adminOnly({
         val newUserParam = request.body.validate[User]
@@ -110,12 +50,10 @@ object Application extends Controller {
   def deleteUser(email: String) = Security.Authenticated.async {
     implicit request =>
       adminOnly({
-        Logger.info(email.toString)
         val f = User.deleteUser(email)
         val requestF =
           for (result <- f) yield {
-            val deleteResult = result.head
-            Ok(Json.obj("ok" -> (deleteResult.getDeletedCount == 0)))
+            Ok(Json.obj("ok" -> (result.getDeletedCount == 1)))
           }
 
         requestF.recover({
@@ -126,41 +64,28 @@ object Application extends Controller {
       })
   }
 
-  def updateUser(id: String) = Security.Authenticated(BodyParsers.parse.json) {
+  def updateUser(id: String) = Security.Authenticated.async(BodyParsers.parse.json) {
     implicit request =>
       val userParam = request.body.validate[User]
 
       userParam.fold(
         error => {
-          Logger.error(JsError.toJson(error).toString())
-          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+          Future {
+            Logger.error(JsError.toJson(error).toString())
+            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+          }
         },
         param => {
-          User.updateUser(param)
-          Ok(Json.obj("ok" -> true))
+          val f = User.updateUser(param)
+          for (ret <- f) yield {
+            Ok(Json.obj("ok" -> (ret.getMatchedCount == 1)))
+          }
         })
   }
 
-  def getAllUsers = Security.Authenticated {
-    val users = User.getAllUsers()
-    implicit val userWrites = Json.writes[User]
-
-    Ok(Json.toJson(users))
-  }
-
-  def groupManagement() = Security.Authenticated {
-    implicit request =>
-      val userInfoOpt = Security.getUserinfo(request)
-      if (userInfoOpt.isEmpty)
-        Forbidden("No such user!")
-      else {
-        val userInfo = userInfoOpt.get
-        val user = User.getUserByEmail(userInfo.id).get
-        if (!user.isAdmin)
-          Forbidden("無權限!")
-        else
-          Ok(views.html.groupManagement(userInfo))
-      }
+  def getAllUsers = Security.Authenticated.async {
+    val userF = User.getAllUsersFuture()
+    for (users <- userF) yield Ok(Json.toJson(users))
   }
 
   def adminOnly[A, B <: controllers.Security.UserInfo](permited: Future[Result])(implicit request: play.api.mvc.Security.AuthenticatedRequest[A, B]) = {
@@ -171,8 +96,9 @@ object Application extends Controller {
       }
     else {
       val userInfo = userInfoOpt.get
-      val user = User.getUserByEmail(userInfo.id).get
-      if (!user.isAdmin)
+      val userF = User.getUserByIdFuture(userInfo.id)
+      val userOpt = waitReadyResult(userF)
+      if (userOpt.isEmpty || userOpt.get.groupId != Group.Admin.toString())
         Future {
           Forbidden("無權限!")
         }
@@ -182,80 +108,26 @@ object Application extends Controller {
     }
   }
 
-  def newGroup(id: String) = Security.Authenticated.async {
-    implicit request =>
-      adminOnly({
-        val newGroup = Group(id, Privilege.defaultPrivilege)
-        val f = Group.newGroup(newGroup)
-
-        val requestF =
-          for (result <- f) yield {
-            Ok(Json.obj("ok" -> true))
-          }
-
-        requestF.recover({
-          case _: Throwable =>
-            Logger.info("recover...")
-            Ok(Json.obj("ok" -> false))
-        })
-      })
-  }
-
   import scala.concurrent.ExecutionContext.Implicits.global
-  def getAllGroups = Security.Authenticated.async {
-    val f = Group.getGroupList
-    for (groupList <- f) yield {
-      Ok(Json.toJson(groupList))
-    }
+  def getGroupInfoList = Action {
+    val infoList = Group.getInfoList
+    implicit val write = Json.writes[GroupInfo]
+    Ok(Json.toJson(infoList))
   }
 
-  def deleteGroup(id: String) = Security.Authenticated.async {
-    implicit request =>
-      adminOnly({
-        val f = Group.delGroup(id)
-        val requestF = for (ret <- f) yield {
-          Ok(Json.obj("ok" -> true))
-        }
-        requestF.recover({
-          case _: Throwable =>
-            Logger.info("recover...")
-            Ok(Json.obj("ok" -> false))
-        })
-      })
+
+  val path = current.path.getAbsolutePath + "/importEPA/"
+
+  def importEpa103 = Action {
+    Epa103Importer.importData(path)
+    Ok(s"匯入 $path")
   }
 
-  def updateGroup(id: String) = Security.Authenticated.async(BodyParsers.parse.json) {
-    implicit request =>
-      Logger.debug("updateGroup")
-      val userInfoOpt = Security.getUserinfo(request)
-      if (userInfoOpt.isEmpty)
-        Future {
-          Forbidden("No such user!")
-        }
-      else {
-        val userInfo = userInfoOpt.get
-        val user = User.getUserByEmail(userInfo.id).get
-        if (!user.isAdmin)
-          Future {
-            Forbidden("無權限!")
-          }
-        else {
-          val groupResult = request.body.validate[Group]
-
-          groupResult.fold(error => {
-            Logger.error(JsError.toJson(error).toString())
-            Future { BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString())) }
-          },
-            group => {
-              val f = Group.updateGroup(group)
-              val requestF = for (ret <- f) yield {
-                Ok(Json.obj("ok" -> true))
-              }
-              requestF
-            })
-        }
-      }
+  def parseXML = Security.Authenticated {
+    CdxReceiver.parseXML
+    Ok(s"parse XML $path")
   }
+
   def monitorConfig = Security.Authenticated {
     Ok(views.html.monitorConfig())
   }
@@ -312,7 +184,7 @@ object Application extends Controller {
 
   def monitorTypeList = Security.Authenticated.async {
     implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
+      val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
         groupF = Group.findGroup(userOpt.get.groupId)
@@ -335,7 +207,7 @@ object Application extends Controller {
 
   def monitorList = Security.Authenticated.async {
     implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
+      val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
         groupF = Group.findGroup(userOpt.get.groupId)
@@ -357,7 +229,7 @@ object Application extends Controller {
 
   def indParkList = Security.Authenticated.async {
     implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
+      val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
         groupF = Group.findGroup(userOpt.get.groupId)
@@ -453,7 +325,7 @@ object Application extends Controller {
 
   def menuRightList = Security.Authenticated.async {
     implicit request =>
-      val userOptF = User.getUserByEmailFuture(request.user.id)
+      val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
         groupF = Group.findGroup(userOpt.get.groupId)

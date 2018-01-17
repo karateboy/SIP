@@ -163,7 +163,7 @@ object MonitorType extends Enumeration {
 
     val ret = waitReadyResult(f)
 
-    val mtCase = toMonitorType(ret(0))
+    val mtCase = toMonitorType(ret)
     Logger.debug(mtCase.toString)
     map = map + (mt -> mtCase)
   }

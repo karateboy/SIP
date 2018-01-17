@@ -3,27 +3,28 @@ import play.api._
 import com.github.nscala_time.time.Imports._
 import models.ModelHelper._
 import models._
+import org.mongodb.scala.bson.Document
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Json
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
 
-case class User(email: String, password: String, name: String, phone: String, isAdmin: Boolean,
-                groupId: String = Group.adminGroup._id,
-                alarmConfig: Option[AlarmConfig] = Some(AlarmConfig.defaultConfig),
-                widgets: Option[List[MonitorType.Value]] = Some(List.empty[MonitorType.Value]))
+case class User(_id: String, password: String, name: String, phone: String, groupId: String = Group.Admin.toString(), 
+    alarm:Option[Boolean] = Some(true)){
+}
 
 object User {
-  import org.mongodb.scala._
   import scala.concurrent._
   import scala.concurrent.duration._
 
   val ColName = "users"
   val collection = MongoDB.database.getCollection(ColName)
-  def toDocument(user: User) = Document("_id" -> user.email, "password" -> user.password,
-    "name" -> user.name, "phone" -> user.phone, "isAdmin" -> user.isAdmin, "groupId" -> user.groupId,
-    "alarmConfig" -> user.alarmConfig, "widgets" -> user.widgets)
+  implicit val userRead = Json.reads[User]
+  implicit val userWrite = Json.writes[User]
+  
+  def toDocument(user: User) = Document(Json.toJson(user).toString())
 
   def init(colNames: Seq[String]) {
     if (!colNames.contains(ColName)) {
@@ -32,9 +33,9 @@ object User {
     }
     val f = collection.count().toFuture()
     f.onSuccess({
-      case count: Seq[Long] =>
-        if (count(0) == 0) {
-          val defaultUser = User("sales@wecc.com.tw", "abc123", "Aragorn", "02-2219-2886", true)
+      case count =>
+        if (count == 0) {
+          val defaultUser = User("karateboy", "abc123", "karateboy", "0920660136")
           Logger.info("Create default user:" + defaultUser.toString())
           newUser(defaultUser)
         }
@@ -43,38 +44,16 @@ object User {
   }
 
   def toUser(doc: Document) = {
-    import scala.collection.JavaConversions._
-    import models.AlarmConfig._
-    val widgetArray = if (doc("widgets").isArray())
-      Some(doc("widgets").asArray().getValues.map { w => MonitorType.withName(w.asString().getValue) }.toList)
-    else
-      None
+    val ret = Json.parse(doc.toJson()).validate[User]
 
-    val alarmConfigOpt =
-      if (doc("alarmConfig").isDocument())
-        AlarmConfig.toAlarmConfig(doc("alarmConfig").asDocument())
-      else
-        None
-    User(
-      email = doc("_id").asString().getValue,
-      password = doc("password").asString().getValue,
-      name = doc("name").asString.getValue,
-      phone = doc("phone").asString().getValue,
-      isAdmin = doc("isAdmin").asBoolean().getValue,
-      groupId = doc("groupId").asString().getValue,
-      alarmConfig = alarmConfigOpt,
-      widgets = widgetArray)
+    ret.fold(error => {
+      Logger.error(JsError.toJson(error).toString())
+      throw new Exception(JsError.toJson(error).toString)
+    },
+      usr => usr)
+
   }
 
-  def createDefaultUser = {
-    val f = collection.count().toFuture()
-    val ret = waitReadyResult(f)
-    if (ret(0) == 0) {
-      val defaultUser = User("sales@wecc.com.tw", "abc123", "Aragorn", "02-2219-2886", true)
-      Logger.info("Create default user:" + defaultUser.toString())
-      newUser(defaultUser)
-    }
-  }
   def newUser(user: User) = {
     collection.insertOne(toDocument(user)).toFuture()
   }
@@ -85,22 +64,12 @@ object User {
   }
 
   def updateUser(user: User) = {
-    val f = collection.replaceOne(equal("_id", user.email), toDocument(user)).toFuture()
-    waitReadyResult(f)
+    val f = collection.replaceOne(equal("_id", user._id), toDocument(user)).toFuture()
+    f
   }
 
-  def getUserByEmail(email: String) = {
-    val f = collection.find(equal("_id", email)).first().toFuture()
-    f.onFailure { errorHandler }
-    val ret = waitReadyResult(f)
-    if (ret.length == 0)
-      None
-    else
-      Some(toUser(ret(0)))
-  }
-
-  def getUserByEmailFuture(email: String) = {
-    val f = collection.find(equal("_id", email)).first().toFuture()
+  def getUserByIdFuture(_id: String) = {
+    val f = collection.find(equal("_id", _id)).limit(1).toFuture()
     f.onFailure { errorHandler }
     for (ret <- f)
       yield if (ret.length == 0)
@@ -109,24 +78,9 @@ object User {
       Some(toUser(ret(0)))
   }
 
-  def getAllUsers() = {
-    val f = collection.find().toFuture()
-    f.onFailure { errorHandler }
-    val ret = waitReadyResult(f)
-    ret.map { toUser }
-  }
-
   def getAllUsersFuture() = {
     val f = collection.find().toFuture()
     f.onFailure { errorHandler }
     for (ret <- f) yield ret.map { toUser }
   }
-
-  def getAdminUsers() = {
-    val f = collection.find(equal("isAdmin", true)).toFuture()
-    f.onFailure { errorHandler }
-    val ret = waitReadyResult(f)
-    ret.map { toUser }
-  }
-
 }

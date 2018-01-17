@@ -22,7 +22,7 @@ object MongoDB {
       MonitorStatus.init(colNames)
       Alarm.init(colNames)
       ManualAuditLog.init(colNames)
-      Group.init(colNames)
+
     }
     //Program need to wait before init complete
     import scala.concurrent.Await

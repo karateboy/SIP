@@ -40,24 +40,21 @@ object Privilege {
   implicit val privilegeRead = Json.reads[Privilege]
 
   lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, Monitor.values.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq)
-  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[Monitor.Value], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value])
-
+  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[Monitor.Value], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value]) 
+  
   def myMonitorList(email: String) = {
     val userOptF = User.getUserByIdFuture(email)
     for {
       userOpt <- userOptF if userOpt.isDefined
-      groupF = Group.findGroup(userOpt.get.groupId)
-      groupSeq <- groupF
+      group = Group.withName(userOpt.get.groupId)
+      groupInfo = Group.map(group)
     } yield {
-      if (groupSeq.length == 0)
-        Seq.empty[Monitor.Value]
-      else {
-        val group = groupSeq(0)
-        group.privilege.allowedMonitors.filter { m =>
+        
+        groupInfo.privilege.allowedMonitors.filter { m =>
           val indParkName = Monitor.map(m).indParkName
-          group.privilege.allowedIndParks.contains(indParkName)
+          groupInfo.privilege.allowedIndParks.contains(indParkName)
         }
-      }
+
     }
 
   }

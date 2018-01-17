@@ -68,15 +68,10 @@ object Realtime extends Controller {
 
       for {
         userOpt <- User.getUserByIdFuture(user.id) if userOpt.isDefined
-        groups <- Group.findGroup(userOpt.get.groupId)
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
         map <- latestRecordMap
       } yield {
-        if (groups.isEmpty)
-          Ok(views.html.realtimeStatus(Map.empty[Monitor.Value, (DateTime, Map[MonitorType.Value, Record])], Privilege.emptyPrivilege))
-        else {
-          val group = groups(0)
-          Ok(views.html.realtimeStatus(map, group.privilege))
-        }
+        Ok(views.html.realtimeStatus(map, groupInfo.privilege))
       }
   }
 

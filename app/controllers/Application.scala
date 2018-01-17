@@ -21,7 +21,7 @@ object Application extends Controller {
 
   val title = "特殊性工業區監測系統"
 
-    def newUser = Security.Authenticated.async(BodyParsers.parse.json) {
+  def newUser = Security.Authenticated.async(BodyParsers.parse.json) {
     implicit request =>
       adminOnly({
         val newUserParam = request.body.validate[User]
@@ -115,7 +115,6 @@ object Application extends Controller {
     Ok(Json.toJson(infoList))
   }
 
-
   val path = current.path.getAbsolutePath + "/importEPA/"
 
   def importEpa103 = Action {
@@ -187,21 +186,11 @@ object Application extends Controller {
       val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
       } yield {
-        if (groupSeq.length == 0)
-          Ok(Json.toJson(List.empty[MonitorType.Value]))
-        else {
-          val group = groupSeq(0)
-          val mtList =
-            if (userOpt.get.isAdmin) {
-              MonitorType.mtvList.map { MonitorType.map }
-            } else
-              group.privilege.allowedMonitorTypes.map { MonitorType.map }
+        val mtList = groupInfo.privilege.allowedMonitorTypes.map { MonitorType.map }
 
-          Ok(Json.toJson(mtList))
-        }
+        Ok(Json.toJson(mtList))
       }
   }
 
@@ -210,20 +199,12 @@ object Application extends Controller {
       val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
       } yield {
-        if (groupSeq.length == 0)
-          Ok(Json.toJson(List.empty[Monitor.Value]))
-        else {
-          val group = groupSeq(0)
-          val mList =
-            if (userOpt.get.isAdmin) {
-              Monitor.mvList.map { Monitor.map }
-            } else
-              group.privilege.allowedMonitors.map { Monitor.map }
-          Ok(Json.toJson(mList))
-        }
+
+        val mList =
+          groupInfo.privilege.allowedMonitors.map { Monitor.map }
+        Ok(Json.toJson(mList))
       }
   }
 
@@ -232,21 +213,13 @@ object Application extends Controller {
       val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
       } yield {
-        if (groupSeq.length == 0)
-          Ok(Json.toJson(List.empty[String]))
-        else {
-          val group = groupSeq(0)
-          val indParks =
-            if (userOpt.get.isAdmin) {
-              Monitor.indParkSet.toList
-            } else
-              group.privilege.allowedIndParks
 
-          Ok(Json.toJson(indParks))
-        }
+        val indParks =
+          groupInfo.privilege.allowedIndParks
+
+        Ok(Json.toJson(indParks))
       }
   }
 
@@ -328,21 +301,12 @@ object Application extends Controller {
       val userOptF = User.getUserByIdFuture(request.user.id)
       for {
         userOpt <- userOptF if userOpt.isDefined
-        groupF = Group.findGroup(userOpt.get.groupId)
-        groupSeq <- groupF
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
       } yield {
-        if (groupSeq.length == 0)
-          Ok(Json.toJson(List.empty[MenuRight.Value]))
-        else {
-          val group = groupSeq(0)
-          val menuRightList =
-            if (userOpt.get.isAdmin) {
-              MenuRight.values.toList.map { v => MenuRight(v, MenuRight.map(v)) }
-            } else
-              group.privilege.allowedMenuRights.map { v => MenuRight(v, MenuRight.map(v)) }
+        val menuRightList =
+          groupInfo.privilege.allowedMenuRights.map { v => MenuRight(v, MenuRight.map(v)) }
 
-          Ok(Json.toJson(menuRightList))
-        }
+        Ok(Json.toJson(menuRightList))
       }
   }
 
@@ -398,11 +362,11 @@ object Application extends Controller {
                   }
                 }
               }
-            }            
+            }
           }
 
           val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
-          for (record <- records){
+          for (record <- records) {
             try {
               val mDate = new DateTime(record.time)
               val monitor = Monitor.withName(record.monitorId)
@@ -429,7 +393,7 @@ object Application extends Controller {
 
           val retF = Future.sequence(f.toList)
 
-          if (collectionName == Record.HourCollection){
+          if (collectionName == Record.HourCollection) {
             checkRecordMap(recordMap)
             AutoAudit.audit(recordMap, true)
           }

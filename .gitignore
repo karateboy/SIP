@@ -25,3 +25,4 @@ server.pid
 /conf/cdx.conf
 /node_modules
 .idea
+/sip_front2/yarn.lock

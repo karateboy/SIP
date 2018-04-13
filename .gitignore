@@ -20,8 +20,6 @@ server.pid
 .cache-*
 /.settings
 /.sbtserver
-/conf/application.conf
-/conf/server.conf
 /conf/cdx.conf
-/node_modules
+node_modules
 .idea

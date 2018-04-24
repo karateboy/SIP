@@ -4,7 +4,7 @@ version := "1.0.8"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.12"
 
 libraryDependencies ++= Seq(
   jdbc,
@@ -14,6 +14,10 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "2.16.0",
   "org.mongodb.scala" %% "mongo-scala-driver" % "1.2.1"
 )
+
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc"                  % "2.5.2"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-config"           % "2.5.2"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1"
 
 mappings in Universal ++=
 (baseDirectory.value / "report_template" * "*" get) map

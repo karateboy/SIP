@@ -272,7 +272,6 @@ object Record {
     import scala.concurrent._
     import scala.concurrent.duration._
 
-    Logger.debug("getLatestRecordMapFuture")
     val mtList = MonitorType.activeMtvList
     val col = MongoDB.database.getCollection(colName)
     val projFields = "monitor" :: "time" :: MonitorType.mtvList.map { MonitorType.BFName(_) }
@@ -300,7 +299,6 @@ object Record {
         }
       }
     for (pairs <- Future.sequence(futureList)) yield {
-      Logger.debug(pairs.toString())
       pairs.toMap
     }
   }

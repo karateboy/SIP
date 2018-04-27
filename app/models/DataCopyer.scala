@@ -25,11 +25,8 @@ object DataCopyer {
   var hourCopyer: ActorRef = _
   var minCopyer: ActorRef = _
   def startup() = {
-    //hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
-    //hourCopyer ! StartCopy
-
+    hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
     minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
-    minCopyer ! StartCopy
   }
 
   val unknownMonitor = "Unknown"
@@ -136,14 +133,21 @@ object DataCopyer {
       }
 
       val now = DateTime.now()
-      val end = if (begin + 1.day > now)
-        now
-      else {
-        val e = (begin + 1.day)
-        e.withMillisOfDay(0)
-      }
 
-      Logger.debug(s"$step $begin $end")
+      val end =
+        step match {
+          case CopyStep.hour =>
+            if (begin + 1.day > now)
+              now
+            else
+              (begin + 1.day).withMillisOfDay(0)
+
+          case CopyStep.min =>
+            if (begin + 1.day > now)
+              now
+            else
+              (begin + 1.day).withMillisOfDay(0)
+        }
       (begin, end)
     }
   }
@@ -159,7 +163,8 @@ object DataCopyer {
     val year = s"${begin.getYear}"
     val month = "%02d".format(begin.getMonthOfYear)
     val day = "%02d".format(begin.getDayOfMonth)
-    Logger.debug(s"$year/$month/$day $step")
+    Logger.info(s"copy $step ${begin.toString("YY/MM/dd HH:mm")} to ${end.toString("YY/MM/dd HH:mm")}")
+
     val result = DB readOnly {
       implicit session =>
 
@@ -181,61 +186,66 @@ object DataCopyer {
             AvgRecord(dp_no, mt, dt, v, s)
         }.list().apply()
     }
-    Logger.debug(s"result = ${result.length}")
+
     val recordList = result filter {
       hr =>
         (hr.dp_no != unknownMonitor && hr.value.isDefined && hr.status.isDefined) &&
           (hr.dateTime >= begin && hr.dateTime < end)
     }
 
-    import scala.collection.mutable.Map
-    val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
-    for (record <- recordList) {
-      try {
-        val monitor = Monitor.withName(record.dp_no)
-        val monitorType = record.mt
-        val timeMap = recordMap.getOrElseUpdate(monitor, Map.empty[DateTime, Map[MonitorType.Value, (Double, String)]])
-        val mtMap = timeMap.getOrElseUpdate(record.dateTime, Map.empty[MonitorType.Value, (Double, String)])
-        mtMap.put(record.mt, (record.value.get, record.status.get))
-      } catch {
-        case ex: Throwable =>
-          Logger.error("skip invalid record ", ex)
-      }
-    }
-
-    val updateModels =
-      for {
-        monitorMap <- recordMap
-        monitor = monitorMap._1
-        timeMaps = monitorMap._2
-        dateTime <- timeMaps.keys.toList.sorted
-        mtMaps = timeMaps(dateTime) if (!mtMaps.isEmpty)
-        doc = Record.toDocument(monitor, dateTime, mtMaps.toList)
-        updateList = doc.toList.map(kv => Updates.set(kv._1, kv._2)) if !updateList.isEmpty
-      } yield {
-        UpdateOneModel(
-          Filters.eq("_id", doc("_id")),
-          Updates.combine(updateList: _*), UpdateOptions().upsert(true))
+    def updateDB = {
+      import scala.collection.mutable.Map
+      val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
+      for (record <- recordList) {
+        try {
+          val monitor = Monitor.withName(record.dp_no)
+          val monitorType = record.mt
+          val timeMap = recordMap.getOrElseUpdate(monitor, Map.empty[DateTime, Map[MonitorType.Value, (Double, String)]])
+          val mtMap = timeMap.getOrElseUpdate(record.dateTime, Map.empty[MonitorType.Value, (Double, String)])
+          mtMap.put(record.mt, (record.value.get, record.status.get))
+        } catch {
+          case ex: Throwable =>
+            Logger.error("skip invalid record ", ex)
+        }
       }
 
-    val collection =
+      val updateModels =
+        for {
+          monitorMap <- recordMap
+          monitor = monitorMap._1
+          timeMaps = monitorMap._2
+          dateTime <- timeMaps.keys.toList.sorted
+          mtMaps = timeMaps(dateTime) if (!mtMaps.isEmpty)
+          doc = Record.toDocument(monitor, dateTime, mtMaps.toList)
+          updateList = doc.toList.map(kv => Updates.set(kv._1, kv._2)) if !updateList.isEmpty
+        } yield {
+          UpdateOneModel(
+            Filters.eq("_id", doc("_id")),
+            Updates.combine(updateList: _*), UpdateOptions().upsert(true))
+        }
+      Logger.info(s"update $step ${updateModels.size} records")
+
+      val collection =
+        step match {
+          case CopyStep.hour =>
+            MongoDB.database.getCollection(Record.HourCollection)
+          case CopyStep.min =>
+            MongoDB.database.getCollection(Record.MinCollection)
+        }
+      val f2 = collection.bulkWrite(updateModels.toList, BulkWriteOptions().ordered(false)).toFuture()
+      f2.onFailure(errorHandler)
+      waitReadyResult(f2)
+
       step match {
         case CopyStep.hour =>
-          MongoDB.database.getCollection(Record.HourCollection)
+          SysConfig.set(SysConfig.AVGHR_LAST, BsonDateTime(end))
         case CopyStep.min =>
-          MongoDB.database.getCollection(Record.MinCollection)
+          SysConfig.set(SysConfig.AVGR_LAST, BsonDateTime(end))
       }
-    val f2 = collection.bulkWrite(updateModels.toList, BulkWriteOptions().ordered(false)).toFuture()
-    f2.onFailure(errorHandler)
-    waitReadyResult(f2)
-    Logger.info(s"successful imported")
-
-    step match {
-      case CopyStep.hour =>
-        SysConfig.set(SysConfig.AVGHR_LAST, BsonDateTime(end))
-      case CopyStep.min =>
-        SysConfig.set(SysConfig.AVGR_LAST, BsonDateTime(end))
     }
+
+    if (!recordList.isEmpty)
+      updateDB
   }
 
 }
@@ -246,17 +256,29 @@ class DataCopyer(step: CopyStep.Value) extends Actor with ActorLogging {
   Logger.info(s"$step Copyer start...")
   val timer = {
     import scala.concurrent.duration._
-    Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(1, MINUTES), self, StartCopy)
+    step match {
+      case CopyStep.hour =>
+        Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(5, MINUTES), self, StartCopy)
+      case CopyStep.min =>
+        Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(1, MINUTES), self, StartCopy)
+    }
+
   }
 
   def receive = handler(false)
 
   def handler(copying: Boolean): Receive = {
     case StartCopy =>
-      Logger.debug(s"StartCopy $copying")
       if (!copying) {
         for ((begin, end) <- getCopyRange(step)) {
-          if (begin < DateTime.now() && begin < end) {
+          val minDuration = step match {
+            case CopyStep.hour =>
+              1.hour
+            case CopyStep.min =>
+              1.minute
+          }
+
+          if (begin < DateTime.now() && begin + minDuration <= end) {
             self ! CopyRange(begin, end)
             context become handler(true)
           }
@@ -264,13 +286,26 @@ class DataCopyer(step: CopyStep.Value) extends Actor with ActorLogging {
       }
     case CopyRange(begin, end) =>
       copyDbRange(begin, end, step)
+      val now = DateTime.now()
       val nextBegin = end
-      val nextEnd = if (end + 1.day < DateTime.now())
-        end + 1.day
-      else
-        DateTime.now()
+      var nextEnd =
+        step match {
+          case CopyStep.hour =>
+            end + 1.day
+          case CopyStep.min =>
+            end + 1.day
+        }
 
-      if (begin < DateTime.now() && begin < end) {
+      if (nextEnd > now)
+        nextEnd = now
+
+      val minDuration = step match {
+        case CopyStep.hour =>
+          1.hour
+        case CopyStep.min =>
+          1.minute
+      }
+      if (nextBegin < now && nextBegin + minDuration <= nextEnd) {
         self ! CopyRange(nextBegin, nextEnd)
       } else {
         context become handler(false)

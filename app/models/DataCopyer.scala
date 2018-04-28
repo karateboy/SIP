@@ -26,7 +26,7 @@ object DataCopyer {
   var minCopyer: ActorRef = _
   def startup() = {
     hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
-    minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
+    //minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
   }
 
   val unknownMonitor = "Unknown"

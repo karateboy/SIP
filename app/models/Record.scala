@@ -303,6 +303,34 @@ object Record {
     }
   }
 
+  def getLatestRecordTimeFuture(colName: String, monitorList: Seq[Monitor.Value]) = {
+    import org.mongodb.scala.bson._
+    import org.mongodb.scala.model._
+    import org.mongodb.scala.model.Projections._
+    import org.mongodb.scala.model.Sorts._
+    import scala.concurrent._
+    import scala.concurrent.duration._
+
+    val mtList = MonitorType.activeMtvList
+    val col = MongoDB.database.getCollection(colName)
+    val projFields = Seq("monitor", "time")
+    val proj = include(projFields: _*)
+    val futureList =
+      for (m <- monitorList) yield {
+        val filter = Filters.and(Filters.equal("monitor", Monitor.map(m)._id), Filters.ne("正十一烷", null)) 
+        val f = col.find(filter).projection(proj).sort(descending("time")).limit(1).toFuture()
+        for {
+          docs <- f if !docs.isEmpty
+        } yield {
+          val doc = docs.head
+          val time = doc("time").asDateTime().toDateTime()            
+          m -> time
+        }
+      }
+    for (pairs <- Future.sequence(futureList)) yield {
+      pairs.toMap
+    }
+  }
   def getWindRose(monitor: Monitor.Value, monitorType: MonitorType.Value, start: DateTime, end: DateTime, level: List[Double], nDiv: Int = 16) = {
     val windRecordFuture = getRecordListFuture(HourCollection)(monitor, start, end)
     val windRecords = waitReadyResult(windRecordFuture)

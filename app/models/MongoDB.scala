@@ -23,6 +23,7 @@ object MongoDB {
       Alarm.init(colNames)
       ManualAuditLog.init(colNames)
 
+      SysConfig.init(colNames)
     }
     //Program need to wait before init complete
     import scala.concurrent.Await

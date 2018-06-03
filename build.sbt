@@ -1,6 +1,6 @@
 name := """SIP"""
 
-version := "1.0.8"
+version := "1.0.10"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -11,14 +11,15 @@ libraryDependencies ++= Seq(
   ws,
   filters,
   specs2 % Test,
-  "org.scalikejdbc" %% "scalikejdbc"                  % "2.5.2",
-  "org.scalikejdbc" %% "scalikejdbc-config"           % "2.5.2",
-  "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1",
   "com.github.nscala-time" %% "nscala-time" % "2.16.0",
   "org.mongodb.scala" %% "mongo-scala-driver" % "2.2.0",
   "com.google.maps" % "google-maps-services" % "0.2.2",
    "commons-io" % "commons-io" % "2.5"
 )
+
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc"                  % "2.5.2"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-config"           % "2.5.2"
+libraryDependencies += "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.5.1"
 
 mappings in Universal ++=
 (baseDirectory.value / "report_template" * "*" get) map

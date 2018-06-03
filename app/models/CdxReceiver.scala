@@ -7,6 +7,9 @@ import play.api.libs.concurrent.Akka
 import play.api._
 import akka.actor.actorRef2Scala
 import scala.concurrent.ExecutionContext.Implicits.global
+import org.mongodb.scala.bson._
+import org.mongodb.scala.model._
+import models.ModelHelper._
 
 object CdxReceiver {
   val props = Props[CdxReceiver]
@@ -181,16 +184,26 @@ class CdxReceiver extends Actor with ActorLogging {
 
     }
 
-    for {
-      monitorMap <- recordMap
-      monitor = monitorMap._1
-      timeMaps = monitorMap._2
-      dateTime <- timeMaps.keys.toList.sorted
-      mtMaps = timeMaps(dateTime)
-    } {
-      if (!mtMaps.isEmpty)
-        Record.upsertRecord(Record.toDocument(monitor, dateTime, mtMaps.toList))(Record.HourCollection)
-    }
+    val updateModels =
+      for {
+        monitorMap <- recordMap
+        monitor = monitorMap._1
+        timeMaps = monitorMap._2
+        dateTime <- timeMaps.keys.toList.sorted
+        mtMaps = timeMaps(dateTime) if !mtMaps.isEmpty
+        doc = Record.toDocument(monitor, dateTime, mtMaps.toList)
+        updateList = doc.toList.map(kv => Updates.set(kv._1, kv._2)) if !updateList.isEmpty
+      } yield {
+        UpdateOneModel(
+          Filters.eq("_id", doc("_id")),
+          Updates.combine(updateList: _*), UpdateOptions().upsert(true))
+      }
+
+    val collection = MongoDB.database.getCollection(Record.HourCollection)
+    val f2 = collection.bulkWrite(updateModels.toList, BulkWriteOptions().ordered(false)).toFuture()
+    f2.onFailure(errorHandler)
+    waitReadyResult(f2)
+
     Logger.info(s"${f.getName} finished")
 
   }

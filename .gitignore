@@ -21,6 +21,5 @@ server.pid
 /.settings
 /.sbtserver
 /conf/cdx.conf
-/node_modules
-.idea
+node_modules
 /sip_front2/yarn.lock

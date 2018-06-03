@@ -1,12 +1,10 @@
 package models
 import play.api._
 import play.api.libs.json._
-import play.api.libs.functional.syntax._
-import Record._
-import MonitorType._
 import com.github.nscala_time.time.Imports._
 import models.ModelHelper._
 import org.mongodb.scala.bson._
+import org.mongodb.scala.model._
 
 abstract class Rule(val lead: Char)
 

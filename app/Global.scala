@@ -11,11 +11,12 @@ object Global extends GlobalSettings {
     Logger.info("Application has started")
     super.onStart(app)
     MongoDB.init()
-    DataCollectManager.startup
+    //DataCollectManager.startup
     
     CdxReceiver.startup
     //CdxReceiver.getInboxFiles
     CdxReceiver.parseXML
+    DataCopyer.startup()
   }
 
   override def onStop(app: Application) {

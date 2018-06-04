@@ -24,9 +24,16 @@ object DataCopyer {
 
   var hourCopyer: ActorRef = _
   var minCopyer: ActorRef = _
+
   def startup() = {
-    hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
-    //minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
+    val enabled = Play.current.configuration.getBoolean("dataCopy.enable").getOrElse(false)
+
+    Logger.info(s"DataCopy is $enabled")
+
+    if (enabled) {
+      hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
+      //minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
+    }
   }
 
   val unknownMonitor = "Unknown"

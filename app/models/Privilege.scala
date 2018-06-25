@@ -29,31 +29,32 @@ object MenuRight extends Enumeration {
 }
 
 case class Privilege(
-  allowedIndParks: Seq[String],
-  allowedMonitors: Seq[Monitor.Value],
+  allowedIndParks:     Seq[String],
   allowedMonitorTypes: Seq[MonitorType.Value],
-  allowedMenuRights: Seq[MenuRight.Value])
+  allowedMenuRights:   Seq[MenuRight.Value],
+  indParkFilter:       String                 = "台塑六輕工業園區") {
+  def allowedMonitors(): Seq[Monitor.Value] =
+    Monitor.indParkMonitor(indParkFilter)
+}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 object Privilege {
   implicit val privilegeWrite = Json.writes[Privilege]
   implicit val privilegeRead = Json.reads[Privilege]
 
-  lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, Monitor.values.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq)
-  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[Monitor.Value], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value]) 
-  
+  lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq)
+  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value])
+
   def myMonitorList(email: String) = {
     val userOptF = User.getUserByIdFuture(email)
     for {
       userOpt <- userOptF if userOpt.isDefined
-      group = Group.withName(userOpt.get.groupId)
-      groupInfo = Group.map(group)
+      groupInfo = Group.map(userOpt.get.groupId)
     } yield {
-        
-        groupInfo.privilege.allowedMonitors.filter { m =>
-          val indParkName = Monitor.map(m).indParkName
-          groupInfo.privilege.allowedIndParks.contains(indParkName)
-        }
+      groupInfo.privilege.allowedMonitors.filter { m =>
+        val indParkName = Monitor.map(m).indParkName
+        groupInfo.privilege.allowedIndParks.contains(indParkName)
+      }
 
     }
 

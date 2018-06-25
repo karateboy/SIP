@@ -98,7 +98,7 @@ object Application extends Controller {
       val userInfo = userInfoOpt.get
       val userF = User.getUserByIdFuture(userInfo.id)
       val userOpt = waitReadyResult(userF)
-      if (userOpt.isEmpty || userOpt.get.groupId != Group.Admin.toString())
+      if (userOpt.isEmpty || userOpt.get.groupId != Group.adminID)
         Future {
           Forbidden("無權限!")
         }

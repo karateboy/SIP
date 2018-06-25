@@ -69,8 +69,8 @@ object Monitor extends Enumeration {
     val dp_no = doc.getString("dp_no")
     val lat = getOptionDouble("lat")
     val lng = getOptionDouble("lng")
-    val autoAudit = getOptionDoc("autoAudit") map {d => AutoAudit.toAutoAudit(d)}
-    Monitor(_id = _id, indParkName = indParkName, dp_no = dp_no, lat = lat, lng = lng, autoAudit=autoAudit)
+    val autoAudit = getOptionDoc("autoAudit") map { d => AutoAudit.toAutoAudit(d) }
+    Monitor(_id = _id, indParkName = indParkName, dp_no = dp_no, lat = lat, lng = lng, autoAudit = autoAudit)
   }
 
   def newMonitor(m: Monitor) = {
@@ -111,6 +111,8 @@ object Monitor extends Enumeration {
   var map: Map[Value, Monitor] = Map(mList.map { e => Value(e._id) -> e }: _*)
   var mvList = mList.map(mt => Monitor.withName(mt._id))
   def indParkSet = mvList.map { map(_).indParkName }.foldRight(Set.empty[String])((name, set) => set + name)
+  def indParkMonitor(indPark: String) =
+    mvList.filter(p => p.toString().startsWith(indPark))
 
   def getMonitorValueByName(indParkName: String, dp_no: String) = {
     try {
@@ -171,7 +173,7 @@ object Monitor extends Enumeration {
     val mCase = toMonitor(ret)
     map = map + (m -> mCase)
   }
-  
+
   def getCenterLat(privilege: Privilege) = {
     val monitors = privilege.allowedMonitors.filter { m => privilege.allowedIndParks.contains(Monitor.map(m).indParkName) }
     val latList = monitors.flatMap { m => Monitor.map(m).lat }

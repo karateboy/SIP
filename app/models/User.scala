@@ -11,7 +11,7 @@ import play.api.libs.json.Json
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
 
-case class User(_id: String, password: String, name: String, phone: String, groupId: String = Group.Admin.toString(), 
+case class User(_id: String, password: String, name: String, phone: String, groupId: String = Group.adminID, 
     alarm:Option[Boolean] = Some(true)){
 }
 

@@ -7,6 +7,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import org.mongodb.scala._
 
 case class Record(monitor: Monitor.Value, time: DateTime, value: Double, status: String)
+case class MTRecord(monitorType: MonitorType.Value, value: Double, status: String)
+case class Record2(monitor: Monitor.Value, time: DateTime, mtMap: Map[MonitorType.Value, MTRecord])
 
 object Record {
   import play.api.libs.json._
@@ -148,6 +150,48 @@ object Record {
     Map(pairs: _*)
   }
 
+  import scala.concurrent._
+  def getMonitorRecordMapF(colName: String)(mtList: List[MonitorType.Value], monitors: Seq[Monitor.Value], startTime: DateTime, endTime: DateTime): Future[Map[DateTime, Map[Monitor.Value, Record2]]] = {
+    import org.mongodb.scala.bson._
+    import org.mongodb.scala.model.Filters._
+    import org.mongodb.scala.model.Projections._
+    import org.mongodb.scala.model.Sorts._
+    import scala.concurrent.duration._
+
+    val col = MongoDB.database.getCollection(colName)
+    val projFields = "monitor" :: "time" :: mtList.map { MonitorType.BFName(_) }
+    val proj = include(projFields: _*)
+    val monitorNames = monitors.map(_.toString())
+    val f = col.find(and(in("monitor", monitorNames: _*), gte("time", startTime.toDate()), lt("time", endTime.toDate()))).projection(proj).sort(ascending("time")).toFuture()
+
+    var timeMap = Map.empty[DateTime, Map[Monitor.Value, Record2]]
+
+    for (docs <- f) yield {
+      val ret = 
+        for {
+          doc <- docs
+          time = new DateTime(doc("time").asDateTime().getValue)
+        } yield {
+          var monitorRecordMap = timeMap.getOrElse(time, Map.empty[Monitor.Value, Record2])
+          val monitor = Monitor.withName(doc("monitor").asString().getValue)
+          val mtRecordPairs =
+            for {
+              mt <- mtList
+              mtBFName = MonitorType.BFName(mt)
+              mtDocOpt = doc.get(mtBFName) if mtDocOpt.isDefined && mtDocOpt.get.isDocument()
+              mtDoc = mtDocOpt.get.asDocument()
+              v = mtDoc.get("v") if v.isDouble()
+              s = mtDoc.get("s") if s.isString()
+            } yield {
+              mt-> MTRecord(mt, v.asDouble().getValue, s.asString().getValue)
+            }
+          val mtMap = mtRecordPairs.toMap
+          monitorRecordMap = monitorRecordMap + (monitor ->Record2(monitor, time: DateTime, mtMap))
+          timeMap = timeMap + (time -> monitorRecordMap) 
+        }
+      timeMap
+    }
+  }
   def resetAuditedRecord(colName: String)(mtList: List[MonitorType.Value], monitor: Monitor.Value, startTime: DateTime, endTime: DateTime) = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model._
@@ -159,21 +203,21 @@ object Record {
     val map = waitReadyResult(f)
     val f2 =
       for {
-      time_map <- map
-      time = time_map._1
-      recordMap = time_map._2
-    } yield {
-      val itF =
-      for {
-        mt_record <- recordMap
-        mt = mt_record._1
-        record = mt_record._2 if MonitorStatus.isAudited(record.status)
+        time_map <- map
+        time = time_map._1
+        recordMap = time_map._2
       } yield {
-        val newStatus = "0" + record.status.substring(1)
-        updateRecordStatus(monitor, time.getMillis, mt, newStatus)(colName)
+        val itF =
+          for {
+            mt_record <- recordMap
+            mt = mt_record._1
+            record = mt_record._2 if MonitorStatus.isAudited(record.status)
+          } yield {
+            val newStatus = "0" + record.status.substring(1)
+            updateRecordStatus(monitor, time.getMillis, mt, newStatus)(colName)
+          }
+        itF.toSeq
       }
-      itF.toSeq
-    }
     import scala.concurrent._
     val f3 = f2.flatMap { x => x }
     Future.sequence(f2.flatMap { x => x })
@@ -191,8 +235,8 @@ object Record {
     val col = MongoDB.database.getCollection(colName)
     val projFields = "monitor" :: "time" :: mtList.map { MonitorType.BFName(_) }
     val proj = include(projFields: _*)
-    val audited = or(mtList.map { mt => Filters.regex(MonitorType.BFName(mt) + ".s", "^[a-zA-Z]") } :_*)
-    
+    val audited = or(mtList.map { mt => Filters.regex(MonitorType.BFName(mt) + ".s", "^[a-zA-Z]") }: _*)
+
     val requirement = List(equal("monitor", monitor.toString), gte("time", startTime.toDate()), lt("time", endTime.toDate()), audited)
 
     val f = col.find(and(requirement: _*)).projection(proj).sort(ascending("time")).toFuture()
@@ -317,13 +361,13 @@ object Record {
     val proj = include(projFields: _*)
     val futureList =
       for (m <- monitorList) yield {
-        val filter = Filters.and(Filters.equal("monitor", Monitor.map(m)._id), Filters.ne("正十一烷", null)) 
+        val filter = Filters.and(Filters.equal("monitor", Monitor.map(m)._id), Filters.ne("正十一烷", null))
         val f = col.find(filter).projection(proj).sort(descending("time")).limit(1).toFuture()
         for {
           docs <- f if !docs.isEmpty
         } yield {
           val doc = docs.head
-          val time = doc("time").asDateTime().toDateTime()            
+          val time = doc("time").asDateTime().toDateTime()
           m -> time
         }
       }

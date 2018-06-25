@@ -16,28 +16,26 @@ import Highchart._
 import models._
 
 case class Stat(
-    avg: Option[Double],
-    min: Option[Double],
-    max: Option[Double],
-    count: Int,
-    total: Int,
-    overCount: Int,
-    hour_count:Option[Int]=None,
-    hour_total:Option[Int]=None
-) {
+  avg:        Option[Double],
+  min:        Option[Double],
+  max:        Option[Double],
+  count:      Int,
+  total:      Int,
+  overCount:  Int,
+  hour_count: Option[Int]    = None,
+  hour_total: Option[Int]    = None) {
   val effectPercent = {
     if (total > 0)
       Some(count.toDouble * 100 / total)
     else
       None
   }
-  
+
   val hourEffectPercent = {
-    for{
+    for {
       h_count <- hour_count
       h_total <- hour_total
-    }yield
-      h_count.toDouble*100/h_total
+    } yield h_count.toDouble * 100 / h_total
   }
 
   val isEffective = {
@@ -345,13 +343,16 @@ object Query extends Controller {
             if (monitorTypes.length == 2) {
               val mt = monitorTypes.filter { _ != windMtv }(0)
               val mtCase = MonitorType.map(monitorTypes.filter { MonitorType.WIN_DIRECTION != _ }(0))
-              Seq(YAxis(None,
-                AxisTitle(Some(Some(s"${mtCase.desp} (${mtCase.unit})"))),
-                getAxisLines(mt),
-                gridLineWidth = Some(0)),
+              Seq(
+                YAxis(
+                  None,
+                  AxisTitle(Some(Some(s"${mtCase.desp} (${mtCase.unit})"))),
+                  getAxisLines(mt),
+                  gridLineWidth = Some(0)),
                 windYaxis)
             } else {
-              Seq(YAxis(None, AxisTitle(Some(None)), None, gridLineWidth = Some(0)),
+              Seq(
+                YAxis(None, AxisTitle(Some(None)), None, gridLineWidth = Some(0)),
                 windYaxis)
             }
           } else {
@@ -403,10 +404,9 @@ object Query extends Controller {
         import java.nio.file.Files
         def allMoniotorTypes = {
           val mts =
-          for(i <- 1 to monitors.length)yield
-           monitorTypes
-           
-          mts.flatMap { x => x }  
+            for (i <- 1 to monitors.length) yield monitorTypes
+
+          mts.flatMap { x => x }
         }
         val excelFile = ExcelUtility.exportChartData(chart, allMoniotorTypes.toArray)
         val downloadFileName =
@@ -465,11 +465,11 @@ object Query extends Controller {
     Ok(views.html.alarm())
   }
 
-  def alarmReport(monitorEncodedStr: String, monitorTypeEncodedStr:String, startStr: String, endStr: String) = Security.Authenticated {
+  def alarmReport(monitorEncodedStr: String, monitorTypeEncodedStr: String, startStr: String, endStr: String) = Security.Authenticated {
     val monitorStr = java.net.URLDecoder.decode(monitorEncodedStr, "UTF-8")
-    val monitors = monitorStr.split(":") map {Monitor.withName}
+    val monitors = monitorStr.split(":") map { Monitor.withName }
     val monitorTypeStr = java.net.URLDecoder.decode(monitorTypeEncodedStr, "UTF-8")
-    val monitorTypes = monitorTypeStr.split(":") map {MonitorType.withName}
+    val monitorTypes = monitorTypeStr.split(":") map { MonitorType.withName }
     val (start, end) =
       (new DateTime(startStr.toLong),
         new DateTime(endStr.toLong))
@@ -504,10 +504,11 @@ object Query extends Controller {
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
       val monitorType = MonitorType.withName(java.net.URLDecoder.decode(monitorTypeStr, "UTF-8"))
 
-      result.fold(err => {
-        Logger.error(JsError.toJson(err).toString())
-        BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(err).toString()))
-      },
+      result.fold(
+        err => {
+          Logger.error(JsError.toJson(err).toString())
+          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(err).toString()))
+        },
         maParam => {
           for (param <- maParam.updateList) {
             Record.updateRecordStatus(monitor, param.time, monitorType, param.status)(Record.HourCollection)
@@ -636,4 +637,40 @@ object Query extends Controller {
     }
   }
 
+  import java.util.Date
+  case class QueryParam(dataType: String, monitors: Seq[String], monitorTypes: Seq[String], start: Date, end: Date)
+
+  case class RowData(date:Date, mtData: Seq[MTRecord])
+  case class DataTab(columnNames:Seq[String], rows:Seq[RowData])
+  def queryData() = Security.Authenticated.async(BodyParsers.parse.json) {
+    implicit request =>
+      implicit val read = Json.reads[QueryParam]
+      val ret = request.body.validate[QueryParam]
+
+      ret.fold(
+        err => Future {
+          Logger.error(JsError.toJson(err).toString())
+          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(err).toString()))
+        },
+        param => {
+          import scala.collection.JavaConverters._
+          val monitorList = param.monitors.map(Monitor.withName)
+          val monitorTypes = param.monitors.map { MonitorType.withName }
+          val tabType = TableType.hour
+          val (start, end) = (new DateTime(param.start), new DateTime(param.end))
+
+          val timeList = tabType match {
+            case TableType.hour =>
+              getPeriods(start, end, 1.hour)
+            case TableType.min =>
+              getPeriods(start, end, 1.minute)
+          }
+
+          val monitors = param.monitors.map(Monitor.withName)
+          val recordMapF = Record.getMonitorRecordMapF(TableType.mapCollection(tabType))(monitorTypes.toList, monitors, start, end)
+          for (recordMap <- recordMapF) yield {            
+            Ok("")
+          }
+        })
+  }
 }

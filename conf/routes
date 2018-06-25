@@ -82,6 +82,7 @@ GET      /MenuRight                                                           co
 GET      /Record/:monitor/:monitorType/:start/:end                            controllers.Query.recordList(monitor, monitorType, start:Long, end:Long)
 PUT      /Record/:monitor/:monitorType                                        controllers.Query.updateRecord(monitor, monitorType)
 
+POST     /QueryRecord                                                         controllers.Query.queryData()		 
 #GET		/WindRose				controllers.Query.windRose
 #GET		/MonitorTypeRose		controllers.Query.monitorTypeRose
 #GET		/WindRoseReport/:monitor/:monitorType/:nWays/:start/:end	controllers.Query.windRoseReport(monitor, monitorType, nWays:Int, start, end)

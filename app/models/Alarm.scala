@@ -73,11 +73,26 @@ object Alarm {
     import org.mongodb.scala.bson.BsonDateTime
     val startB: BsonDateTime = start
     val endB: BsonDateTime = end
-    val monitorStrList = monitorList map { _.toString }
-    val monitorTypeStrList = monitorTypeList map { _.toString }
+    
+    val timeFilter = Seq(Some(gte("time", startB)), Some(lt("time", endB)))
+    val monitorFilter = if(monitorList.length == 0)
+      None
+    else {
+      val monitorStrList = monitorList map { _.toString }
+      Some(in("monitor", monitorStrList: _*))
+    }
+    
+    val monitorTypeFilter = 
+    if(monitorTypeList.length == 0)
+      None
+    else{
+      val monitorTypeStrList = monitorTypeList map { _.toString }
+      Some(in("monitorType", monitorTypeStrList: _*))
+    }  
 
-    val f = collection.find(and(gte("time", startB), lt("time", endB),
-      in("monitor", monitorStrList: _*), in("monitorType", monitorTypeStrList: _*))).sort(ascending("time")).toFuture()
+    val filters = Seq(Some(gte("time", startB)), Some(lt("time", endB)), monitorFilter, monitorTypeFilter).flatMap(x => x)
+    
+    val f = collection.find(and(filters: _*)).sort(ascending("time")).toFuture()
 
     for (docs <- f)
       yield docs.map { toAlarm }

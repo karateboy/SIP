@@ -10,8 +10,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 case class MonitorType(_id: String, desp: String, unit: String, std_law: Option[Double],
                        prec: Int, order: Int, std_internal: Option[Double] = None,
-                       level1: Option[Double]=None, level2: Option[Double]=None, 
-                       level3: Option[Double]=None, level4: Option[Double]=None)
+                       level1: Option[Double] = None, level2: Option[Double] = None,
+                       level3: Option[Double] = None, level4: Option[Double] = None)
 
 object MonitorType extends Enumeration {
   import org.mongodb.scala.bson._
@@ -47,7 +47,7 @@ object MonitorType extends Enumeration {
       f.onFailure(errorHandler)
       f.onSuccess({
         case _: Seq[t] =>
-          //insertMt
+        //insertMt
       })
       Some(f.mapTo[Unit])
     } else
@@ -66,7 +66,8 @@ object MonitorType extends Enumeration {
 
   def toMonitorType(d: Document) = {
     val ret = Json.parse(d.toJson()).validate[MonitorType]
-    ret.fold(error => {
+    ret.fold(
+      error => {
       Logger.error(JsError.toJson(error).toString())
       throw new Exception(JsError.toJson(error).toString)
     },
@@ -112,17 +113,16 @@ object MonitorType extends Enumeration {
     }
   }
 
- 
   def newMonitorType(mt: MonitorType) = {
     val doc = toDocument(mt)
     import org.mongodb.scala._
-    collection.insertOne(doc).subscribe((doOnNext: Completed) => {},
+    collection.insertOne(doc).subscribe(
+      (doOnNext: Completed) => {},
       (ex: Throwable) => {
         Logger.error(ex.getMessage, ex)
         throw ex
       })
   }
-
 
   import org.mongodb.scala.model.Filters._
   def upsertMonitorType(mt: MonitorType) = {
@@ -229,5 +229,11 @@ object MonitorType extends Enumeration {
       val (overInternal, overLaw) = overStd(mt, v)
       MonitorStatus.getCssClassStr(r.get.status, overInternal, overLaw)
     }
+  }
+
+  def getCssClassStr(mt: MonitorType.Value, r: Record2) = {
+    val v = r.value
+    val (overInternal, overLaw) = overStd(mt, v)
+    MonitorStatus.getCssClassStr(r.status, overInternal, overLaw)
   }
 }

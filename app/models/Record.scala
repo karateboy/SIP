@@ -7,10 +7,12 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import org.mongodb.scala._
 
 case class Record(monitor: Monitor.Value, time: DateTime, value: Double, status: String)
-case class MTRecord(monitorType: MonitorType.Value, value: Double, status: String)
-case class Record2(monitor: Monitor.Value, time: DateTime, mtMap: Map[MonitorType.Value, MTRecord])
+case class Record2(value: Double, status: String)
+
+//case class MTMap(mtMap: Map[MonitorType.Value, Record2])
 
 object Record {
+  type MTMap = Map[MonitorType.Value, Record2]
   import play.api.libs.json._
   import play.api.libs.functional.syntax._
   import org.mongodb.scala.model.Indexes._
@@ -151,7 +153,7 @@ object Record {
   }
 
   import scala.concurrent._
-  def getMonitorRecordMapF(colName: String)(mtList: List[MonitorType.Value], monitors: Seq[Monitor.Value], startTime: DateTime, endTime: DateTime): Future[Map[DateTime, Map[Monitor.Value, Record2]]] = {
+  def getMonitorRecordMapF(colName: String)(mtList: List[MonitorType.Value], monitors: Seq[Monitor.Value], startTime: DateTime, endTime: DateTime): Future[Map[DateTime, Map[Monitor.Value, MTMap]]] = {
     import org.mongodb.scala.bson._
     import org.mongodb.scala.model.Filters._
     import org.mongodb.scala.model.Projections._
@@ -164,7 +166,7 @@ object Record {
     val monitorNames = monitors.map(_.toString())
     val f = col.find(and(in("monitor", monitorNames: _*), gte("time", startTime.toDate()), lt("time", endTime.toDate()))).projection(proj).sort(ascending("time")).toFuture()
 
-    var timeMap = Map.empty[DateTime, Map[Monitor.Value, Record2]]
+    var timeMap = Map.empty[DateTime, Map[Monitor.Value, MTMap]]
 
     for (docs <- f) yield {
       val ret = 
@@ -172,7 +174,7 @@ object Record {
           doc <- docs
           time = new DateTime(doc("time").asDateTime().getValue)
         } yield {
-          var monitorRecordMap = timeMap.getOrElse(time, Map.empty[Monitor.Value, Record2])
+          var monitorRecordMap = timeMap.getOrElse(time, Map.empty[Monitor.Value, MTMap])
           val monitor = Monitor.withName(doc("monitor").asString().getValue)
           val mtRecordPairs =
             for {
@@ -183,10 +185,10 @@ object Record {
               v = mtDoc.get("v") if v.isDouble()
               s = mtDoc.get("s") if s.isString()
             } yield {
-              mt-> MTRecord(mt, v.asDouble().getValue, s.asString().getValue)
+              mt-> Record2(v.asDouble().getValue, s.asString().getValue)
             }
           val mtMap = mtRecordPairs.toMap
-          monitorRecordMap = monitorRecordMap + (monitor ->Record2(monitor, time: DateTime, mtMap))
+          monitorRecordMap = monitorRecordMap + (monitor ->mtMap)
           timeMap = timeMap + (time -> monitorRecordMap) 
         }
       timeMap

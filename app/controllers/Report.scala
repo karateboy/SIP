@@ -28,9 +28,8 @@ object Report extends Controller {
     Ok(views.html.monitorReport(""))
   }
 
-  def getMinMonthlySocket = WebSocket.acceptWithActor[String, String] { request =>
-    out =>
-      MinMonthlyReportWorker.props(out)
+  def getMinMonthlySocket = WebSocket.acceptWithActor[String, String] { request => out =>
+    MinMonthlyReportWorker.props(out)
   }
 
   def getOverallStatMap(statMap: Map[MonitorType.Value, Map[DateTime, Stat]]) = {
@@ -91,6 +90,14 @@ object Report extends Controller {
     }
   }
 
+  case class CellData(v: String, cellClassName: String)
+  case class RowData(cellData: Seq[CellData])
+  case class DataTab(columnNames: Seq[String], rows: Seq[RowData])
+
+  implicit val cellWrite = Json.writes[CellData]
+  implicit val rowWrite = Json.writes[RowData]
+  implicit val dtWrite = Json.writes[DataTab]
+
   def getMonitorReport(monitorStr: String, reportTypeStr: String, startDate: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
@@ -133,10 +140,175 @@ object Report extends Controller {
           case OutputType.html =>
             Ok(output)
           case OutputType.pdf =>
-            Ok.sendFile(creatPdfWithReportHeader(title, output),
+            Ok.sendFile(
+              creatPdfWithReportHeader(title, output),
               fileName = _ =>
                 play.utils.UriEncoding.encodePathSegment(title + start.toString("YYYYMM") + ".pdf", "UTF-8"))
         }
+      } else if (outputType == OutputType.json) {
+        val (columnNames, rows) =
+          reportType match {
+            case PeriodReport.DailyReport =>
+              val adjustedStart = start.withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.mtvList, monitor, adjustedStart, adjustedStart + 1.day)
+              val mtTimeMap = periodMap.map { pair =>
+                val k = pair._1
+                val v = pair._2
+                k -> Map(v.map { r => r.time -> r }: _*)
+              }
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(adjustedStart, adjustedStart + 1.day)
+
+              val mtColumnNames =
+                for (mt <- MonitorType.activeMtvList) yield s"${MonitorType.map(mt).desp}"
+
+              val topRows = for {
+                i <- 0 to 23
+              } yield {
+                val timeCell = CellData("%02d:00".format(i), "")
+                val valueCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.formatRecord(mt, mtTimeMap(mt).get(start + i.hour))
+                    styleStr = MonitorType.getCssClassStr(mt, mtTimeMap(mt).get(start + i.hour))
+                  } yield CellData(v, styleStr)
+                RowData(timeCell :: valueCells)
+              }
+              val avgRow = {
+                val titleCell = CellData("平均", "")
+                val avgCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, statMap(mt)(start).avg)
+                  } yield CellData(v, "")
+                RowData(titleCell :: avgCells)
+              }
+              val maxRow = {
+                val titleCell = CellData("最大", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, statMap(mt)(start).max)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+              val minRow = {
+                val titleCell = CellData("最小", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, statMap(mt)(start).min)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+
+              val effectiveRow = {
+                val titleCell = CellData("有效率(%)", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, statMap(mt)(adjustedStart).effectPercent)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+
+              val rows = topRows :+ avgRow :+ maxRow :+ minRow :+ effectiveRow
+              ("時間" :: mtColumnNames, rows)
+
+            case PeriodReport.MonthlyReport =>
+              val adjustedStart = start.withDayOfMonth(1).withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, adjustedStart, adjustedStart + 1.month)
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.day)(adjustedStart, adjustedStart + 1.month)
+              val overallStatMap = getOverallStatMap(statMap)
+              val mtColumnNames =
+                for (mt <- MonitorType.activeMtvList) yield s"${MonitorType.map(mt).desp}"
+
+              val topRows = for {
+                t <- Query.getPeriods(adjustedStart, adjustedStart + 1.month, 1.day)
+              } yield {
+                val timeCell = CellData(t.toString("d"), "")
+                val valueCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, statMap(mt)(t).avg)
+                    styleStr = if (!statMap(mt)(t).isEffective)
+                      "abnormal_status"
+                    else
+                      ""
+                  } yield CellData(v, styleStr)
+                RowData(timeCell :: valueCells)
+              }
+              val avgRow = {
+                val titleCell = CellData("平均", "")
+                val avgCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, overallStatMap(mt).avg)
+                  } yield CellData(v, "")
+                RowData(titleCell :: avgCells)
+              }
+              val maxRow = {
+                val titleCell = CellData("最大", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, overallStatMap(mt).max)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+              val minRow = {
+                val titleCell = CellData("最小", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, overallStatMap(mt).min)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+
+              val hourCountRow = {
+                val titleCell = CellData("有效時數", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = overallStatMap(mt).hour_count.get.toString()
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+
+              val hourTotalRow = {
+                val titleCell = CellData("應測時數", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = overallStatMap(mt).hour_total.get.toString()
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+              val effectiveRow = {
+                val titleCell = CellData("有效率(%)", "")
+                val vCells =
+                  for {
+                    mt <- MonitorType.activeMtvList
+                    v = MonitorType.format(mt, overallStatMap(mt).hourEffectPercent)
+                  } yield CellData(v, "")
+                RowData(titleCell :: vCells)
+              }
+
+              val rows = topRows :+ avgRow :+ maxRow :+ minRow :+ hourCountRow :+ hourTotalRow :+ effectiveRow
+              ("日期" :: mtColumnNames, rows)
+
+            /*
+            case PeriodReport.YearlyReport =>
+              val adjustedStart = start.withDayOfYear(1).withMillisOfDay(0)
+              val periodMap = Record.getRecordMap(Record.HourCollection)(MonitorType.activeMtvList, monitor, adjustedStart, adjustedStart + 1.year)
+              val statMap = Query.getPeriodStatReportMap(periodMap, 1.month)(adjustedStart, adjustedStart + 1.year)
+              val overallStatMap = getOverallStatMap(statMap)
+              ("年報", views.html.yearlyReport(monitor, adjustedStart, MonitorType.activeMtvList, statMap, overallStatMap))
+					*/
+          }
+
+        Ok(Json.toJson(DataTab(columnNames, rows)))
+
       } else {
         import java.io.File
         import java.nio.file.Files
@@ -170,55 +342,189 @@ object Report extends Controller {
       original.withDayOfMonth(1).withMillisOfDay(0)
     }
     val outputType = OutputType.withName(outputTypeStr)
+    val recordList = Record.getRecordMap(Record.HourCollection)(List(mt), monitor, start, start + 1.month)(mt)
+    val timePair = recordList.map { r => r.time -> r }
+    val timeMap = Map(timePair: _*)
+
+    def getHourPeriodStat(records: Seq[Record], hourList: List[DateTime]) = {
+      if (records.length == 0)
+        Stat(None, None, None, 0, 0, 0)
+      else {
+        val values = records.map { r => r.value }
+        val min = values.min
+        val max = values.max
+        val sum = values.sum
+        val count = records.filter { r => MonitorStatus.isValid(r.status) }.length
+        val total = new Duration(start, start + 1.month).getStandardDays.toInt
+        val overCount = if (MonitorType.map(mt).std_law.isDefined) {
+          values.count { _ > MonitorType.map(mt).std_law.get }
+        } else
+          0
+
+        val avg = if (mt == MonitorType.WIN_DIRECTION) {
+          val windDir = records
+          val windSpeed = hourList.map(timeMap)
+          Query.windAvg(windSpeed, windDir)
+        } else {
+          sum / total
+        }
+        Stat(
+          avg = Some(avg),
+          min = Some(min),
+          max = Some(max),
+          total = total,
+          count = count,
+          overCount = overCount)
+      }
+    }
+    val hourValues =
+      for {
+        h <- 0 to 23
+        hourList = Query.getPeriods(start + h.hour, start + 1.month, 1.day)
+      } yield {
+        h -> getHourPeriodStat(hourList.flatMap { timeMap.get }, hourList)
+      }
+    val hourStatMap = Map(hourValues: _*)
+    val dayStatMap = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)
+    val overallStat = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)(mt)(start)
+
     val title = "月份時報表"
     if (outputType == OutputType.html || outputType == OutputType.pdf) {
-      val recordList = Record.getRecordMap(Record.HourCollection)(List(mt), monitor, start, start + 1.month)(mt)
-      val timePair = recordList.map { r => r.time -> r }
-      val timeMap = Map(timePair: _*)
+      Ok(views.html.monthlyHourReport(monitor, mt, start, timeMap, hourStatMap, dayStatMap(mt), overallStat))
+    } else if (outputType == OutputType.json) {
 
-      def getHourPeriodStat(records: Seq[Record], hourList: List[DateTime]) = {
-        if (records.length == 0)
-          Stat(None, None, None, 0, 0, 0)
-        else {
-          val values = records.map { r => r.value }
-          val min = values.min
-          val max = values.max
-          val sum = values.sum
-          val count = records.filter { r => MonitorStatus.isValid(r.status) }.length
-          val total = new Duration(start, start + 1.month).getStandardDays.toInt
-          val overCount = if (MonitorType.map(mt).std_law.isDefined) {
-            values.count { _ > MonitorType.map(mt).std_law.get }
-          } else
-            0
+      val hourColumn =
+        for (t <- 0 to 23) yield s"${t}"
 
-          val avg = if (mt == MonitorType.WIN_DIRECTION) {
-            val windDir = records
-            val windSpeed = hourList.map(timeMap)
-            Query.windAvg(windSpeed, windDir)
-          } else {
-            sum / total
-          }
-          Stat(
-            avg = Some(avg),
-            min = Some(min),
-            max = Some(max),
-            total = total,
-            count = count,
-            overCount = overCount)
-        }
+      val columns = "日\\小時" +: hourColumn :+ "平均" :+ "最大" :+ "最小" :+ "有效筆數" :+ "應測筆數" :+ "有效率(%)"
+
+      val topRows = for {
+        day <- Query.getPeriods(start, start + 1.month, 1.day)
+      } yield {
+        val date = CellData(day.toString("dd"), "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = MonitorType.formatRecord(mt, timeMap.get(day + h.hour))
+            styleStr = MonitorType.getCssClassStr(mt, timeMap.get(day + h.hour))
+          } yield CellData(v, styleStr)
+        val avg = CellData(MonitorType.format(mt, dayStatMap(mt)(day).avg), "")
+        val max = CellData(MonitorType.format(mt, dayStatMap(mt)(day).max), "")
+        val min = CellData(MonitorType.format(mt, dayStatMap(mt)(day).min), "")
+        val count = CellData(dayStatMap(mt)(day).count.toString, "")
+        val total = CellData(dayStatMap(mt)(day).total.toString, "")
+        val effective = CellData(MonitorType.format(mt, dayStatMap(mt)(day).effectPercent), "")
+        val cells = date +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+
+        RowData(cells)
       }
 
-      val hourValues =
-        for {
-          h <- 0 to 23
-          hourList = Query.getPeriods(start + h.hour, start + 1.month, 1.day)
-        } yield {
-          h -> getHourPeriodStat(hourList.flatMap { timeMap.get }, hourList)
-        }
-      val hourStatMap = Map(hourValues: _*)
-      val dayStatMap = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)
-      val overallStat = Query.getPeriodStatReportMap(Map(mt -> recordList), 1.day)(start, start + 1.month)(mt)(start)
-      Ok(views.html.monthlyHourReport(monitor, mt, start, timeMap, hourStatMap, dayStatMap(mt), overallStat))
+      val avgRow = {
+        val title = CellData("平均", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = MonitorType.format(mt, hourStatMap(h).avg)
+          } yield CellData(v, "")
+        val avg = CellData(MonitorType.format(mt, overallStat.avg), "")
+        val max = CellData("", "")
+        val min = CellData("", "")
+        val count = CellData("", "")
+        val total = CellData("", "")
+        val effective = CellData("", "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+
+      val maxRow = {
+        val title = CellData("最大", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = MonitorType.format(mt, hourStatMap(h).max)
+          } yield CellData(v, "")
+        val avg = CellData("", "")
+        val max = CellData(MonitorType.format(mt, overallStat.max), "")
+        val min = CellData("", "")
+        val count = CellData("", "")
+        val total = CellData("", "")
+        val effective = CellData("", "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+
+      val minRow = {
+        val title = CellData("最小", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = MonitorType.format(mt, hourStatMap(h).min)
+          } yield CellData(v, "")
+        val avg = CellData("", "")
+        val max = CellData("", "")
+        val min = CellData(MonitorType.format(mt, overallStat.min), "")
+        val count = CellData("", "")
+        val total = CellData("", "")
+        val effective = CellData("", "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+
+      /*
+      val hourCountRow = {
+        val title = CellData("有效時數", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = hourStatMap(h).hour_count.get.toString
+          } yield CellData(v, "")
+        val avg = CellData("", "")
+        val max = CellData("", "")
+        val min = CellData("", "")
+        val count = CellData(overallStat.hour_count.get.toString, "")
+        val total = CellData("", "")
+        val effective = CellData("", "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+
+      val hourTotalRow = {
+        val title = CellData("應測時數", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = hourStatMap(h).hour_total.get.toString
+          } yield CellData(v, "")
+        val avg = CellData("", "")
+        val max = CellData("", "")
+        val min = CellData("", "")
+        val count = CellData("", "")
+        val total = CellData(overallStat.hour_total.get.toString, "")
+        val effective = CellData("", "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+
+      val effectiveRow = {
+        val title = CellData("有效率(%)", "")
+        val values =
+          for {
+            h <- 0 to 23
+            v = MonitorType.format(mt, hourStatMap(h).effectPercent)
+          } yield CellData(v, "")
+        val avg = CellData("", "")
+        val max = CellData("", "")
+        val min = CellData("", "")
+        val count = CellData("", "")
+        val total = CellData("", "")
+        val effective = CellData(MonitorType.format(mt, overallStat.effectPercent), "")
+        val cells = title +: values :+ avg :+ max :+ min :+ count :+ total :+ effective
+        RowData(cells)
+      }
+*/
+      val rows = topRows :+ avgRow :+ maxRow :+ minRow
+      val tab = DataTab(columns, rows)
+      Ok(Json.toJson(tab))
     } else {
       import java.io.File
       import java.nio.file.Files
@@ -252,7 +558,7 @@ object Report extends Controller {
 
       }
   }
-  
+
   def reauditReport(monitorStr: String, monitorTypeStr: String, startLong: Long, endLong: Long) = Security.Authenticated.async {
     implicit request =>
       import scala.collection.JavaConverters._
@@ -264,11 +570,11 @@ object Report extends Controller {
 
       val f = Record.resetAuditedRecord(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
       waitReadyResult(f)
-      
+
       val recordListF = Record.getRecordListFuture(Record.HourCollection)(monitor, start, end)
       val recordList = waitReadyResult(recordListF)
       AutoAudit.audit2(monitor, recordList, false)
-      
+
       val recordMapF = Record.getAuditRecordMapFuture(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
       for (recordMap <- recordMapF) yield {
         val timeList = recordMap.keys.toList.sorted

@@ -60,6 +60,7 @@ object Realtime extends Controller {
   def realtimeStatus = Security.Authenticated {
     Ok(views.html.realtimeStatusA(""))
   }
+
   def realtimeStatusContent() = Security.Authenticated.async {
     implicit request =>
       import MonitorType._
@@ -72,6 +73,50 @@ object Realtime extends Controller {
         map <- latestRecordMap
       } yield {
         Ok(views.html.realtimeStatus(map, groupInfo.privilege))
+      }
+  }
+
+  case class CellData(v: String, cellClassName: String)
+  case class RowData(cellData: Seq[CellData])
+  case class DataTab(columnNames: Seq[String], rows: Seq[RowData])
+
+  implicit val cellWrite = Json.writes[CellData]
+  implicit val rowWrite = Json.writes[RowData]
+  implicit val dtWrite = Json.writes[DataTab]
+
+  def realtimeData() = Security.Authenticated.async {
+    implicit request =>
+      import MonitorType._
+      val user = request.user
+      val latestRecordMapF = Record.getLatestRecordMapFuture(Record.HourCollection)
+
+      for {
+        map <- latestRecordMapF
+        yulinMap = map.filter { kv =>
+          Monitor.map(kv._1).indParkName == "台塑六輕工業園區"
+        }
+      } yield {
+
+        val mtColumns =
+          for (mt <- MonitorType.activeMtvList) yield s"${MonitorType.map(mt).desp}"
+
+        val columns = "測站" +: "資料時間" +: mtColumns
+        val rows = for {
+          (monitor, recordPair) <- yulinMap
+          (time, recordMap) = recordPair
+        } yield {
+          val monitorCell = CellData(s"${Monitor.map(monitor).dp_no}", "")
+          val timeCell = CellData(s"${time.toLocalTime().toString()}", "")
+          val valueCells =
+            for {
+              mt <- MonitorType.activeMtvList
+              v = MonitorType.formatRecord(mt, recordMap.get(mt))
+              styleStr = MonitorType.getCssClassStr(mt, recordMap.get(mt))
+            } yield CellData(v, styleStr)
+          RowData(monitorCell +: timeCell +: valueCells)
+        }
+
+        Ok(Json.toJson(DataTab(columns, rows.toSeq)))
       }
   }
 

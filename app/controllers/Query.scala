@@ -695,7 +695,7 @@ object Query extends Controller {
                     mt <- monitorTypes
                   } yield {
                     if (!mtMap.contains(mt))
-                      CellData("-", "-")
+                      CellData("-", "abnormal_status")
                     else {
                       val record = mtMap(mt)
                       CellData(MonitorType.format(mt, Some(record.value)), MonitorType.getCssClassStr(mt, record))

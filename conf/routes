@@ -56,15 +56,18 @@ GET      /Recalculate/:start/:end                                             co
 GET      /MonitorTypeStatusList                                               controllers.Realtime.MonitorTypeStatusList()
 GET      /RealtimeStatus                                                      controllers.Realtime.realtimeStatus()
 GET      /RealtimeStatusContent                                               controllers.Realtime.realtimeStatusContent()
+GET      /RealtimeData                                                        controllers.Realtime.realtimeData()
 
 #Report
 GET      /Report                                                              controllers.Report.monitorReport()
 GET      /monitorReport/:monitor/:reportType/:reportDate                      controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="html")
 GET      /PDF/monitorReport/:monitor/:reportType/:reportDate                  controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="pdf")
 GET      /Excel/monitorReport/:monitor/:reportType/:reportDate                controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="excel")
+GET      /JSON/monitorReport/:monitor/:reportType/:reportDate                 controllers.Report.getMonitorReport(monitor, reportType, reportDate:Long, outputTypeStr="json")
 
 GET      /MonitorMonthlyHourReport                                            controllers.Report.monitorMonthlyHourReport
 GET      /MonthlyHourReport/:monitor/:monitorType/:reportDate                 controllers.Report.monthlyHourReport(monitor, monitorType, reportDate:Long, outputTypeStr="html")
+GET      /JSON/MonthlyHourReport/:monitor/:monitorType/:reportDate            controllers.Report.monthlyHourReport(monitor, monitorType, reportDate:Long, outputTypeStr="json")
 
 GET      /Audit                                                               controllers.Report.audit
 GET      /AuditReport/:monitor/:monitorType/:start/:end                       controllers.Report.auditReport(monitor, monitorType, start:Long, end:Long)

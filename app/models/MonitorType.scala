@@ -214,9 +214,9 @@ object MonitorType extends Enumeration {
       val (overInternal, overLaw) = overStd(mt, r.get.value)
       val prec = map(mt).prec
       val value = s"%.${prec}f".format(r.get.value)
-      if (overInternal || overLaw)
-        s"<i class='fa fa-exclamation-triangle'></i>$value"
-      else
+      //if (overInternal || overLaw)
+        //s"<i class='fa fa-exclamation-triangle'></i>$value"
+      //else
         s"$value"
     }
   }

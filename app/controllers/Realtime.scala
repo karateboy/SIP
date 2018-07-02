@@ -88,21 +88,27 @@ object Realtime extends Controller {
     implicit request =>
       import MonitorType._
       val user = request.user
-      val latestRecordMapF = Record.getLatestRecordMapFuture(Record.HourCollection)
-
+      val latestRecordMapF = Record.getLatestRecordMap2Future(Record.HourCollection)
+      val targetTime = (DateTime.now() - 2.hour).withMinuteOfHour(0).withSecond(0).withMillisOfSecond(0)
+      val ylMonitors = Monitor.mvList filter { Monitor.map(_).indParkName == "台塑六輕工業園區" }
       for {
         map <- latestRecordMapF
         yulinMap = map.filter { kv =>
           Monitor.map(kv._1).indParkName == "台塑六輕工業園區"
         }
       } yield {
+        var yulinFullMap = yulinMap
+        for (m <- ylMonitors) {
+          if (!yulinFullMap.contains(m))
+            yulinFullMap += (m -> (targetTime, Map.empty[MonitorType.Value, Record]))
+        }
 
         val mtColumns =
           for (mt <- MonitorType.activeMtvList) yield s"${MonitorType.map(mt).desp}"
 
         val columns = "測站" +: "資料時間" +: mtColumns
         val rows = for {
-          (monitor, recordPair) <- yulinMap
+          (monitor, recordPair) <- yulinFullMap
           (time, recordMap) = recordPair
         } yield {
           val monitorCell = CellData(s"${Monitor.map(monitor).dp_no}", "")

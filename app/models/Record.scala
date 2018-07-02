@@ -169,7 +169,7 @@ object Record {
     var timeMap = Map.empty[DateTime, Map[Monitor.Value, MTMap]]
 
     for (docs <- f) yield {
-      val ret = 
+      val ret =
         for {
           doc <- docs
           time = new DateTime(doc("time").asDateTime().getValue)
@@ -185,11 +185,11 @@ object Record {
               v = mtDoc.get("v") if v.isDouble()
               s = mtDoc.get("s") if s.isString()
             } yield {
-              mt-> Record2(v.asDouble().getValue, s.asString().getValue)
+              mt -> Record2(v.asDouble().getValue, s.asString().getValue)
             }
           val mtMap = mtRecordPairs.toMap
-          monitorRecordMap = monitorRecordMap + (monitor ->mtMap)
-          timeMap = timeMap + (time -> monitorRecordMap) 
+          monitorRecordMap = monitorRecordMap + (monitor -> mtMap)
+          timeMap = timeMap + (time -> monitorRecordMap)
         }
       timeMap
     }
@@ -345,6 +345,47 @@ object Record {
         }
       }
     for (pairs <- Future.sequence(futureList)) yield {
+      pairs.toMap
+    }
+  }
+
+  def getLatestRecordMap2Future(colName: String) = {
+    import org.mongodb.scala.bson._
+    import org.mongodb.scala.model.Filters._
+    import org.mongodb.scala.model.Projections._
+    import org.mongodb.scala.model.Sorts._
+
+    val mtList = MonitorType.activeMtvList
+    val col = MongoDB.database.getCollection(colName)
+    val projFields = "monitor" :: "time" :: MonitorType.mtvList.map { MonitorType.BFName(_) }
+    val targetTime = (DateTime.now() - 2.hour).withMinuteOfHour(0).withSecond(0).withMillisOfSecond(0)
+    val proj = include(projFields: _*)
+    val f = col.find(equal("time", targetTime.toDate())).projection(proj).toFuture()
+    val pairsF =
+      for {
+        docs <- f
+      } yield {
+        for {
+          doc <- docs
+          m = Monitor.withName(doc("monitor").asString().getValue)
+          time = doc("time").asDateTime().toDateTime()
+        } yield {
+          val pair =
+            for {
+              mt <- MonitorType.mtvList
+              mtBFName = MonitorType.BFName(mt)
+              mtDocOpt = doc.get(mtBFName) if mtDocOpt.isDefined && mtDocOpt.get.isDocument()
+              mtDoc = mtDocOpt.get.asDocument()
+              v = mtDoc.get("v") if v.isDouble()
+              s = mtDoc.get("s") if s.isString()
+            } yield {
+              mt -> Record(m, time, v.asDouble().doubleValue(), s.asString().getValue)
+            }
+          m -> (time, pair.toMap)
+        }
+      }
+
+    for (pairs <- pairsF) yield {
       pairs.toMap
     }
   }

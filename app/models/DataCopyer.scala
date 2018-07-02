@@ -20,7 +20,7 @@ object CopyStep extends Enumeration {
 }
 object DataCopyer {
   case object StartCopy
-  case class CopyRange(begin: DateTime, end: DateTime)
+  case class CopyDay(begin: DateTime)
 
   var hourCopyer: ActorRef = _
   var minCopyer: ActorRef = _
@@ -32,7 +32,7 @@ object DataCopyer {
 
     if (enabled) {
       hourCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.hour), name = "hourCopyer")
-      //minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
+      minCopyer = Akka.system.actorOf(Props(classOf[DataCopyer], CopyStep.min), name = "minCopyer")
     }
   }
 
@@ -122,8 +122,7 @@ object DataCopyer {
     "U253" -> "對-二乙基苯",
     "U254" -> "正十一烷")
 
-  def getCopyRange(step: CopyStep.Value) = {
-    Logger.debug(s"getCopyRange $step")
+  def getCopyStart(step: CopyStep.Value) = {
     val latestF = step match {
       case CopyStep.hour =>
         SysConfig.get(SysConfig.AVGHR_LAST)
@@ -134,32 +133,18 @@ object DataCopyer {
     for { latest <- latestF } yield {
       val begin = step match {
         case CopyStep.hour =>
-          new DateTime(latest.asDateTime().toDate())
+          val rawHour = new DateTime(latest.asDateTime().toDate())
+          rawHour.withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0)
         case CopyStep.min =>
-          new DateTime(latest.asDateTime().toDate())
+          val rawMin = new DateTime(latest.asDateTime().toDate())
+          rawMin.withSecondOfMinute(0).withMillisOfSecond(0)
       }
 
-      val now = DateTime.now()
-
-      val end =
-        step match {
-          case CopyStep.hour =>
-            if (begin + 1.day > now)
-              now
-            else
-              (begin + 1.day).withMillisOfDay(0)
-
-          case CopyStep.min =>
-            if (begin + 1.day > now)
-              now
-            else
-              (begin + 1.day).withMillisOfDay(0)
-        }
-      (begin, end)
+      begin
     }
   }
 
-  def copyDbRange(begin: DateTime, end: DateTime, step: CopyStep.Value) {
+  def copyDbDay(begin: DateTime, step: CopyStep.Value) {
     val tab = step match {
       case CopyStep.hour =>
         SQLSyntax.createUnsafely(s"A_AVGHR${begin.getYear}")
@@ -170,7 +155,7 @@ object DataCopyer {
     val year = s"${begin.getYear}"
     val month = "%02d".format(begin.getMonthOfYear)
     val day = "%02d".format(begin.getDayOfMonth)
-    Logger.info(s"copy $step ${begin.toString("YY/MM/dd HH:mm")} to ${end.toString("YY/MM/dd HH:mm")}")
+    Logger.info(s"copy $step ${begin.toString("YY/MM/dd HH:mm")}")
 
     val result = DB readOnly {
       implicit session =>
@@ -196,8 +181,7 @@ object DataCopyer {
 
     val recordList = result filter {
       hr =>
-        (hr.dp_no != unknownMonitor && hr.value.isDefined && hr.status.isDefined) &&
-          (hr.dateTime >= begin && hr.dateTime < end)
+        (hr.dp_no != unknownMonitor && hr.value.isDefined && hr.status.isDefined)
     }
 
     def updateDB = {
@@ -230,7 +214,12 @@ object DataCopyer {
             Filters.eq("_id", doc("_id")),
             Updates.combine(updateList: _*), UpdateOptions().upsert(true))
         }
-      Logger.info(s"update $step ${updateModels.size} records")
+
+      val monitorEnds = recordMap map { map =>
+        map._2.keys.max
+      }
+
+      Logger.info(s"update $step ${updateModels.size} records ($begin => ${monitorEnds.min}")
 
       val collection =
         step match {
@@ -243,16 +232,20 @@ object DataCopyer {
       f2.onFailure(errorHandler)
       waitReadyResult(f2)
 
-      step match {
-        case CopyStep.hour =>
-          SysConfig.set(SysConfig.AVGHR_LAST, end)
-        case CopyStep.min =>
-          SysConfig.set(SysConfig.AVGR_LAST, end)
-      }
     }
 
     if (!recordList.isEmpty)
       updateDB
+
+    val now = DateTime.now()
+    if (begin + 1.day + 2.hour < now) {
+      step match {
+        case CopyStep.hour =>
+          SysConfig.set(SysConfig.AVGHR_LAST, begin + 1.day)
+        case CopyStep.min =>
+          SysConfig.set(SysConfig.AVGR_LAST, begin + 1.day)
+      }
+    }
   }
 
 }
@@ -277,43 +270,18 @@ class DataCopyer(step: CopyStep.Value) extends Actor with ActorLogging {
   def handler(copying: Boolean): Receive = {
     case StartCopy =>
       if (!copying) {
-        for ((begin, end) <- getCopyRange(step)) {
-          val minDuration = step match {
-            case CopyStep.hour =>
-              1.hour
-            case CopyStep.min =>
-              1.minute
-          }
-
-          if (begin < DateTime.now() && begin + minDuration <= end) {
-            self ! CopyRange(begin, end)
-            context become handler(true)
-          }
+        for (start <- getCopyStart(step)) {
+          self ! CopyDay(start)
+          context become handler(true)
         }
       }
-    case CopyRange(begin, end) =>
-      copyDbRange(begin, end, step)
+
+    case CopyDay(start) =>
+      copyDbDay(start, step)
       val now = DateTime.now()
-      val nextBegin = end
-      var nextEnd =
-        step match {
-          case CopyStep.hour =>
-            end + 1.day
-          case CopyStep.min =>
-            end + 1.day
-        }
-
-      if (nextEnd > now)
-        nextEnd = now
-
-      val minDuration = step match {
-        case CopyStep.hour =>
-          1.hour
-        case CopyStep.min =>
-          1.minute
-      }
-      if (nextBegin < now && nextBegin + minDuration <= nextEnd) {
-        self ! CopyRange(nextBegin, nextEnd)
+      val nextStart = start + 1.day
+      if (nextStart < now) {
+        self ! CopyDay(nextStart)
       } else {
         context become handler(false)
       }

@@ -112,7 +112,7 @@ object Realtime extends Controller {
           (time, recordMap) = recordPair
         } yield {
           val monitorCell = CellData(s"${Monitor.map(monitor).dp_no}", "")
-          val timeCell = CellData(s"${time.toLocalTime().toString()}", "")
+          val timeCell = CellData(s"${time.toLocalTime().toString("HH:mm")}", "")
           val valueCells =
             for {
               mt <- MonitorType.activeMtvList

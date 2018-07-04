@@ -536,14 +536,14 @@ object Report extends Controller {
     Ok(views.html.audit())
   }
 
-  def auditReport(monitorStr: String, monitorTypeStr: String, startLong: Long, endLong: Long) = Security.Authenticated.async {
+  def auditReport(monitorStr: String, monitorTypeStr: String, startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated.async {
     implicit request =>
       import scala.collection.JavaConverters._
       val monitor = Monitor.withName(java.net.URLDecoder.decode(monitorStr, "UTF-8"))
-
       val monitorTypeStrArray = monitorTypeStr.split(':')
       val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
       val (start, end) = (new DateTime(startLong), new DateTime(endLong))
+      val outputType = OutputType.withName(outputTypeStr)
 
       val recordMapF = Record.getAuditRecordMapFuture(Record.HourCollection)(monitorTypes.toList, monitor, start, end)
       for (recordMap <- recordMapF) yield {
@@ -553,9 +553,33 @@ object Report extends Controller {
           val mtCase = MonitorType.map(t)
           s"${mtCase.desp}(${mtCase.unit})"
         }.mkString(",")
-        val output = views.html.auditReport(monitorTypes, explain, start, end, timeList, recordMap)
-        Ok(output)
 
+        def jsonOutput = {
+          val mtColumns = for (mt <- monitorTypes) yield Seq(MonitorType.map(mt).desp, "註記理由")
+          val mtColumn1 = mtColumns.flatMap(x => x)
+
+          val columns = "時間" +: mtColumn1
+          val rows = for (t <- timeList) yield {
+            val timeC = CellData(t.toString("YYYY-MM-dd HH:mm"), "")
+            val mtCells = for (mt <- monitorTypes) yield {
+              val r = recordMap(t).get(mt)
+              val c1 = CellData(MonitorType.formatRecord(mt, r), MonitorType.getCssClassStr(mt, r))
+              val c2 = CellData(MonitorStatus.formatRecordExplain(r), "")
+              Seq(c1, c2)
+            }
+            val mtCell1 = mtCells.flatMap(x => x)
+            RowData(timeC +: mtCell1)
+          }
+          DataTab(columns, rows)
+        }
+        outputType match {
+          case OutputType.html =>
+            val output = views.html.auditReport(monitorTypes, explain, start, end, timeList, recordMap)
+            Ok(output)
+          case OutputType.json =>
+            val tab = jsonOutput
+            Ok(Json.toJson(tab))
+        }
       }
   }
 

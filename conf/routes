@@ -72,6 +72,7 @@ GET      /JSON/MonthlyHourReport/:monitor/:monitorType/:reportDate            co
 GET      /Audit                                                               controllers.Report.audit
 GET      /AuditReport/:monitor/:monitorType/:start/:end                       controllers.Report.auditReport(monitor, monitorType, start:Long, end:Long)
 GET      /ReauditReport/:monitor/:monitorType/:start/:end                     controllers.Report.reauditReport(monitor, monitorType, start:Long, end:Long)
+GET      /JSON/AuditReport/:monitor/:monitorType/:start/:end                  controllers.Report.auditReportJSON(monitor, monitorType, start:Long, end:Long)
 
 #JSON
 GET      /MonitorType                                                         controllers.Application.monitorTypeList

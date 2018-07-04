@@ -247,7 +247,6 @@ object DataCopyer {
       }
     }
   }
-
 }
 
 class DataCopyer(step: CopyStep.Value) extends Actor with ActorLogging {
@@ -260,7 +259,7 @@ class DataCopyer(step: CopyStep.Value) extends Actor with ActorLogging {
       case CopyStep.hour =>
         Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(5, MINUTES), self, StartCopy)
       case CopyStep.min =>
-        Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(1, MINUTES), self, StartCopy)
+        Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(5, MINUTES), self, StartCopy)
     }
 
   }

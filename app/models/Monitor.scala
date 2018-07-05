@@ -11,13 +11,12 @@ import org.mongodb.scala.bson._
 import models.ModelHelper._
 
 case class Monitor(_id: String, indParkName: String, dp_no: String,
-                   lat: Option[Double] = None, lng: Option[Double] = None,
-                   autoAudit: Option[AutoAudit] = None) {
+                   lat: Option[Double] = None, lng: Option[Double] = None) {
 
   def toDocument = {
     import AutoAudit._
     Document("_id" -> _id, "indParkName" -> indParkName, "dp_no" -> dp_no,
-      "lat" -> lat, "lng" -> lng, "autoAudit" -> autoAudit)
+      "lat" -> lat, "lng" -> lng)
   }
 
 }
@@ -69,8 +68,8 @@ object Monitor extends Enumeration {
     val dp_no = doc.getString("dp_no")
     val lat = getOptionDouble("lat")
     val lng = getOptionDouble("lng")
-    val autoAudit = getOptionDoc("autoAudit") map { d => AutoAudit.toAutoAudit(d) }
-    Monitor(_id = _id, indParkName = indParkName, dp_no = dp_no, lat = lat, lng = lng, autoAudit = autoAudit)
+
+    Monitor(_id = _id, indParkName = indParkName, dp_no = dp_no, lat = lat, lng = lng)
   }
 
   def newMonitor(m: Monitor) = {
@@ -164,6 +163,8 @@ object Monitor extends Enumeration {
 
     import scala.concurrent.ExecutionContext.Implicits.global
 
+    ???
+    /*
     val idFilter = equal("_id", map(m)._id)
     val opt = FindOneAndUpdateOptions().returnDocument(com.mongodb.client.model.ReturnDocument.AFTER)
     val f = collection.findOneAndUpdate(idFilter, set("autoAudit", autoAudit.toDocument), opt).toFuture()
@@ -172,6 +173,8 @@ object Monitor extends Enumeration {
 
     val mCase = toMonitor(ret)
     map = map + (m -> mCase)
+    * 
+    */
   }
 
   def getCenterLat(privilege: Privilege) = {

@@ -233,7 +233,8 @@ object Application extends Controller {
     implicit request =>
       val mtResult = request.body.validate[MonitorType]
 
-      mtResult.fold(error => {
+      mtResult.fold(
+        error => {
         Logger.error(JsError.toJson(error).toString())
         BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
       },
@@ -261,22 +262,36 @@ object Application extends Controller {
     Ok(views.html.auditConfig())
   }
 
-  def getAllMonitorAuditConfig = Security.Authenticated {
+  def getAllMonitorAuditConfig = Security.Authenticated.async {
     implicit request =>
-
-      val autoAuditList = Monitor.mvList map { Monitor.map(_).autoAudit.getOrElse(AutoAudit.default) }
-
-      Ok(Json.toJson(autoAuditList))
+      implicit val configWrite = Json.writes[AuditConfig]
+      val mapF = AuditConfig.getConfigMapFuture
+      val userOptF = User.getUserByIdFuture(request.user.id)
+      for {
+        map <- mapF
+        userOpt <- userOptF if userOpt.isDefined
+        groupInfo = Group.getGroupInfo(userOpt.get.groupId)
+        mList = groupInfo.privilege.allowedMonitors.map { Monitor.map }
+      } yield {
+        var fullMap = map
+        for(m <- mList){
+          if(!fullMap.contains(m._id))
+            fullMap += m._id -> AuditConfig.defaultConfig(m._id)
+        }
+        Ok(Json.toJson(fullMap))
+      }
   }
 
   def getMonitorAuditConfig(rawMonitorStr: String) = Security.Authenticated {
     implicit request =>
+      ???
+    /*
       val monitorStr = java.net.URLDecoder.decode(rawMonitorStr, "UTF-8")
       val m = Monitor.withName(monitorStr)
 
       val autoAudit = Monitor.map(m).autoAudit.getOrElse(AutoAudit.default)
-
-      Ok(Json.toJson(autoAudit))
+			*/
+    //Ok(Json.toJson(autoAudit))
   }
 
   def setMonitorAuditConfig(rawMonitorStr: String) = Security.Authenticated(BodyParsers.parse.json) {

@@ -1,5 +1,4 @@
 package models
-import scala.collection.Map
 import play.api.Logger
 import EnumUtils._
 import play.api.libs.json._
@@ -7,43 +6,74 @@ import play.api.libs.functional.syntax._
 import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
+import org.mongodb.scala.bson._
+import org.mongodb.scala.model._
 
-case class MonitorType(_id: String, desp: String, unit: String, std_law: Option[Double],
-                       prec: Int, order: Int, std_internal: Option[Double] = None,
-                       level1: Option[Double] = None, level2: Option[Double] = None,
-                       level3: Option[Double] = None, level4: Option[Double] = None)
+case class MonitorType(_id: String, desp: String, unit: String, order: Int, prec: Int = 2,
+                       std_law:      Option[Double] = None,
+                       std_internal: Option[Double] = None,
+                       level1:       Option[Double] = None, level2: Option[Double] = None,
+                       level3: Option[Double] = None, level4: Option[Double] = None, itemID: Option[Int] = None) {
+  def getItemIdUpdates = {
+
+    Updates.combine(
+      Updates.setOnInsert("desp", desp),
+      Updates.setOnInsert("unit", unit),
+      Updates.setOnInsert("order", order),
+      Updates.set("itemID", itemID))
+  }
+}
 
 object MonitorType extends Enumeration {
-  import org.mongodb.scala.bson._
-  import scala.concurrent._
-  import scala.concurrent.duration._
+
+  import org.mongodb.scala.bson.codecs.Macros._
+  import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
+  import org.bson.codecs.configuration.CodecRegistries.{ fromRegistries, fromProviders }
 
   implicit val mtvRead: Reads[MonitorType.Value] = EnumUtils.enumReads(MonitorType)
   implicit val mtvWrite: Writes[MonitorType.Value] = EnumUtils.enumWrites
   implicit val mtWrite = Json.writes[MonitorType]
   implicit val mtRead = Json.reads[MonitorType]
-  implicit object TransformMonitorType extends BsonTransformer[MonitorType.Value] {
-    def apply(mt: MonitorType.Value): BsonString = new BsonString(mt.toString)
+
+  val ColName = "monitorTypes"
+  val codecRegistry = fromRegistries(fromProviders(classOf[MonitorType]), DEFAULT_CODEC_REGISTRY)
+  val collection = MongoDB.database.getCollection[MonitorType](ColName).withCodecRegistry(codecRegistry)
+
+  var epaOrder = 100
+  def epaMonitorType(desp: String, unit: String, itemID: Int) = {
+    epaOrder += 1
+    MonitorType(_id = desp, desp = desp, unit = unit, order = epaOrder, itemID = Some(itemID))
   }
-  val colName = "monitorTypes"
-  val collection = MongoDB.database.getCollection(colName)
-  val defaultMonitorTypes = List()
+
+  val epaMonitorTypes = Seq(
+    epaMonitorType("溫度", "℃", 14),
+    epaMonitorType("甲烷", "ppm", 31),
+    epaMonitorType("一氧化碳", "ppm", 2),
+    epaMonitorType("二氧化碳", "ppm", 36),
+    epaMonitorType("非甲烷碳氫化合物", "ppm", 9),
+    epaMonitorType("一氧化氮", "ppb", 6),
+    epaMonitorType("二氧化氮", "ppb", 7),
+    epaMonitorType("氮氧化物", "ppb", 5),
+    epaMonitorType("臭氧", "ppb", 3),
+    epaMonitorType("酸雨", "pH", 21),
+    epaMonitorType("PM10", "μg/m3", 4),
+    epaMonitorType("PM2.5", "μg/m3", 33),
+    epaMonitorType("導電度", "μmho/cm", 22),
+    epaMonitorType("降雨強度", "㎜", 32),
+    epaMonitorType("降雨量", "㎜", 23),
+    epaMonitorType("相對濕度", "percent", 38),
+    epaMonitorType("二氧化硫", "ppb", 1),
+    epaMonitorType("總碳氫化合物", "ppm", 8),
+    epaMonitorType("小時風向值", "小時風向值", 144),
+    epaMonitorType("風向", "degrees", 11),
+    epaMonitorType("風速", "m/sec", 10),
+    epaMonitorType("小時風速值", "m/sec", 143))
 
   lazy val WIN_SPEED = MonitorType.withName("風速")
   lazy val WIN_DIRECTION = MonitorType.withName("風向")
   def init(colNames: Seq[String]) = {
-    def insertMt = {
-      val f = collection.insertMany(defaultMonitorTypes.map { toDocument }).toFuture()
-      f.onFailure(errorHandler)
-      f.onSuccess({
-        case _: Seq[t] =>
-          refreshMtv
-      })
-      f.mapTo[Unit]
-    }
-
-    if (!colNames.contains(colName)) {
-      val f = MongoDB.database.createCollection(colName).toFuture()
+    if (!colNames.contains(ColName)) {
+      val f = MongoDB.database.createCollection(ColName).toFuture()
       f.onFailure(errorHandler)
       f.onSuccess({
         case _: Seq[t] =>
@@ -52,6 +82,37 @@ object MonitorType extends Enumeration {
       Some(f.mapTo[Unit])
     } else
       None
+
+    for (set <- SysConfig.get(SysConfig.SET_MT_ITEM_ID)) {
+      if (!set.asBoolean().getValue) {
+        Logger.info("Init EPA MonitorType ItemID")
+        for (ret <- initMonitorTypeItemID) {
+          Logger.info(s"EPA MonitorType ItemID is set ${ret.getInsertedCount}/${ret.getModifiedCount}")
+          refreshMtv
+          SysConfig.set(SysConfig.SET_MT_ITEM_ID, BsonBoolean(true))
+        }
+      }
+    }
+  }
+
+  def initMonitorTypeItemID = {
+    val updateModels =
+      for (mt <- epaMonitorTypes) yield {
+        val updates = Updates.combine(
+          Updates.setOnInsert("desp", mt.desp),
+          Updates.setOnInsert("unit", mt.unit),
+          Updates.set("order", mt.order),
+          Updates.setOnInsert("prec", mt.prec),
+          Updates.set("itemID", mt.itemID.get))
+
+        UpdateOneModel(
+          Filters.eq("_id", mt._id),
+          updates, UpdateOptions().upsert(true))
+      }
+
+    val f2 = collection.bulkWrite(updateModels, BulkWriteOptions().ordered(false)).toFuture()
+    f2.onFailure(errorHandler)
+    f2
   }
 
   def BFName(mt: MonitorType.Value) = {
@@ -59,26 +120,10 @@ object MonitorType extends Enumeration {
     mtCase._id.replace(".", "_")
   }
 
-  def toDocument(mt: MonitorType) = {
-    val json = Json.toJson(mt)
-    Document(json.toString())
-  }
-
-  def toMonitorType(d: Document) = {
-    val ret = Json.parse(d.toJson()).validate[MonitorType]
-    ret.fold(
-      error => {
-      Logger.error(JsError.toJson(error).toString())
-      throw new Exception(JsError.toJson(error).toString)
-    },
-      mt => mt)
-  }
-
   private def mtList: List[MonitorType] =
     {
-      val f = MongoDB.database.getCollection(colName).find().toFuture()
-      val r = waitReadyResult(f)
-      r.map { toMonitorType }.toList
+      val f = collection.find().toFuture()
+      waitReadyResult(f).toList
     }
 
   def refreshMtv = {
@@ -104,31 +149,35 @@ object MonitorType extends Enumeration {
       MonitorType.withName(_id)
     } catch {
       case _: NoSuchElementException =>
-        val mt = MonitorType(_id, _id, unit, None, 2, mtvList.size)
+        val mt = MonitorType(_id = _id, desp = _id, unit = unit, order = mtvList.size)
         newMonitorType(mt)
         val value = Value(mt._id)
         map = map + (value -> mt)
-        mtvList = (value :: mtvList.reverse).reverse
+        mtvList = mtvList :+ (value)
         value
     }
   }
 
-  def newMonitorType(mt: MonitorType) = {
-    val doc = toDocument(mt)
-    import org.mongodb.scala._
-    collection.insertOne(doc).subscribe(
-      (doOnNext: Completed) => {},
-      (ex: Throwable) => {
-        Logger.error(ex.getMessage, ex)
-        throw ex
+  def getMonitorTypeByItemID(itemID: Int) = {
+    for (
+      (v, mtCase) <- map.find(kv => {
+        if (kv._2.itemID.isDefined && kv._2.itemID.get == itemID)
+          true
+        else
+          false
       })
+    ) yield {
+      v
+    }
   }
+  def newMonitorType(mt: MonitorType) =
+    collection.insertOne(mt).toFuture()
 
   import org.mongodb.scala.model.Filters._
+  import org.mongodb.scala.model._
+
   def upsertMonitorType(mt: MonitorType) = {
-    import org.mongodb.scala.model.UpdateOptions
-    import org.mongodb.scala.bson.BsonString
-    val f = collection.replaceOne(equal("_id", mt._id), toDocument(mt), UpdateOptions().upsert(true)).toFuture()
+    val f = collection.replaceOne(equal("_id", mt._id), mt, UpdateOptions().upsert(true)).toFuture()
     waitReadyResult(f)
     true
   }
@@ -137,7 +186,6 @@ object MonitorType extends Enumeration {
     import org.mongodb.scala._
     import org.mongodb.scala.model.Filters._
     import org.mongodb.scala.model.Updates._
-    import org.mongodb.scala.model.FindOneAndUpdateOptions
 
     import scala.concurrent.ExecutionContext.Implicits.global
     val idFilter = equal("_id", map(mt)._id)
@@ -161,10 +209,8 @@ object MonitorType extends Enumeration {
         }
       }
 
-    val ret = waitReadyResult(f)
+    val mtCase = waitReadyResult(f)
 
-    val mtCase = toMonitorType(ret)
-    Logger.debug(mtCase.toString)
     map = map + (mt -> mtCase)
   }
 
@@ -215,9 +261,9 @@ object MonitorType extends Enumeration {
       val prec = map(mt).prec
       val value = s"%.${prec}f".format(r.get.value)
       //if (overInternal || overLaw)
-        //s"<i class='fa fa-exclamation-triangle'></i>$value"
+      //s"<i class='fa fa-exclamation-triangle'></i>$value"
       //else
-        s"$value"
+      s"$value"
     }
   }
 

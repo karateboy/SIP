@@ -13,7 +13,7 @@ object MongoDB {
   def init(){
     val f = database.listCollectionNames().toFuture()
     val colFuture = f.map { colNames =>
-      //MonitorType =>
+      SysConfig.init(colNames)
       Monitor.init(colNames)
       MonitorType.init(colNames)
       Record.init(colNames)
@@ -23,7 +23,7 @@ object MongoDB {
       Alarm.init(colNames)
       ManualAuditLog.init(colNames)
 
-      SysConfig.init(colNames)
+      
       AuditConfig.init(colNames)
     }
     //Program need to wait before init complete

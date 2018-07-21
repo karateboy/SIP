@@ -6,17 +6,18 @@ import akka.actor._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Global extends GlobalSettings {  
+object Global extends GlobalSettings {
   override def onStart(app: Application) {
     Logger.info("Application has started")
     super.onStart(app)
     MongoDB.init()
     //DataCollectManager.startup
-    
+
     CdxReceiver.startup
     //CdxReceiver.getInboxFiles
     CdxReceiver.parseXML
     DataCopyer.startup()
+    //OpenDataReceiver.startup()
   }
 
   override def onStop(app: Application) {

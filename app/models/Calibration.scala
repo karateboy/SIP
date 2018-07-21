@@ -10,8 +10,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 case class CalibrationJSON(monitorType: String, startTime: Long, endTime: Long, zero_val: Option[Double],
                            span_std: Option[Double], span_val: Option[Double])
 
-case class Calibration(monitor:Monitor.Value, monitorType: MonitorType.Value, startTime: DateTime, endTime: DateTime, 
-      span:Option[Double], zero_std: Option[Double], zero_val: Option[Double], span_std: Option[Double], span_val: Option[Double]) {
+case class Calibration(monitor: Monitor.Value, monitorType: MonitorType.Value, startTime: DateTime, endTime: DateTime,
+                       span: Option[Double], zero_std: Option[Double], zero_val: Option[Double], span_std: Option[Double], span_val: Option[Double]) {
   def zero_dev = zero_val.map(Math.abs)
   def span_dev =
     for (_span <- span_val; _std <- span_std)
@@ -27,6 +27,10 @@ case class Calibration(monitor:Monitor.Value, monitorType: MonitorType.Value, st
 }
 
 object Calibration {
+
+  import org.mongodb.scala.bson.codecs.Macros._
+  import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
+  import org.bson.codecs.configuration.CodecRegistries.{ fromRegistries, fromProviders }
 
   val collectionName = "calibration"
   val collection = MongoDB.database.getCollection(collectionName)
@@ -49,9 +53,12 @@ object Calibration {
 
   def toDocument(cal: Calibration) = {
     import org.mongodb.scala.bson._
+    implicit object TransformMonitorType extends BsonTransformer[MonitorType.Value] {
+      def apply(mt: MonitorType.Value): BsonString = new BsonString(mt.toString)
+    }
     Document("monitor" -> cal.monitor.toString, "monitorType" -> cal.monitorType, "startTime" -> (cal.startTime: BsonDateTime),
-      "endTime" -> (cal.endTime: BsonDateTime), "span" -> cal.span, 
-      "zero_std" -> cal.zero_std, "zero_val" -> cal.zero_val,  
+      "endTime" -> (cal.endTime: BsonDateTime), "span" -> cal.span,
+      "zero_std" -> cal.zero_std, "zero_val" -> cal.zero_val,
       "span_std" -> cal.span_std, "span_val" -> cal.span_val)
   }
 
@@ -69,12 +76,12 @@ object Calibration {
     val span = doc.get("span").collect(doublePf)
     val zero_std = doc.get("zero_std").collect(doublePf)
     val zero_val = doc.get("zero_val").collect(doublePf)
-    
+
     val span_std = doc.get("span_std").collect(doublePf)
     val span_val = doc.get("span_val").collect(doublePf)
-    Calibration(monitor=monitor, monitorType=monitorType, startTime=startTime, endTime=endTime, 
-        span=span, zero_std=zero_std, zero_val=zero_val, 
-        span_std=span_std, span_val=span_val)
+    Calibration(monitor = monitor, monitorType = monitorType, startTime = startTime, endTime = endTime,
+      span = span, zero_std = zero_std, zero_val = zero_val,
+      span_std = span_std, span_val = span_val)
   }
 
   def calibrationReport(start: DateTime, end: DateTime) = {
@@ -137,8 +144,8 @@ object Calibration {
     f
     //f map {_=> ForwardManager.forwardCalibration}
   }
-  
-  def insert(cals:Seq[Calibration]) = {
+
+  def insert(cals: Seq[Calibration]) = {
     import ModelHelper._
     val docs = cals map toDocument
     val f = collection.insertMany(docs).toFuture()
@@ -149,7 +156,7 @@ object Calibration {
     f
   }
 
-/*
+  /*
   def getZeroCalibrationStyle(cal: Calibration) = {
     val styleOpt =
       for {

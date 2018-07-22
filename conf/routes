@@ -77,9 +77,9 @@ GET      /JSON/AuditReport/:monitor/:monitorType/:start/:end                  co
 #JSON
 GET      /MonitorType                                                         controllers.Application.monitorTypeList
 POST     /MonitorType/:id                                                     controllers.Application.upsertMonitorType(id)
-PUT      /MonitorType/:id                                                     controllers.Application.upsertMonitorType(id)
 
 GET      /Monitor                                                             controllers.Application.monitorList
+POST     /Monitor/:id                                                         controllers.Application.upsertMonitor(id)
 GET      /IndPark                                                             controllers.Application.indParkList
 GET      /ReportUnit                                                          controllers.Application.reportUnitList
 GET      /MenuRight                                                           controllers.Application.menuRightList
@@ -108,6 +108,7 @@ GET      /AuditConfigPage                                                     co
 GET      /AuditConfig                                                         controllers.Application.getAllMonitorAuditConfig
 GET      /AuditConfig/:monitor                                                controllers.Application.getMonitorAuditConfig(monitor)
 POST     /AuditConfig/:monitor                                                controllers.Application.setMonitorAuditConfig(monitor)
+GET      /DefaultAuditConfig                                                  controllers.Application.defaultAuditConfig
 
 GET      /TestSMS/:mobile                                                     controllers.Application.testSMS(mobile)
 GET      /TestAlarm                                                           controllers.Application.testAlarm

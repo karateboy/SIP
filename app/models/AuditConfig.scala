@@ -2,36 +2,30 @@ package models
 import play.api._
 import com.github.nscala_time.time.Imports._
 import models.ModelHelper._
-import models.ExcelTool._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
-import play.api.Play.current
-import org.apache.poi.openxml4j.opc._
-import org.apache.poi.xssf.usermodel._
-import org.apache.poi.ss.usermodel._
-import java.util.Date
 import org.mongodb.scala.model._
-import org.mongodb.scala.model.Indexes._
+import play.api.libs.json._
 
 case class AuditConfig(
   _id:                    String,
-  minMaxRule:             Option[MinMaxRule],
-  compareRule:            Option[CompareRule],
-  differenceRule:         Option[DifferenceRule],
-  spikeRule:              Option[SpikeRule],
-  persistenceRule:        Option[PersistenceRule],
-  monoRule:               Option[MonoRule],
-  twoHourRule:            Option[TwoHourRule],
-  threeHourRule:          Option[ThreeHourRule],
-  fourHourRule:           Option[FourHourRule],
-  overInternalStdMinRule: Option[OverInternalStdMinRule],
-  dataReadyMinRule:       Option[DataReadyMinRule])
+  minMaxRule:             MinMaxRule,
+  compareRule:            CompareRule,
+  differenceRule:         DifferenceRule,
+  spikeRule:              SpikeRule,
+  persistenceRule:        PersistenceRule,
+  monoRule:               MonoRule,
+  twoHourRule:            TwoHourRule,
+  threeHourRule:          ThreeHourRule,
+  fourHourRule:           FourHourRule,
+  overInternalStdMinRule: OverInternalStdMinRule,
+  dataReadyMinRule:       DataReadyMinRule)
 
 object AuditConfig {
   import org.mongodb.scala.bson.codecs.Macros._
   import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
   import org.bson.codecs.configuration.CodecRegistries.{ fromRegistries, fromProviders }
-
+  
   val codecRegistry = fromRegistries(fromProviders(
     classOf[AuditConfig],
     classOf[MinMaxRule], classOf[CompareRule], classOf[DifferenceRule], classOf[SpikeRule],
@@ -42,19 +36,22 @@ object AuditConfig {
   val ColName = "auditConfig"
   val collection = MongoDB.database.getCollection[AuditConfig](ColName).withCodecRegistry(codecRegistry)
 
+  implicit val writes = Json.writes[AuditConfig]
+  implicit val reads = Json.reads[AuditConfig]
+  
   def defaultConfig(_id: String) = AuditConfig(
     _id,
-    Some(MinMaxRule.default),
-    Some(CompareRule.default),
-    Some(DifferenceRule.default),
-    Some(SpikeRule.default),
-    Some(PersistenceRule.default),
-    Some(MonoRule.default),
-    Some(TwoHourRule.default),
-    Some(ThreeHourRule.default),
-    Some(FourHourRule.default),
-    Some(OverInternalStdMinRule.default),
-    Some(DataReadyMinRule.default))
+    MinMaxRule.default,
+    CompareRule.default,
+    DifferenceRule.default,
+    SpikeRule.default,
+    PersistenceRule.default,
+    MonoRule.default,
+    TwoHourRule.default,
+    ThreeHourRule.default,
+    FourHourRule.default,
+    OverInternalStdMinRule.default,
+    DataReadyMinRule.default)
 
   
   def init(colNames: Seq[String]) {

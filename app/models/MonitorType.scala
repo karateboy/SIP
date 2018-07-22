@@ -128,9 +128,12 @@ object MonitorType extends Enumeration {
 
   def refreshMtv = {
     val list = mtList
+    map = Map.empty[MonitorType.Value, MonitorType]
+
     for (mt <- list) {
       try {
-        MonitorType.withName(mt._id)
+        val mtv = MonitorType.withName(mt._id)
+        map = map + (mtv -> mt)
       } catch {
         case _: NoSuchElementException =>
           map = map + (Value(mt._id) -> mt)

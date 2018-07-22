@@ -229,21 +229,39 @@ object Application extends Controller {
   }
 
   def upsertMonitorType(id: String) = Security.Authenticated(BodyParsers.parse.json) {
-    Logger.info(s"upsert Mt:$id")
     implicit request =>
       val mtResult = request.body.validate[MonitorType]
 
       mtResult.fold(
         error => {
-        Logger.error(JsError.toJson(error).toString())
-        BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
-      },
+          Logger.error(JsError.toJson(error).toString())
+          BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+        },
         mt => {
           MonitorType.upsertMonitorType(mt)
+          MonitorType.refreshMtv
           Ok(Json.obj("ok" -> true))
         })
   }
 
+  def upsertMonitor(id: String) = Security.Authenticated.async(BodyParsers.parse.json) {
+    implicit request =>
+      val mtResult = request.body.validate[Monitor]
+
+      mtResult.fold(
+        error => {
+          Future {
+            Logger.error(JsError.toJson(error).toString())
+            BadRequest(Json.obj("ok" -> false, "msg" -> JsError.toJson(error).toString()))
+          }
+        },
+        monitor => {
+          for (ret <- Monitor.upsert(monitor)) yield {
+            Monitor.refresh
+            Ok(Json.obj("ok" -> true))
+          }
+        })
+  }
   def dataManagement = Security.Authenticated {
     Ok(views.html.dataManagement())
   }
@@ -274,8 +292,8 @@ object Application extends Controller {
         mList = groupInfo.privilege.allowedMonitors.map { Monitor.map }
       } yield {
         var fullMap = map
-        for(m <- mList){
-          if(!fullMap.contains(m._id))
+        for (m <- mList) {
+          if (!fullMap.contains(m._id))
             fullMap += m._id -> AuditConfig.defaultConfig(m._id)
         }
         Ok(Json.toJson(fullMap))
@@ -472,5 +490,10 @@ object Application extends Controller {
   def testAlarm = Security.Authenticated {
     Alarm.log(Monitor.withName("台塑六輕工業園區#彰化縣大城站"), MonitorType.withName("PM10"), "測試警報")
     Ok("")
+  }
+  
+  def defaultAuditConfig = Security.Authenticated {
+    AuditConfig.defaultConfig("default")
+    Ok(Json.toJson(AuditConfig.defaultConfig("default")))
   }
 }

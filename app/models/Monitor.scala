@@ -1,6 +1,5 @@
 package models
-import scala.collection.Map
-import play.api.Logger
+import play.api._
 import EnumUtils._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -8,19 +7,10 @@ import models.ModelHelper._
 import com.github.nscala_time.time.Imports._
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.mongodb.scala.bson._
-import models.ModelHelper._
+import org.mongodb.scala.model._
 
 case class Monitor(_id: String, indParkName: String, dp_no: String,
-                   lat: Option[Double] = None, lng: Option[Double] = None) {
-
-  def toDocument = {
-    import AutoAudit._
-    Document("_id" -> _id, "indParkName" -> indParkName, "dp_no" -> dp_no,
-      "lat" -> lat, "lng" -> lng)
-  }
-
-}
-
+                   lat: Option[Double] = None, lng: Option[Double] = None)
 object Monitor extends Enumeration {
   implicit val monitorRead: Reads[Monitor.Value] = EnumUtils.enumReads(Monitor)
   implicit val monitorWrite: Writes[Monitor.Value] = EnumUtils.enumWrites
@@ -30,15 +20,20 @@ object Monitor extends Enumeration {
   implicit val mWrite = Json.writes[Monitor]
   implicit val mRead = Json.reads[Monitor]
 
-  import org.mongodb.scala.bson._
+  import org.mongodb.scala.bson.codecs.Macros._
+  import org.mongodb.scala.bson.codecs.DEFAULT_CODEC_REGISTRY
+  import org.bson.codecs.configuration.CodecRegistries.{ fromRegistries, fromProviders }
+
   import scala.concurrent._
   import scala.concurrent.duration._
 
   implicit object TransformMonitor extends BsonTransformer[Monitor.Value] {
     def apply(m: Monitor.Value): BsonString = new BsonString(m.toString)
   }
+
   val colName = "monitors"
-  val collection = MongoDB.database.getCollection(colName)
+  val codecRegistry = fromRegistries(fromProviders(classOf[Monitor]), DEFAULT_CODEC_REGISTRY)
+  val collection = MongoDB.database.getCollection[Monitor](colName).withCodecRegistry(codecRegistry)
 
   def monitorId(indParkName: String, dp_no: String) = s"${indParkName}#${dp_no}"
 
@@ -62,23 +57,13 @@ object Monitor extends Enumeration {
       None
   }
 
-  def toMonitor(implicit doc: Document) = {
-    val _id = doc.getString("_id")
-    val indParkName = doc.getString("indParkName")
-    val dp_no = doc.getString("dp_no")
-    val lat = getOptionDouble("lat")
-    val lng = getOptionDouble("lng")
-
-    Monitor(_id = _id, indParkName = indParkName, dp_no = dp_no, lat = lat, lng = lng)
-  }
-
   def newMonitor(m: Monitor) = {
     Logger.debug(s"Create monitor value ${m._id}!")
     val v = Value(m._id)
     map = map + (v -> m)
     mvList = (v :: mvList.reverse).reverse
 
-    val f = collection.insertOne(m.toDocument).toFuture()
+    val f = collection.insertOne(m).toFuture()
     f.onFailure(errorHandler)
     f.onSuccess({
       case _: Seq[t] =>
@@ -88,16 +73,18 @@ object Monitor extends Enumeration {
 
   private def mList: List[Monitor] =
     {
-      val f = MongoDB.database.getCollection(colName).find().toFuture()
-      val r = waitReadyResult(f)
-      r.map { toMonitor(_) }.toList
+      val f = collection.find().toFuture()
+      val ret = waitReadyResult(f)
+      ret.toList
     }
 
-  def refreshMonitor = {
+  def refresh = {
     val list = mList
+    map = Map.empty[Monitor.Value, Monitor]
     for (m <- list) {
       try {
-        Monitor.withName(m._id)
+        val mv = Monitor.withName(m._id)
+        map = map + (mv -> m)
       } catch {
         case _: NoSuchElementException =>
           map = map + (Value(m._id) -> m)
@@ -111,10 +98,10 @@ object Monitor extends Enumeration {
   var mvList = mList.map(mt => Monitor.withName(mt._id))
   def indParkSet = mvList.map { map(_).indParkName }.foldRight(Set.empty[String])((name, set) => set + name)
   def indParkMonitor(indParkFilter: Seq[String]) =
-    mvList.filter(p =>{
+    mvList.filter(p => {
       val monitor = Monitor.map(p)
       indParkFilter.contains(monitor.indParkName)
-    })      
+    })
 
   def getMonitorValueByName(indParkName: String, dp_no: String) = {
     try {
@@ -151,11 +138,15 @@ object Monitor extends Enumeration {
         collection.findOneAndUpdate(idFilter, set(colname, Double.parseDouble(newValue)), opt).toFuture()
       }
 
-    val ret = waitReadyResult(f)
+    val mCase = waitReadyResult(f)
 
-    val mCase = toMonitor(ret)
-    Logger.debug(mCase.toString)
     map = map + (m -> mCase)
+  }
+
+  def upsert(m: Monitor) = {
+    val f = collection.replaceOne(Filters.equal("_id", m._id), m, UpdateOptions().upsert(true)).toFuture()
+    f.onFailure(errorHandler)
+    f
   }
 
   def updateMonitorAutoAudit(m: Monitor.Value, autoAudit: AutoAudit) = {
@@ -176,7 +167,7 @@ object Monitor extends Enumeration {
 
     val mCase = toMonitor(ret)
     map = map + (m -> mCase)
-    * 
+    *
     */
   }
 

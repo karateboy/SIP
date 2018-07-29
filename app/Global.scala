@@ -17,7 +17,7 @@ object Global extends GlobalSettings {
     //CdxReceiver.getInboxFiles
     CdxReceiver.parseXML
     DataCopyer.startup()
-    //OpenDataReceiver.startup()
+    OpenDataReceiver.startup()
   }
 
   override def onStop(app: Application) {

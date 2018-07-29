@@ -41,7 +41,7 @@ class OpenDataReceiver extends Actor with ActorLogging {
   import com.github.nscala_time.time.Imports._
   val timer = {
     import scala.concurrent.duration._
-    Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(1, DAYS), receiver, GetEpaHourData)
+    Akka.system.scheduler.schedule(Duration(5, SECONDS), Duration(1, HOURS), receiver, GetEpaHourData)
   }
 
   import scala.xml._
@@ -53,14 +53,9 @@ class OpenDataReceiver extends Actor with ActorLogging {
       import scala.collection.mutable.Map
       val recordMap = Map.empty[Monitor.Value, Map[DateTime, Map[MonitorType.Value, (Double, String)]]]
 
-      var currentDate = DateTime.now().withMillisOfDay(0)
       def filter(dataNode: Node) = {
         val monitorDateOpt = dataNode \ "MonitorDate"
         val mDate = DateTime.parse(s"${monitorDateOpt.text.trim()}", DateTimeFormat.forPattern("YYYY-MM-dd"))
-        if (mDate != currentDate) {
-          Logger.debug(s"current Date ${mDate.toString()}")
-          currentDate = mDate
-        }
         start <= mDate && mDate < end
       }
 
@@ -101,7 +96,6 @@ class OpenDataReceiver extends Actor with ActorLogging {
 
       val qualifiedData = data.filter(filter)
 
-      Logger.debug(s"${data.length} qualified=${qualifiedData.length}")
       qualifiedData.map { processData }
 
       val updateModels =
@@ -130,8 +124,7 @@ class OpenDataReceiver extends Actor with ActorLogging {
     }
 
     def getData(skip: Int) {
-      val url = s"https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000027/?format=xml&limit=${limit}&skip=${skip}&orderby=MonitorDate%20desc&token=00k8zvmeJkieHA9w13JvOw"
-      Logger.debug(url)
+      val url = s"https://opendata.epa.gov.tw/webapi/api/rest/datastore/355000000I-000027/?format=xml&limit=${limit}&offset=${skip}&orderby=MonitorDate%20desc&token=00k8zvmeJkieHA9w13JvOw"
       val retFuture =
         WS.url(url).get().map {
           response =>

@@ -10,7 +10,7 @@ import org.mongodb.scala.bson._
 import org.mongodb.scala.model._
 
 case class Monitor(_id: String, indParkName: String, dp_no: String,
-                   lat: Option[Double] = None, lng: Option[Double] = None)
+                   lat: Option[Double] = None, lng: Option[Double] = None, show: Option[Boolean] = Some(false))
 object Monitor extends Enumeration {
   implicit val monitorRead: Reads[Monitor.Value] = EnumUtils.enumReads(Monitor)
   implicit val monitorWrite: Writes[Monitor.Value] = EnumUtils.enumWrites

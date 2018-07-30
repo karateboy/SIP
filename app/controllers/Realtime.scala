@@ -211,7 +211,7 @@ object Realtime extends Controller {
             status = statusMap(m)
           } yield {
             val (statusIndex, statusStr) = getStatusIndex(status)
-            MonitorInfo(m.toString(), statusIndex, weather.windDir, weather.windSpeed, statusStr, lat, lng)
+            MonitorInfo(mCase.dp_no, statusIndex, weather.windDir, weather.windSpeed, statusStr, lat, lng)
           }
 
         Ok(Json.toJson(mapInfos))

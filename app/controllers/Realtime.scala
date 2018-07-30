@@ -161,11 +161,9 @@ object Realtime extends Controller {
     }
   }
 
-  case class MonitorInfo(id: String, status: Int, winDir: Double, winSpeed: Double, statusStr: String)
-  case class RealtimeMapInfo(info: Seq[MonitorInfo])
+  case class MonitorInfo(id: String, status: Int, winDir: Double, winSpeed: Double, statusStr: String, lat: Double, lng: Double)
 
   implicit val monitorInfoWrite = Json.writes[MonitorInfo]
-  implicit val mapInfoWrite = Json.writes[RealtimeMapInfo]
 
   def realtimeMap = Security.Authenticated.async {
     implicit request =>
@@ -206,14 +204,17 @@ object Realtime extends Controller {
         val mapInfos =
           for {
             m <- myMonitorList
+            mCase = Monitor.map(m)
+            lat <- mCase.lat
+            lng <- mCase.lng
             weather = weatherMap.getOrElse(m, WindInfo(0, 0))
             status = statusMap(m)
           } yield {
             val (statusIndex, statusStr) = getStatusIndex(status)
-            MonitorInfo(m.toString(), statusIndex, weather.windDir, weather.windSpeed, statusStr)
+            MonitorInfo(m.toString(), statusIndex, weather.windDir, weather.windSpeed, statusStr, lat, lng)
           }
 
-        Ok(Json.toJson(RealtimeMapInfo(mapInfos)))
+        Ok(Json.toJson(mapInfos))
 
       }
   }

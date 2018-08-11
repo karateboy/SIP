@@ -32,7 +32,7 @@ case class Privilege(
   allowedIndParks:     Seq[String],
   allowedMonitorTypes: Seq[MonitorType.Value],
   allowedMenuRights:   Seq[MenuRight.Value],
-  indParkFilter:       Seq[String]                 = Seq("台塑六輕工業園區", "環保署")) {
+  indParkFilter:       Seq[String]                 = Seq("台塑六輕工業園區", "環保署", "揚塵測站")) {
   def allowedMonitors(): Seq[Monitor.Value] =
     Monitor.indParkMonitor(indParkFilter)
 }

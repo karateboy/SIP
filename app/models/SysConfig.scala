@@ -16,12 +16,14 @@ object SysConfig extends Enumeration {
   val AVGR_LAST = Value
   val SET_MT_ITEM_ID = Value
   val EPA_LAST = Value
+  val DUST_LAST = Value
 
   val defaultConfig = Map(
     AVGHR_LAST -> Document(valueKey -> DateTime.parse("2017-1-1").toDate()),
     AVGR_LAST -> Document(valueKey -> DateTime.parse("2017-1-1").toDate()),
     SET_MT_ITEM_ID -> Document(valueKey -> false),
-    EPA_LAST-> Document(valueKey -> DateTime.parse("2018-7-1").toDate()))
+    EPA_LAST-> Document(valueKey -> DateTime.parse("2018-7-1").toDate()),
+    DUST_LAST -> Document(valueKey -> DateTime.parse("2018-7-1").toDate()))
 
   def init(colNames: Seq[String]) {
     if (!colNames.contains(ColName)) {

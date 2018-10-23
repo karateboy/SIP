@@ -103,6 +103,12 @@ object Monitor extends Enumeration {
       indParkFilter.contains(monitor.indParkName)
     })
 
+  def indParkMonitor(indPark: String) =
+    mvList.filter(p => {
+      val monitor = Monitor.map(p)
+      monitor.indParkName == indPark
+    })
+
   def getMonitorValueByName(indParkName: String, dp_no: String) = {
     try {
       val id = monitorId(indParkName, dp_no)

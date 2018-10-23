@@ -27,28 +27,41 @@ object MenuRight extends Enumeration {
     map(v)
   }
 }
-
+case class MonitorFilter(indPark: String, names: Seq[String])
 case class Privilege(
   allowedIndParks:     Seq[String],
   allowedMonitorTypes: Seq[MonitorType.Value],
   allowedMenuRights:   Seq[MenuRight.Value],
-  indParkFilter:       Seq[String]                 = Seq("台塑六輕工業園區", "環保署", "揚塵測站")) {
-  def allowedMonitors(): Seq[Monitor.Value] =
-    Monitor.indParkMonitor(indParkFilter)
+  monitorFilters:      Seq[MonitorFilter]) {
+  def allowedMonitors(): Seq[Monitor.Value] = {
+    monitorFilters flatMap { filter =>
+      Monitor.indParkMonitor(filter.indPark) filter {
+        mv =>
+          filter.names.isEmpty ||
+            filter.names.exists({ name => Monitor.map(mv).dp_no.contains(name) })
+      }
+    }
+  }
 }
 
 import scala.concurrent.ExecutionContext.Implicits.global
 object Privilege {
+  implicit val mfWrite = Json.writes[MonitorFilter]
+  implicit val mfRead = Json.reads[MonitorFilter]
   implicit val privilegeWrite = Json.writes[Privilege]
   implicit val privilegeRead = Json.reads[Privilege]
 
-  lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq)
-  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value])
+  val defaultMonitorFilters = Seq(
+    MonitorFilter("台塑六輕工業園區", Seq.empty[String]),
+    MonitorFilter("環保署", Seq.empty[String]),
+    MonitorFilter("揚塵測站", Seq("旭光", "義賢")))
+
+  lazy val defaultPrivilege = Privilege(Monitor.indParkSet.toSeq, MonitorType.values.toSeq, MenuRight.values.toSeq, defaultMonitorFilters)
+  val emptyPrivilege = Privilege(Seq.empty[String], Seq.empty[MonitorType.Value], Seq.empty[MenuRight.Value], defaultMonitorFilters)
 
   def myMonitorList(email: String) = {
-    val userOptF = User.getUserByIdFuture(email)
     for {
-      userOpt <- userOptF if userOpt.isDefined
+      userOpt <- User.getUserByIdFuture(email)
       groupInfo = Group.map(userOpt.get.groupId)
     } yield {
       groupInfo.privilege.allowedMonitors.filter { m =>

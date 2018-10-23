@@ -326,26 +326,30 @@ object Record {
       for (m <- Monitor.mvList) yield {
         val f = col.find(equal("monitor", Monitor.map(m)._id)).projection(proj).sort(descending("time")).limit(1).toFuture()
         for {
-          docs <- f if !docs.isEmpty
+          docs <- f
         } yield {
-          val doc = docs.head
-          val time = doc("time").asDateTime().toDateTime()
-          val pair =
-            for {
-              mt <- MonitorType.mtvList
-              mtBFName = MonitorType.BFName(mt)
-              mtDocOpt = doc.get(mtBFName) if mtDocOpt.isDefined && mtDocOpt.get.isDocument()
-              mtDoc = mtDocOpt.get.asDocument()
-              v = mtDoc.get("v") if v.isDouble()
-              s = mtDoc.get("s") if s.isString()
-            } yield {
-              mt -> Record(m, time, v.asDouble().doubleValue(), s.asString().getValue)
-            }
-          m -> (time, pair.toMap)
+          if (docs.isEmpty)
+            None
+          else {
+            val doc = docs.head
+            val time = doc("time").asDateTime().toDateTime()
+            val pair =
+              for {
+                mt <- MonitorType.mtvList
+                mtBFName = MonitorType.BFName(mt)
+                mtDocOpt = doc.get(mtBFName) if mtDocOpt.isDefined && mtDocOpt.get.isDocument()
+                mtDoc = mtDocOpt.get.asDocument()
+                v = mtDoc.get("v") if v.isDouble()
+                s = mtDoc.get("s") if s.isString()
+              } yield {
+                mt -> Record(m, time, v.asDouble().doubleValue(), s.asString().getValue)
+              }
+            Some(m -> (time, pair.toMap))
+          }
         }
       }
     for (pairs <- Future.sequence(futureList)) yield {
-      pairs.toMap
+      pairs.flatMap(x=>x).toMap
     }
   }
 
@@ -407,15 +411,19 @@ object Record {
         val filter = Filters.and(Filters.equal("monitor", Monitor.map(m)._id), Filters.ne("正十一烷", null))
         val f = col.find(filter).projection(proj).sort(descending("time")).limit(1).toFuture()
         for {
-          docs <- f if !docs.isEmpty
+          docs <- f
         } yield {
-          val doc = docs.head
-          val time = doc("time").asDateTime().toDateTime()
-          m -> time
+          if (docs.isEmpty) {
+            None
+          } else {
+            val doc = docs.head
+            val time = doc("time").asDateTime().toDateTime()
+            Some(m -> time)
+          }
         }
       }
     for (pairs <- Future.sequence(futureList)) yield {
-      pairs.toMap
+      pairs.flatMap(x => x).toMap
     }
   }
   def getWindRose(monitor: Monitor.Value, monitorType: MonitorType.Value, start: DateTime, end: DateTime, level: List[Double], nDiv: Int = 16) = {

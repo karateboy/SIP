@@ -135,6 +135,57 @@ object Query extends Controller {
     Map(pairs: _*)
   }
 
+  def getPeriodBoxReport(monitor: Monitor.Value, mt: MonitorType.Value, tabType: TableType.Value, period: Period,
+                         statusFilter: MonitorStatusFilter.Value = MonitorStatusFilter.ValidData)(start: DateTime, end: DateTime) = {
+    val recordList = Record.getRecordMap(TableType.mapCollection(tabType))(List(mt), monitor, start, end)(mt)
+    def periodSlice(period_start: DateTime, period_end: DateTime) = {
+      recordList.dropWhile { _.time < period_start }.takeWhile { _.time < period_end }
+    }
+    val data =
+      if (period.getHours == 1) {
+        recordList.filter { r => MonitorStatusFilter.isMatched(statusFilter, r.status) }.map { r => r.value }
+      } else {
+        for {
+          period_start <- getPeriods(start, end, period)
+          records = periodSlice(period_start, period_start + period) if records.length > 0
+        } yield {
+          if (mt == MonitorType.WIN_DIRECTION) {
+            val windDir = records
+            val windSpeed = Record.getRecordMap(Record.HourCollection)(List(MonitorType.WIN_SPEED), monitor, period_start, period_start + period)(mt)
+            windAvg(windSpeed, windDir)
+          } else {
+            val values = records.map { r => r.value }
+            values.sum / values.length
+          }
+        }
+      }
+    val sorted = data.sorted
+    val min = if (sorted.length >= 1)
+      Some(sorted.head)
+    else
+      None
+    val max = if (sorted.length >= 1)
+      Some(sorted.last)
+    else
+      None
+    val med = if (sorted.length >= 3)
+      Some(sorted(sorted.length / 2))
+    else
+      None
+
+    val low_q = if (sorted.length >= 4)
+      Some(sorted(sorted.length / 4))
+    else
+      None
+
+    val high_q = if (sorted.length >= 4)
+      Some(sorted(sorted.length * 3 / 4))
+    else
+      None
+
+    Seq(min, low_q, med, high_q, max)
+  }
+
   def getPeriodStatReportMap(recordListMap: Map[MonitorType.Value, Seq[Record]], period: Period, statusFilter: List[String] = List("010"))(start: DateTime, end: DateTime) = {
     val mTypes = recordListMap.keys.toList
     if (mTypes.contains(MonitorType.WIN_DIRECTION)) {
@@ -371,6 +422,163 @@ object Query extends Controller {
     chart
   }
 
+  def boxHelper(monitors: Array[Monitor.Value], monitorTypes: Array[MonitorType.Value], tabType: TableType.Value,
+                reportUnit: ReportUnit.Value, start: DateTime, end: DateTime)(statusFilter: MonitorStatusFilter.Value) = {
+
+    val windMtv = MonitorType.WIN_DIRECTION
+    val period: Period =
+      reportUnit match {
+        case ReportUnit.Min =>
+          1.minute
+        case ReportUnit.TenMin =>
+          10.minute
+        case ReportUnit.Hour =>
+          1.hour
+        case ReportUnit.Day =>
+          1.day
+        case ReportUnit.Month =>
+          1.month
+        case ReportUnit.Quarter =>
+          3.month
+        case ReportUnit.Year =>
+          1.year
+      }
+
+    val timeList = getPeriods(start, end, period)
+    val timeSeq = timeList
+
+    def getSeries() = {
+      val monitorReportPairs =
+        for {
+          monitor <- monitors
+        } yield {
+          val pair =
+            for {
+              mt <- monitorTypes
+              boxReport = getPeriodBoxReport(monitor, mt, tabType, period, statusFilter)(start, end)
+            } yield mt -> boxReport
+          monitor -> pair.toMap
+        }
+
+      val monitorReportMap = monitorReportPairs.toMap
+      for {
+        m <- monitors
+        boxReport = monitorTypes map { mt => monitorReportMap(m)(mt) }
+      } yield {
+        seqData(s"${Monitor.map(m).dp_no}", boxReport)
+      }
+    }
+
+    val series = getSeries()
+
+    val downloadFileName = {
+      val startName = start.toString("YYMMdd")
+      val mtNames = monitorTypes.map { MonitorType.map(_).desp }
+      startName + mtNames.mkString
+    }
+
+    val title =
+      reportUnit match {
+        case ReportUnit.Min =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月dd日 HH:mm")}~${end.toString("YYYY年MM月dd日 HH:mm")})"
+        case ReportUnit.TenMin =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月dd日 HH:mm")}~${end.toString("YYYY年MM月dd日 HH:mm")})"
+        case ReportUnit.Hour =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月dd日 HH:mm")}~${end.toString("YYYY年MM月dd日 HH:mm")})"
+        case ReportUnit.Day =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月dd日")}~${end.toString("YYYY年MM月dd日")})"
+        case ReportUnit.Month =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月")}~${end.toString("YYYY年MM月dd日")})"
+        case ReportUnit.Quarter =>
+          s"盒鬚圖 (${start.toString("YYYY年MM月")}~${end.toString("YYYY年MM月dd日")})"
+        case ReportUnit.Year =>
+          s"盒鬚圖 (${start.toString("YYYY年")}~${end.toString("YYYY年")})"
+      }
+
+    def getAxisLines(mt: MonitorType.Value) = {
+      val mtCase = MonitorType.map(mt)
+      val std_law_line =
+        if (mtCase.std_law.isEmpty)
+          None
+        else
+          Some(AxisLine("#FF0000", 2, mtCase.std_law.get, Some(AxisLineLabel("right", "法規值"))))
+
+      val lines = Seq(std_law_line, None).filter { _.isDefined }.map { _.get }
+      if (lines.length > 0)
+        Some(lines)
+      else
+        None
+    }
+
+    val xAxis = {
+      val names =
+        for {
+          mt <- monitorTypes
+        } yield s"${MonitorType.map(mt).desp}"
+
+      XAxis(Some(names))
+    }
+
+    val windMtCase = MonitorType.map(windMtv)
+    val windYaxis = YAxis(None, AxisTitle(Some(Some(s"${windMtCase.desp} (${windMtCase.unit})"))), None,
+      opposite = true,
+      floor = Some(0),
+      ceiling = Some(360),
+      min = Some(0),
+      max = Some(360),
+      tickInterval = Some(45),
+      gridLineWidth = Some(1),
+      gridLineColor = Some("#00D800"))
+
+    val chart =
+      if (monitorTypes.length == 1) {
+        val mt = monitorTypes(0)
+        val mtCase = MonitorType.map(monitorTypes(0))
+
+        HighchartData(
+          Map("type" -> "boxplot"),
+          Map("text" -> title),
+          xAxis,
+          if (!monitorTypes.contains(windMtv))
+            Seq(YAxis(None, AxisTitle(Some(Some(s"${mtCase.desp} (${mtCase.unit})"))), getAxisLines(mt)))
+          else
+            Seq(windYaxis),
+          series,
+          Some(downloadFileName))
+      } else {
+        val yAxis =
+          if (monitorTypes.contains(windMtv)) {
+            if (monitorTypes.length == 2) {
+              val mt = monitorTypes.filter { _ != windMtv }(0)
+              val mtCase = MonitorType.map(monitorTypes.filter { MonitorType.WIN_DIRECTION != _ }(0))
+              Seq(
+                YAxis(
+                  None,
+                  AxisTitle(Some(Some(s"${mtCase.desp} (${mtCase.unit})"))),
+                  getAxisLines(mt),
+                  gridLineWidth = Some(0)),
+                windYaxis)
+            } else {
+              Seq(
+                YAxis(None, AxisTitle(Some(None)), None, gridLineWidth = Some(0)),
+                windYaxis)
+            }
+          } else {
+            Seq(YAxis(None, AxisTitle(Some(None)), None))
+          }
+
+        HighchartData(
+          Map("type" -> "line"),
+          Map("text" -> title),
+          xAxis,
+          yAxis,
+          series,
+          Some(downloadFileName))
+      }
+
+    chart
+  }
+
   def historyTrendChart(monitorStr: String, monitorTypeStr: String, reportUnitStr: String,
                         startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated {
     implicit request =>
@@ -399,6 +607,58 @@ object Query extends Controller {
       val outputType = OutputType.withName(outputTypeStr)
 
       val chart = trendHelper(monitors, monitorTypes, tabType, reportUnit, start, end)(statusFilter)
+
+      if (outputType == OutputType.excel) {
+        import java.nio.file.Files
+        def allMoniotorTypes = {
+          val mts =
+            for (i <- 1 to monitors.length) yield monitorTypes
+
+          mts.flatMap { x => x }
+        }
+        val excelFile = ExcelUtility.exportChartData(chart, allMoniotorTypes.toArray)
+        val downloadFileName =
+          if (chart.downloadFileName.isDefined)
+            chart.downloadFileName.get
+          else
+            chart.title("text")
+
+        Ok.sendFile(excelFile, fileName = _ =>
+          play.utils.UriEncoding.encodePathSegment(downloadFileName + ".xlsx", "UTF-8"),
+          onClose = () => { Files.deleteIfExists(excelFile.toPath()) })
+      } else {
+        Results.Ok(Json.toJson(chart))
+      }
+  }
+
+  def historyBoxPlot(monitorStr: String, monitorTypeStr: String, reportUnitStr: String,
+                     startLong: Long, endLong: Long, outputTypeStr: String) = Security.Authenticated {
+    implicit request =>
+      import scala.collection.JavaConverters._
+      val monitorStrArray = java.net.URLDecoder.decode(monitorStr, "UTF-8").split(':')
+      val monitors = monitorStrArray.map { Monitor.withName }
+
+      val monitorTypeStrArray = monitorTypeStr.split(':')
+      val monitorTypes = monitorTypeStrArray.map { MonitorType.withName }
+      val reportUnit = ReportUnit.withName(reportUnitStr)
+      val statusFilter = MonitorStatusFilter.ValidData
+      val (tabType, start, end) =
+        if (reportUnit == ReportUnit.Hour || reportUnit == ReportUnit.Min || reportUnit == ReportUnit.TenMin) {
+          val tab = if (reportUnit == ReportUnit.Hour)
+            TableType.hour
+          else
+            TableType.min
+
+          (tab, new DateTime(startLong), new DateTime(endLong))
+        } else if (reportUnit == ReportUnit.Day) {
+          (TableType.hour, new DateTime(startLong), new DateTime(endLong))
+        } else {
+          (TableType.hour, new DateTime(startLong), new DateTime(endLong))
+        }
+
+      val outputType = OutputType.withName(outputTypeStr)
+
+      val chart = boxHelper(monitors, monitorTypes, tabType, reportUnit, start, end)(statusFilter)
 
       if (outputType == OutputType.excel) {
         import java.nio.file.Files
